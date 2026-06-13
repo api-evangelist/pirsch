@@ -53,6 +53,8 @@ apis:
         url: https://docs.pirsch.io/api-sdks/api-guide
       - type: SDKs
         url: https://docs.pirsch.io/api-sdks/sdks
+      - type: OpenAPI
+        url: openapi/pirsch-pirsch-api-openapi.yml
     contact:
       - FN: Pirsch Support
         url: https://pirsch.io

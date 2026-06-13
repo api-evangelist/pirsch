@@ -1,0 +1,14 @@
+{
+  "url": "https://example.com/checkout",
+  "ip": "203.0.113.42",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+  "event_name": "purchase",
+  "event_duration": 45,
+  "event_meta": {
+    "plan": "pro",
+    "amount": "29.99",
+    "currency": "USD"
+  },
+  "non_interactive": false,
+  "title": "Checkout | Example Site"
+}

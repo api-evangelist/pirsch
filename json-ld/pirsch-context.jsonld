@@ -1,0 +1,282 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "pirsch": "https://pirsch.io/vocab#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Provider": "schema:Organization",
+    "WebAPI": "schema:WebAPI",
+    "APIReference": "schema:APIReference",
+    "documentation": "schema:documentation",
+    "url": "schema:url",
+    "name": "schema:name",
+    "description": "schema:description",
+
+    "Domain": {
+      "@id": "pirsch:Domain",
+      "@type": "@id"
+    },
+    "id": {
+      "@id": "pirsch:id",
+      "@type": "xsd:string"
+    },
+    "hostname": {
+      "@id": "pirsch:hostname",
+      "@type": "xsd:string"
+    },
+    "subdomain": {
+      "@id": "pirsch:subdomain",
+      "@type": "xsd:string"
+    },
+    "timezone": {
+      "@id": "schema:timeZone",
+      "@type": "xsd:string"
+    },
+    "display_name": {
+      "@id": "schema:alternateName",
+      "@type": "xsd:string"
+    },
+    "public": {
+      "@id": "pirsch:public",
+      "@type": "xsd:boolean"
+    },
+    "user_role": {
+      "@id": "pirsch:userRole",
+      "@type": "xsd:string"
+    },
+
+    "Hit": {
+      "@id": "pirsch:Hit",
+      "@type": "@id"
+    },
+    "ip": {
+      "@id": "pirsch:ipAddress",
+      "@type": "xsd:string"
+    },
+    "user_agent": {
+      "@id": "pirsch:userAgent",
+      "@type": "xsd:string"
+    },
+    "referrer": {
+      "@id": "schema:url",
+      "@type": "xsd:string"
+    },
+    "title": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "screen_width": {
+      "@id": "pirsch:screenWidth",
+      "@type": "xsd:integer"
+    },
+    "screen_height": {
+      "@id": "pirsch:screenHeight",
+      "@type": "xsd:integer"
+    },
+    "tags": {
+      "@id": "pirsch:tags",
+      "@type": "@json"
+    },
+    "disable_bot_filter": {
+      "@id": "pirsch:disableBotFilter",
+      "@type": "xsd:boolean"
+    },
+
+    "Event": {
+      "@id": "pirsch:Event",
+      "@type": "@id"
+    },
+    "event_name": {
+      "@id": "pirsch:eventName",
+      "@type": "xsd:string"
+    },
+    "event_duration": {
+      "@id": "schema:duration",
+      "@type": "xsd:decimal"
+    },
+    "event_meta": {
+      "@id": "pirsch:eventMeta",
+      "@type": "@json"
+    },
+    "non_interactive": {
+      "@id": "pirsch:nonInteractive",
+      "@type": "xsd:boolean"
+    },
+
+    "VisitorStats": {
+      "@id": "pirsch:VisitorStats",
+      "@type": "@id"
+    },
+    "visitors": {
+      "@id": "pirsch:visitors",
+      "@type": "xsd:integer"
+    },
+    "views": {
+      "@id": "pirsch:views",
+      "@type": "xsd:integer"
+    },
+    "sessions": {
+      "@id": "pirsch:sessions",
+      "@type": "xsd:integer"
+    },
+    "bounces": {
+      "@id": "pirsch:bounces",
+      "@type": "xsd:integer"
+    },
+    "bounce_rate": {
+      "@id": "pirsch:bounceRate",
+      "@type": "xsd:decimal"
+    },
+    "cr": {
+      "@id": "pirsch:conversionRate",
+      "@type": "xsd:decimal"
+    },
+    "custom_metric_avg": {
+      "@id": "pirsch:customMetricAvg",
+      "@type": "xsd:decimal"
+    },
+    "custom_metric_total": {
+      "@id": "pirsch:customMetricTotal",
+      "@type": "xsd:decimal"
+    },
+
+    "ConversionGoal": {
+      "@id": "pirsch:ConversionGoal",
+      "@type": "@id"
+    },
+    "path_pattern": {
+      "@id": "pirsch:pathPattern",
+      "@type": "xsd:string"
+    },
+    "event_meta_key": {
+      "@id": "pirsch:eventMetaKey",
+      "@type": "xsd:string"
+    },
+    "event_meta_value": {
+      "@id": "pirsch:eventMetaValue",
+      "@type": "xsd:string"
+    },
+    "delete_reached": {
+      "@id": "pirsch:deleteReached",
+      "@type": "xsd:boolean"
+    },
+    "email_reached": {
+      "@id": "pirsch:emailReached",
+      "@type": "xsd:boolean"
+    },
+
+    "Funnel": {
+      "@id": "pirsch:Funnel",
+      "@type": "@id"
+    },
+    "steps": {
+      "@id": "pirsch:funnelSteps",
+      "@container": "@list"
+    },
+
+    "ShortLink": {
+      "@id": "pirsch:ShortLink",
+      "@type": "@id"
+    },
+    "utm_source": {
+      "@id": "pirsch:utmSource",
+      "@type": "xsd:string"
+    },
+    "utm_medium": {
+      "@id": "pirsch:utmMedium",
+      "@type": "xsd:string"
+    },
+    "utm_campaign": {
+      "@id": "pirsch:utmCampaign",
+      "@type": "xsd:string"
+    },
+    "utm_content": {
+      "@id": "pirsch:utmContent",
+      "@type": "xsd:string"
+    },
+    "utm_term": {
+      "@id": "pirsch:utmTerm",
+      "@type": "xsd:string"
+    },
+    "expires_at": {
+      "@id": "schema:expires",
+      "@type": "xsd:dateTime"
+    },
+
+    "Webhook": {
+      "@id": "pirsch:Webhook",
+      "@type": "@id"
+    },
+    "endpoint": {
+      "@id": "schema:url",
+      "@type": "xsd:string"
+    },
+    "active": {
+      "@id": "pirsch:active",
+      "@type": "xsd:boolean"
+    },
+
+    "TrafficFilter": {
+      "@id": "pirsch:TrafficFilter",
+      "@type": "@id"
+    },
+    "filter": {
+      "@id": "pirsch:filterValue",
+      "@type": "xsd:string"
+    },
+
+    "Member": {
+      "@id": "pirsch:Member",
+      "@type": "@id"
+    },
+    "role": {
+      "@id": "pirsch:memberRole",
+      "@type": "xsd:string"
+    },
+    "user_id": {
+      "@id": "pirsch:userId",
+      "@type": "xsd:string"
+    },
+
+    "AccessLink": {
+      "@id": "pirsch:AccessLink",
+      "@type": "@id"
+    },
+    "code": {
+      "@id": "pirsch:accessCode",
+      "@type": "xsd:string"
+    },
+    "valid_until": {
+      "@id": "schema:expires",
+      "@type": "xsd:dateTime"
+    },
+
+    "Client": {
+      "@id": "pirsch:Client",
+      "@type": "@id"
+    },
+    "client_id": {
+      "@id": "pirsch:clientId",
+      "@type": "xsd:string"
+    },
+    "client_secret": {
+      "@id": "pirsch:clientSecret",
+      "@type": "xsd:string"
+    },
+
+    "access_token": {
+      "@id": "pirsch:accessToken",
+      "@type": "xsd:string"
+    },
+
+    "def_time": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "mod_time": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    }
+  }
+}

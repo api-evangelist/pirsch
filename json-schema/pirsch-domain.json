@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pirsch/main/json-schema/pirsch-domain.json",
+  "title": "Domain",
+  "description": "A Pirsch domain (website) configured for analytics tracking",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique domain identifier"
+    },
+    "hostname": {
+      "type": "string",
+      "description": "Primary hostname of the tracked site (e.g. example.com)"
+    },
+    "subdomain": {
+      "type": "string",
+      "description": "Pirsch subdomain used for the tracking snippet"
+    },
+    "def_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Creation timestamp"
+    },
+    "mod_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last modification timestamp"
+    },
+    "user_id": {
+      "type": ["string", "null"],
+      "description": "Owner user ID"
+    },
+    "organization_id": {
+      "type": ["string", "null"],
+      "description": "Organization ID if domain belongs to an org"
+    },
+    "timezone": {
+      "type": "string",
+      "description": "IANA timezone identifier (e.g. Europe/Berlin)"
+    },
+    "public": {
+      "type": "boolean",
+      "description": "Whether the dashboard is publicly visible"
+    },
+    "disable_scripts": {
+      "type": "boolean",
+      "description": "Whether sending scripts is disabled"
+    },
+    "subscription_active": {
+      "type": "boolean",
+      "description": "Whether the domain has an active subscription"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Human-readable display name"
+    },
+    "group_by_title": {
+      "type": "boolean",
+      "description": "Whether pages are grouped by title instead of path"
+    },
+    "user_role": {
+      "type": "string",
+      "enum": ["Owner", "Admin", "Viewer"],
+      "description": "Current user's role for this domain"
+    },
+    "theme_id": {
+      "type": "string",
+      "description": "Applied dashboard theme ID"
+    },
+    "settings": {
+      "type": "object",
+      "description": "Domain-specific feature settings"
+    }
+  }
+}

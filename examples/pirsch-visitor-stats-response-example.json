@@ -1,0 +1,35 @@
+[
+  {
+    "day": "2026-06-01T00:00:00Z",
+    "visitors": 1245,
+    "views": 3872,
+    "sessions": 1567,
+    "bounces": 612,
+    "bounce_rate": 0.39,
+    "cr": 0.05,
+    "custom_metric_avg": 0.0,
+    "custom_metric_total": 0.0
+  },
+  {
+    "day": "2026-06-02T00:00:00Z",
+    "visitors": 1103,
+    "views": 3201,
+    "sessions": 1320,
+    "bounces": 554,
+    "bounce_rate": 0.42,
+    "cr": 0.04,
+    "custom_metric_avg": 0.0,
+    "custom_metric_total": 0.0
+  },
+  {
+    "day": "2026-06-03T00:00:00Z",
+    "visitors": 987,
+    "views": 2944,
+    "sessions": 1180,
+    "bounces": 499,
+    "bounce_rate": 0.42,
+    "cr": 0.04,
+    "custom_metric_avg": 0.0,
+    "custom_metric_total": 0.0
+  }
+]

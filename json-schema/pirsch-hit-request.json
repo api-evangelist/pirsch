@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pirsch/main/json-schema/pirsch-hit-request.json",
+  "title": "HitRequest",
+  "description": "Request body for sending a single page view to Pirsch",
+  "type": "object",
+  "required": ["url", "ip", "user_agent"],
+  "properties": {
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Full URL of the page viewed"
+    },
+    "ip": {
+      "type": "string",
+      "description": "Visitor IP address (IPv4 or IPv6)"
+    },
+    "user_agent": {
+      "type": "string",
+      "description": "Visitor User-Agent header value"
+    },
+    "accept_language": {
+      "type": "string",
+      "description": "Accept-Language header value"
+    },
+    "referrer": {
+      "type": "string",
+      "description": "HTTP Referer header value"
+    },
+    "title": {
+      "type": "string",
+      "description": "Page title"
+    },
+    "sec_ch_ua": {
+      "type": "string",
+      "description": "Sec-CH-UA client hint"
+    },
+    "sec_ch_ua_mobile": {
+      "type": "string",
+      "description": "Sec-CH-UA-Mobile client hint"
+    },
+    "sec_ch_ua_platform": {
+      "type": "string",
+      "description": "Sec-CH-UA-Platform client hint"
+    },
+    "screen_width": {
+      "type": "integer",
+      "description": "Screen width in pixels"
+    },
+    "screen_height": {
+      "type": "integer",
+      "description": "Screen height in pixels"
+    },
+    "disable_bot_filter": {
+      "type": "boolean",
+      "description": "Disable bot filtering for this hit"
+    },
+    "tags": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Custom key-value tags"
+    }
+  }
+}

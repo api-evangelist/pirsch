@@ -1,0 +1,21 @@
+{
+  "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "hostname": "example.com",
+  "subdomain": "example",
+  "def_time": "2025-01-15T09:00:00Z",
+  "mod_time": "2026-06-01T14:30:00Z",
+  "user_id": "u1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "organization_id": null,
+  "timezone": "Europe/Berlin",
+  "public": false,
+  "disable_scripts": false,
+  "subscription_active": true,
+  "display_name": "Example Site",
+  "group_by_title": false,
+  "user_role": "Owner",
+  "theme_id": "",
+  "settings": {
+    "show_active_visitors": true,
+    "enable_conversion_goals": true
+  }
+}

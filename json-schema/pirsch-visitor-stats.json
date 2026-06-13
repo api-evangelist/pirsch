@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pirsch/main/json-schema/pirsch-visitor-stats.json",
+  "title": "VisitorStats",
+  "description": "Visitor statistics for a single time bucket (day, week, month, or year)",
+  "type": "object",
+  "properties": {
+    "day": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start of day (when scale=day)"
+    },
+    "week": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start of week (when scale=week)"
+    },
+    "month": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start of month (when scale=month)"
+    },
+    "year": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start of year (when scale=year)"
+    },
+    "visitors": {
+      "type": "integer",
+      "description": "Number of unique visitors"
+    },
+    "views": {
+      "type": "integer",
+      "description": "Number of page views"
+    },
+    "sessions": {
+      "type": "integer",
+      "description": "Number of sessions"
+    },
+    "bounces": {
+      "type": "integer",
+      "description": "Number of bounced sessions"
+    },
+    "bounce_rate": {
+      "type": "number",
+      "format": "float",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Bounce rate as a decimal between 0 and 1"
+    },
+    "cr": {
+      "type": "number",
+      "format": "float",
+      "description": "Conversion rate as a decimal"
+    },
+    "custom_metric_avg": {
+      "type": "number",
+      "format": "float",
+      "description": "Average value of the custom metric"
+    },
+    "custom_metric_total": {
+      "type": "number",
+      "format": "float",
+      "description": "Total value of the custom metric"
+    }
+  }
+}

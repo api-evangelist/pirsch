@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pirsch/main/json-schema/pirsch-event-request.json",
+  "title": "EventRequest",
+  "description": "Request body for sending a custom event to Pirsch",
+  "type": "object",
+  "required": ["url", "ip", "user_agent", "event_name"],
+  "properties": {
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Full URL of the page where the event occurred"
+    },
+    "ip": {
+      "type": "string",
+      "description": "Visitor IP address"
+    },
+    "user_agent": {
+      "type": "string",
+      "description": "Visitor User-Agent header value"
+    },
+    "event_name": {
+      "type": "string",
+      "description": "Name of the custom event"
+    },
+    "event_duration": {
+      "type": "number",
+      "description": "Duration of the event in seconds"
+    },
+    "event_meta": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Custom event metadata as key-value pairs"
+    },
+    "non_interactive": {
+      "type": "boolean",
+      "description": "Whether the event was triggered without user interaction"
+    },
+    "accept_language": {
+      "type": "string"
+    },
+    "referrer": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "screen_width": {
+      "type": "integer"
+    },
+    "screen_height": {
+      "type": "integer"
+    },
+    "disable_bot_filter": {
+      "type": "boolean"
+    },
+    "tags": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}

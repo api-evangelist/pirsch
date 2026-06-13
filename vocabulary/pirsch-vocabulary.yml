@@ -1,0 +1,162 @@
+vocabulary:
+  provider: pirsch
+  version: "1.0"
+  description: Domain vocabulary for the Pirsch privacy-first web analytics API
+  terms:
+
+    - term: hit
+      definition: >-
+        A single page view tracking request sent to Pirsch containing the URL,
+        visitor IP, user agent, and optional metadata such as referrer and page title.
+      category: tracking
+
+    - term: event
+      definition: >-
+        A custom user interaction tracked beyond page views, identified by an
+        event_name and optionally carrying a duration and metadata key-value pairs.
+      category: tracking
+
+    - term: session
+      definition: >-
+        A sequence of page views and events from a single visitor within a
+        continuous browsing period. Pirsch extends sessions without using cookies.
+      category: tracking
+
+    - term: visitor
+      definition: >-
+        A unique user identified by a privacy-preserving fingerprint derived
+        from IP, user agent, and other request characteristics without storing
+        personal data.
+      category: analytics
+
+    - term: bounce
+      definition: >-
+        A session in which the visitor viewed only one page and left without
+        further interaction. The bounce_rate is expressed as a decimal (0–1).
+      category: analytics
+
+    - term: bounce_rate
+      definition: >-
+        The ratio of single-page sessions to total sessions, expressed as a
+        decimal between 0 and 1. For example, 0.42 means 42% of sessions bounced.
+      category: analytics
+
+    - term: cr
+      definition: >-
+        Conversion rate — the ratio of sessions that completed at least one
+        conversion goal to total sessions, expressed as a decimal.
+      category: analytics
+
+    - term: conversion_goal
+      definition: >-
+        A configured target action, defined by a URL path pattern or event name,
+        that Pirsch tracks to measure campaign and funnel success.
+      category: management
+
+    - term: funnel
+      definition: >-
+        An ordered sequence of steps (each defined by a filter) used to analyse
+        visitor drop-off between key stages of a user flow.
+      category: management
+
+    - term: domain
+      definition: >-
+        A website registered in Pirsch for tracking, identified by a hostname
+        and a unique subdomain used to route data to the correct dataset.
+      category: management
+
+    - term: subdomain
+      definition: >-
+        The Pirsch-assigned identifier subdomain used in the tracking snippet
+        and API routing to direct data to the correct domain dataset.
+      category: management
+
+    - term: client
+      definition: >-
+        An API credential set (OAuth client or access token) associated with a
+        domain that grants programmatic access to the Pirsch API.
+      category: authentication
+
+    - term: access_token
+      definition: >-
+        A short-lived JWT Bearer token obtained by POSTing client credentials
+        to /api/v1/token. Used in the Authorization header for subsequent requests.
+      category: authentication
+
+    - term: access_key
+      definition: >-
+        A long-lived static credential that can be used directly as a Bearer
+        token without the OAuth token exchange flow.
+      category: authentication
+
+    - term: scale
+      definition: >-
+        The time granularity for grouping statistics query results. Accepted
+        values are day, week, month, and year.
+      category: statistics
+
+    - term: tags
+      definition: >-
+        Custom string key-value pairs attached to page views and events, used
+        to segment and filter analytics data by arbitrary dimensions.
+      category: tracking
+
+    - term: view
+      definition: >-
+        A saved analytics dashboard configuration including a date range, period,
+        and filter set that can be recalled to reproduce a specific report.
+      category: management
+
+    - term: short_link
+      definition: >-
+        A UTM-enriched redirect URL managed by Pirsch that automatically tracks
+        campaign source, medium, content, and other UTM parameters.
+      category: management
+
+    - term: webhook
+      definition: >-
+        An HTTP callback registered for a specific domain event that Pirsch
+        will POST to whenever the event occurs.
+      category: management
+
+    - term: traffic_filter
+      definition: >-
+        A rule that excludes specific IP addresses, user agents, or hostnames
+        from being counted in analytics data.
+      category: management
+
+    - term: active_visitors
+      definition: >-
+        Visitors who have sent at least one page view within the last N seconds
+        (default 600), used for real-time audience reporting.
+      category: analytics
+
+    - term: alternative_domain
+      definition: >-
+        An additional hostname associated with a Pirsch domain, allowing
+        analytics to aggregate data across multiple hostnames.
+      category: management
+
+    - term: access_link
+      definition: >-
+        A shareable URL with an embedded code that provides read-only or
+        time-limited access to a domain's Pirsch dashboard.
+      category: management
+
+    - term: organization_id
+      definition: >-
+        The identifier of a Pirsch organization, used to manage multi-domain
+        access groups and shared membership.
+      category: management
+
+    - term: platform
+      definition: >-
+        The device category of a visitor: desktop, mobile, or unknown, as
+        derived from the user agent string.
+      category: analytics
+
+    - term: custom_metric
+      definition: >-
+        A numeric value passed with events or goals that Pirsch aggregates as
+        custom_metric_avg and custom_metric_total in statistics responses.
+      category: analytics
