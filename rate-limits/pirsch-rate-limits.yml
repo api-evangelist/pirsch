@@ -1,0 +1,80 @@
+specificationVersion: "0.1"
+id: pirsch-rate-limits
+name: Pirsch API Rate Limits
+description: >-
+  Pirsch enforces per-endpoint rate limits to protect its infrastructure.
+  Limits vary by endpoint category. Response headers communicate current
+  quota status on every request. Statistics and data-collection endpoints are
+  currently unlimited but may be capped in future releases.
+url: https://docs.pirsch.io/api-sdks/api-guide
+created: "2026-06-13"
+modified: "2026-06-13"
+limits:
+  - name: Security Endpoints
+    description: >-
+      Applies to authentication-adjacent endpoints such as login and
+      password-reset flows.
+    scope: security
+    requests: 10
+    window: 60
+    unit: requests/minute
+    endpoints:
+      - POST /api/v1/token
+      - password reset flows
+
+  - name: Configuration Endpoints
+    description: >-
+      Applies to management and configuration operations including domain
+      settings, member management, webhooks, goals, funnels, and similar
+      administrative endpoints.
+    scope: configuration
+    requests: 60
+    window: 60
+    unit: requests/minute
+    endpoints:
+      - /api/v1/domain/*
+      - /api/v1/member
+      - /api/v1/client
+      - /api/v1/report
+      - /api/v1/webhook
+      - /api/v1/goal
+      - /api/v1/funnel
+      - /api/v1/filter
+      - /api/v1/link
+      - /api/v1/view
+
+  - name: Statistics & Data Collection Endpoints
+    description: >-
+      Statistics reads and data-collection writes (hit, event, session) are
+      currently unlimited. This may change; monitor response headers for
+      quota signals.
+    scope: statistics
+    requests: unlimited
+    window: 60
+    unit: requests/minute
+    endpoints:
+      - GET /api/v1/statistics/*
+      - POST /api/v1/hit
+      - POST /api/v1/hit/batch
+      - POST /api/v1/event
+      - POST /api/v1/event/batch
+      - POST /api/v1/session
+      - POST /api/v1/session/batch
+
+headers:
+  - name: X-RateLimit-Limit
+    description: Maximum number of requests allowed in the current window.
+  - name: X-RateLimit-Remaining
+    description: Number of requests remaining in the current window.
+  - name: X-RateLimit-Reset
+    description: Unix timestamp when the current window resets.
+  - name: Retry-After
+    description: >-
+      Seconds to wait before retrying after a 429 Too Many Requests response.
+
+pagination:
+  - name: Page Size Cap
+    description: >-
+      All list and statistics endpoints cap results at 100 items per request.
+      Use offset and limit parameters to paginate.
+    maxLimit: 100

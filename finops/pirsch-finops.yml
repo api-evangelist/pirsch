@@ -1,0 +1,100 @@
+specificationVersion: "1.0"
+id: pirsch-finops
+name: Pirsch FinOps Framework
+description: >-
+  FinOps guidance for managing Pirsch Analytics API costs aligned with the
+  FinOps Foundation FOCUS specification. Pirsch bills on page views (plus
+  events and 10 % of session extensions). Understanding traffic volume and
+  event density is the primary cost driver.
+url: https://pirsch.io/pricing
+created: "2026-06-13"
+modified: "2026-06-13"
+
+dimensions:
+  - name: Page View Volume
+    description: >-
+      The primary billing unit. Each page view, each event, and 10 % of each
+      session-extension call counts toward the monthly quota. High-traffic
+      sites or aggressive event tracking accelerate quota consumption.
+    unit: page_views/month
+    costDriver: true
+
+  - name: Plan Tier
+    description: >-
+      Standard ($6/mo, 50 sites) vs. Plus ($12/mo, unlimited sites) vs.
+      Enterprise (custom). Plan choice is the top-level cost control lever.
+    unit: USD/month
+    costDriver: true
+
+  - name: Number of Websites
+    description: >-
+      Standard is capped at 50 websites; Plus is unlimited. Teams running
+      many client sites should factor in whether Plus saves per-domain costs.
+    unit: websites
+    costDriver: false
+
+visibility:
+  - name: API Usage Headers
+    description: >-
+      Monitor X-RateLimit-Remaining and X-RateLimit-Reset headers on
+      configuration-endpoint calls to track quota consumption in real time.
+  - name: Dashboard Statistics Export
+    description: >-
+      Use GET /api/v1/statistics (CSV export) to pull raw data for
+      cost-attribution reporting across multiple domains.
+  - name: Billing Page
+    description: Account billing and current period usage visible in the Pirsch dashboard.
+    url: https://pirsch.io/dashboard
+
+optimization:
+  - name: Batch Data Collection
+    description: >-
+      Use POST /api/v1/hit/batch, /event/batch, and /session/batch instead of
+      single-record endpoints to reduce API call volume without reducing
+      tracked data accuracy.
+  - name: Traffic Filters
+    description: >-
+      Configure bot/spam filters via POST /api/v1/filter to avoid counting
+      non-human traffic toward the monthly page-view quota.
+  - name: Event Governance
+    description: >-
+      Audit custom events regularly. Remove unused or duplicate event types to
+      prevent unnecessary quota consumption.
+  - name: Right-Size Plan
+    description: >-
+      If operating fewer than 50 websites and not requiring funnels or A/B
+      testing, the Standard plan at $6/month is sufficient. Upgrade to Plus
+      only when unlimited sites or advanced features are needed.
+  - name: Annual Billing
+    description: >-
+      Pirsch offers an annual billing discount. For stable workloads, committing
+      annually reduces effective monthly cost.
+
+allocation:
+  - name: Domain-Level Attribution
+    description: >-
+      Each Pirsch domain maps to a single website. Use domain IDs as the
+      cost-centre identifier when attributing API usage to internal teams or
+      clients via the management API.
+  - name: White-Label Client Billing (Plus/Enterprise)
+    description: >-
+      Plus and Enterprise plans support custom domains and white labeling.
+      Operators reselling analytics can map per-domain traffic to client
+      invoices using the statistics export endpoint.
+
+commitments:
+  - name: Monthly Subscription
+    description: Rolling month-to-month subscription; cancel anytime.
+    minimumTerm: 1 month
+  - name: Annual Subscription
+    description: Pre-paid annual subscription at a reduced effective monthly rate.
+    minimumTerm: 12 months
+  - name: Free Trial
+    description: 30-day free trial, no credit card required, full feature access.
+    minimumTerm: 0 months
+    price: 0
+
+paymentMethods:
+  - Credit card
+  - PayPal
+  - SEPA direct debit (EUR only)

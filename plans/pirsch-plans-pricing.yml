@@ -1,0 +1,88 @@
+specificationVersion: "0.1"
+id: pirsch-plans-pricing
+name: Pirsch Plans & Pricing
+description: >-
+  Pirsch offers three subscription tiers based on monthly page views and
+  feature access. All plans include a 30-day free trial with no credit card
+  required. Prices shown are monthly; annual billing reduces cost. Page view
+  quotas count page views, events, and 10 % of session extensions.
+url: https://pirsch.io/pricing
+created: "2026-06-13"
+modified: "2026-06-13"
+plans:
+  - name: Standard
+    description: >-
+      Entry-level plan for individual sites and developers. Includes the full
+      REST API and SDK access, GDPR compliance, custom events, conversion
+      goals, session analysis, URL shortener, and Google Analytics import.
+    url: https://pirsch.io/pricing
+    price: 6.00
+    unit: month
+    currency: USD
+    quotas:
+      - name: Monthly Page Views
+        value: 10000
+        unit: page_views/month
+      - name: Websites
+        value: 50
+        unit: websites
+    features:
+      - Events & conversion goals
+      - Session analysis
+      - URL shortener
+      - RESTful API & SDKs
+      - GDPR / CCPA compliance
+      - Data ownership
+      - Google Analytics import
+
+  - name: Plus
+    description: >-
+      Best-value plan adding unlimited websites, funnels, A/B testing &
+      segmentation, advanced URL shortener, team collaboration, custom domains,
+      custom themes, white labeling, and priority support.
+    url: https://pirsch.io/pricing
+    price: 12.00
+    unit: month
+    currency: USD
+    quotas:
+      - name: Monthly Page Views
+        value: 10000
+        unit: page_views/month
+      - name: Websites
+        value: unlimited
+        unit: websites
+    features:
+      - Everything in Standard
+      - Funnels
+      - A/B testing & segmentation
+      - Advanced URL shortener
+      - Teams & role management
+      - Custom domains
+      - Custom themes & white labeling
+      - Priority support
+
+  - name: Enterprise
+    description: >-
+      Custom plan for large organisations needing managed cloud or on-premise
+      installation, SAML SSO, raw data access, personal onboarding, user
+      training, marketing consulting, and dedicated support.
+    url: https://pirsch.io/pricing
+    price: custom
+    unit: month
+    currency: USD
+    quotas:
+      - name: Monthly Page Views
+        value: custom
+        unit: page_views/month
+      - name: Websites
+        value: unlimited
+        unit: websites
+    features:
+      - Everything in Plus
+      - Managed cloud or on-premise install
+      - SAML single sign-on
+      - Raw data access
+      - Personal onboarding & training
+      - Marketing consulting
+      - Custom features
+      - Dedicated support

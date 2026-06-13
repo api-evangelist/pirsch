@@ -1,0 +1,83 @@
+aid: pirsch
+name: Pirsch
+description: >-
+  Pirsch is a privacy-first website analytics platform built and hosted in
+  Germany. GDPR, CCPA, PECR, and Schrems II compliant, it tracks page views,
+  sessions, custom events, conversion goals, funnels, and traffic sources
+  without cookies or personal data storage. Developers access all data via a
+  RESTful API with OAuth and access-key authentication, supported by official
+  Go, JavaScript, and PHP SDKs.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/pirsch/refs/heads/main/apis.yml
+created: "2026-06-13"
+modified: "2026-06-13"
+specificationVersion: "0.19"
+tags:
+  - Analytics
+  - Web Analytics
+  - Privacy
+  - GDPR
+  - Cookie-Free
+  - Page Views
+  - Sessions
+  - Events
+  - Conversion Goals
+  - Funnels
+  - Traffic Sources
+apis:
+  - aid: pirsch:pirsch-api
+    name: Pirsch API
+    description: >-
+      RESTful API for sending page views, events, and session data to Pirsch,
+      and for querying statistics including visitors, pages, referrers, UTM
+      parameters, geo-location, device, browser, conversion goals, funnels,
+      and real-time active visitors. Also exposes management endpoints for
+      domains, members, clients, webhooks, email reports, traffic filters,
+      short links, and views.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.pirsch.io/api-sdks/api
+    baseURL: https://api.pirsch.io/api/v1
+    tags:
+      - Analytics
+      - Page Views
+      - Events
+      - Sessions
+      - Statistics
+      - Conversion Goals
+      - Funnels
+    properties:
+      - type: Documentation
+        url: https://docs.pirsch.io/api-sdks/api
+      - type: APIGuide
+        url: https://docs.pirsch.io/api-sdks/api-guide
+      - type: SDKs
+        url: https://docs.pirsch.io/api-sdks/sdks
+    contact:
+      - FN: Pirsch Support
+        url: https://pirsch.io
+        email: ""
+common:
+  - type: Website
+    url: https://pirsch.io
+  - type: Documentation
+    url: https://docs.pirsch.io
+  - type: GitHubOrg
+    url: https://github.com/pirsch-analytics
+  - type: LinkedIn
+    url: https://www.linkedin.com/products/emvi-software-gmbh-pirsch-analytics/
+  - type: Blog
+    url: https://pirsch.io/blog
+  - type: Pricing
+    url: https://pirsch.io/pricing
+  - type: X
+    url: https://x.com/PirschAnalytics
+  - type: Plans
+    url: plans/pirsch-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/pirsch-rate-limits.yml
+  - type: FinOps
+    url: finops/pirsch-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
