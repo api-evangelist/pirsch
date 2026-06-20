@@ -8,7 +8,7 @@ description: >-
   RESTful API with OAuth and access-key authentication, supported by official
   Go, JavaScript, and PHP SDKs.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/pirsch/refs/heads/main/apis.yml
 created: "2026-06-13"
 modified: "2026-06-13"
@@ -35,7 +35,7 @@ apis:
       and real-time active visitors. Also exposes management endpoints for
       domains, members, clients, webhooks, email reports, traffic filters,
       short links, and views.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://docs.pirsch.io/api-sdks/api
     baseURL: https://api.pirsch.io/api/v1
     tags:
