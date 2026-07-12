@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/pirsch-pirsch-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  description: Pass an OAuth2 access token obtained from POST /token, or a static access key,
+    as a Bearer token in the Authorization header.
+  sources:
+  - openapi/pirsch-pirsch-api-openapi.yml

@@ -60,6 +60,10 @@ apis:
         url: https://pirsch.io
         email: ""
 common:
+  - type: DomainSecurity
+    url: security/pirsch-domain-security.yml
+  - type: Authentication
+    url: authentication/pirsch-authentication.yml
   - type: Website
     url: https://pirsch.io
   - type: Documentation
