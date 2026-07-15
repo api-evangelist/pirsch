@@ -60,6 +60,8 @@ apis:
         url: https://pirsch.io
         email: ""
 common:
+  - type: AgenticAccess
+    url: agentic-access/pirsch-agentic-access.yml
   - type: DomainSecurity
     url: security/pirsch-domain-security.yml
   - type: Authentication
