@@ -1,0 +1,171 @@
+openapi: 3.0.3
+info:
+  title: Pirsch Access Links Short Links API
+  description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
+  version: '1'
+  contact:
+    name: Pirsch Support
+    url: https://pirsch.io
+  license:
+    name: Proprietary
+    url: https://pirsch.io/privacy
+servers:
+- url: https://api.pirsch.io/api/v1
+  description: Pirsch production API
+security:
+- BearerAuth: []
+tags:
+- name: Short Links
+  description: Create and manage UTM-enriched short links
+paths:
+  /link:
+    get:
+      operationId: listShortLinks
+      summary: List short links
+      tags:
+      - Short Links
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Domain ID
+      - name: search
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Short links
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShortLink'
+    post:
+      operationId: createOrUpdateShortLink
+      summary: Create or update short link
+      tags:
+      - Short Links
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateShortLinkRequest'
+      responses:
+        '200':
+          description: Short link saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShortLink'
+    delete:
+      operationId: deleteShortLink
+      summary: Delete short link
+      tags:
+      - Short Links
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Short link deleted
+components:
+  schemas:
+    ShortLink:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        name:
+          type: string
+        event_name:
+          type: string
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
+        expired_url:
+          type: string
+        webhook_id:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        urls:
+          type: array
+          items:
+            type: object
+    CreateShortLinkRequest:
+      type: object
+      required:
+      - domain_id
+      - name
+      properties:
+        domain_id:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        event_name:
+          type: string
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        expires_at:
+          type: string
+          format: date-time
+        expired_url:
+          type: string
+        password:
+          type: string
+        webhook_endpoint:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        allow_indexing:
+          type: boolean
+        tags:
+          type: array
+          items:
+            type: string
+        urls:
+          type: array
+          items:
+            type: object
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Pass an OAuth2 access token obtained from POST /token, or a static access key, as a Bearer token in the Authorization header.

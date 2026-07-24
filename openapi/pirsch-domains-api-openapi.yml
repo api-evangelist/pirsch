@@ -1,0 +1,351 @@
+openapi: 3.0.3
+info:
+  title: Pirsch Access Links Domains API
+  description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
+  version: '1'
+  contact:
+    name: Pirsch Support
+    url: https://pirsch.io
+  license:
+    name: Proprietary
+    url: https://pirsch.io/privacy
+servers:
+- url: https://api.pirsch.io/api/v1
+  description: Pirsch production API
+security:
+- BearerAuth: []
+tags:
+- name: Domains
+  description: Manage tracked domains and their configuration
+paths:
+  /domain:
+    get:
+      operationId: listDomains
+      summary: List domains
+      description: Get all domains accessible to the authenticated user
+      tags:
+      - Domains
+      parameters:
+      - name: id
+        in: query
+        schema:
+          type: string
+      - name: subdomain
+        in: query
+        schema:
+          type: string
+      - name: domain
+        in: query
+        schema:
+          type: string
+      - name: access
+        in: query
+        schema:
+          type: string
+      - name: search
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Domain list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Domain'
+    post:
+      operationId: createDomain
+      summary: Create a domain
+      description: Create a new domain for tracking
+      tags:
+      - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDomainRequest'
+      responses:
+        '200':
+          description: Created domain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+    delete:
+      operationId: deleteDomain
+      summary: Delete a domain
+      description: Permanently delete a domain and all its data
+      tags:
+      - Domains
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Domain deleted
+  /domain/hostname:
+    post:
+      operationId: updateDomainHostname
+      summary: Update domain hostname
+      tags:
+      - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - domain_id
+              - hostname
+              properties:
+                domain_id:
+                  type: string
+                hostname:
+                  type: string
+      responses:
+        '200':
+          description: Hostname updated
+  /domain/subdomain:
+    post:
+      operationId: updateDomainSubdomain
+      summary: Update domain subdomain
+      tags:
+      - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - domain_id
+              - subdomain
+              properties:
+                domain_id:
+                  type: string
+                subdomain:
+                  type: string
+      responses:
+        '200':
+          description: Subdomain updated
+  /domain/timezone:
+    post:
+      operationId: updateDomainTimezone
+      summary: Update domain timezone
+      tags:
+      - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - domain_id
+              - timezone
+              properties:
+                domain_id:
+                  type: string
+                timezone:
+                  type: string
+      responses:
+        '200':
+          description: Timezone updated
+  /domain/settings:
+    post:
+      operationId: updateDomainSettings
+      summary: Update domain settings
+      tags:
+      - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - domain_id
+              properties:
+                domain_id:
+                  type: string
+                settings:
+                  type: object
+      responses:
+        '200':
+          description: Settings updated
+  /domain/alternative:
+    get:
+      operationId: listAlternativeDomains
+      summary: List alternative domains
+      tags:
+      - Domains
+      parameters:
+      - name: domain_id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Alternative domains
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AlternativeDomain'
+    post:
+      operationId: createAlternativeDomain
+      summary: Create alternative domain
+      tags:
+      - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - domain_id
+              - hostname
+              properties:
+                domain_id:
+                  type: string
+                hostname:
+                  type: string
+      responses:
+        '200':
+          description: Alternative domain created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlternativeDomain'
+    put:
+      operationId: updateAlternativeDomain
+      summary: Update alternative domain
+      tags:
+      - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - id
+              - hostname
+              properties:
+                id:
+                  type: string
+                hostname:
+                  type: string
+      responses:
+        '200':
+          description: Alternative domain updated
+    delete:
+      operationId: deleteAlternativeDomain
+      summary: Delete alternative domain
+      tags:
+      - Domains
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Alternative domain deleted
+components:
+  schemas:
+    CreateDomainRequest:
+      type: object
+      required:
+      - hostname
+      - subdomain
+      - timezone
+      properties:
+        hostname:
+          type: string
+        subdomain:
+          type: string
+        timezone:
+          type: string
+        organization_id:
+          type: string
+        theme_id:
+          type: string
+        public:
+          type: boolean
+        group_by_title:
+          type: boolean
+        disable_scripts:
+          type: boolean
+        display_name:
+          type: string
+        settings:
+          type: object
+    Domain:
+      type: object
+      properties:
+        id:
+          type: string
+        hostname:
+          type: string
+        subdomain:
+          type: string
+        def_time:
+          type: string
+          format: date-time
+        mod_time:
+          type: string
+          format: date-time
+        user_id:
+          type: string
+          nullable: true
+        organization_id:
+          type: string
+          nullable: true
+        timezone:
+          type: string
+        public:
+          type: boolean
+        disable_scripts:
+          type: boolean
+        subscription_active:
+          type: boolean
+        display_name:
+          type: string
+        group_by_title:
+          type: boolean
+        user_role:
+          type: string
+          enum:
+          - Owner
+          - Admin
+          - Viewer
+        theme_id:
+          type: string
+        settings:
+          type: object
+    AlternativeDomain:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        hostname:
+          type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Pass an OAuth2 access token obtained from POST /token, or a static access key, as a Bearer token in the Authorization header.

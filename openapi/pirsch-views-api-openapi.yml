@@ -1,0 +1,122 @@
+openapi: 3.0.3
+info:
+  title: Pirsch Access Links Views API
+  description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
+  version: '1'
+  contact:
+    name: Pirsch Support
+    url: https://pirsch.io
+  license:
+    name: Proprietary
+    url: https://pirsch.io/privacy
+servers:
+- url: https://api.pirsch.io/api/v1
+  description: Pirsch production API
+security:
+- BearerAuth: []
+tags:
+- name: Views
+  description: Save and manage custom analytics views
+paths:
+  /view:
+    get:
+      operationId: listViews
+      summary: List saved views
+      description: Get all saved analytics views for a domain
+      tags:
+      - Views
+      parameters:
+      - name: domain_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: search
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Views
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/View'
+    post:
+      operationId: createOrUpdateView
+      summary: Create or update view
+      tags:
+      - Views
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateViewRequest'
+      responses:
+        '200':
+          description: View saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/View'
+    delete:
+      operationId: deleteView
+      summary: Delete view
+      tags:
+      - Views
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: View deleted
+components:
+  schemas:
+    CreateViewRequest:
+      type: object
+      required:
+      - domain_id
+      - name
+      properties:
+        domain_id:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        period:
+          type: string
+    View:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        name:
+          type: string
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        period:
+          type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Pass an OAuth2 access token obtained from POST /token, or a static access key, as a Bearer token in the Authorization header.

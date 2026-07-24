@@ -1,0 +1,108 @@
+openapi: 3.0.3
+info:
+  title: Pirsch Access Links Clients API
+  description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
+  version: '1'
+  contact:
+    name: Pirsch Support
+    url: https://pirsch.io
+  license:
+    name: Proprietary
+    url: https://pirsch.io/privacy
+servers:
+- url: https://api.pirsch.io/api/v1
+  description: Pirsch production API
+security:
+- BearerAuth: []
+tags:
+- name: Clients
+  description: Manage OAuth2 and access-key API clients
+paths:
+  /client:
+    get:
+      operationId: listClients
+      summary: List API clients
+      tags:
+      - Clients
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Domain ID
+      responses:
+        '200':
+          description: Clients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+    post:
+      operationId: createClient
+      summary: Create or update API client
+      description: Create a new OAuth client or access token client for a domain
+      tags:
+      - Clients
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateClientRequest'
+      responses:
+        '200':
+          description: Client created (includes client_secret on creation)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+    delete:
+      operationId: deleteClient
+      summary: Delete API client
+      tags:
+      - Clients
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Client deleted
+components:
+  schemas:
+    Client:
+      type: object
+      properties:
+        client_id:
+          type: string
+        description:
+          type: string
+        client_secret:
+          type: string
+          description: Only returned on creation
+    CreateClientRequest:
+      type: object
+      required:
+      - domain_id
+      - type
+      - description
+      properties:
+        domain_id:
+          type: string
+        type:
+          type: string
+          enum:
+          - oauth
+          - token
+        description:
+          type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Pass an OAuth2 access token obtained from POST /token, or a static access key, as a Bearer token in the Authorization header.

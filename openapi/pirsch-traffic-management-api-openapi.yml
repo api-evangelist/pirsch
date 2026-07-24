@@ -1,0 +1,195 @@
+openapi: 3.0.3
+info:
+  title: Pirsch Access Links Traffic Management API
+  description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
+  version: '1'
+  contact:
+    name: Pirsch Support
+    url: https://pirsch.io
+  license:
+    name: Proprietary
+    url: https://pirsch.io/privacy
+servers:
+- url: https://api.pirsch.io/api/v1
+  description: Pirsch production API
+security:
+- BearerAuth: []
+tags:
+- name: Traffic Management
+  description: Filter traffic and configure spike/warning notifications
+paths:
+  /filter:
+    get:
+      operationId: listTrafficFilters
+      summary: List traffic filters
+      tags:
+      - Traffic Management
+      parameters:
+      - name: domain_id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Traffic filters
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TrafficFilter'
+    post:
+      operationId: createOrUpdateTrafficFilter
+      summary: Create or update traffic filter
+      tags:
+      - Traffic Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFilterRequest'
+      responses:
+        '200':
+          description: Filter saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrafficFilter'
+    delete:
+      operationId: deleteTrafficFilter
+      summary: Delete traffic filter
+      tags:
+      - Traffic Management
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Filter deleted
+  /traffic/spike:
+    put:
+      operationId: toggleSpikeNotifications
+      summary: Toggle spike notifications
+      tags:
+      - Traffic Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - domain_id
+              properties:
+                domain_id:
+                  type: string
+      responses:
+        '200':
+          description: Spike notifications toggled
+    post:
+      operationId: configureSpikeNotifications
+      summary: Configure spike notification threshold
+      tags:
+      - Traffic Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - domain_id
+              - threshold
+              properties:
+                domain_id:
+                  type: string
+                threshold:
+                  type: integer
+      responses:
+        '200':
+          description: Spike threshold updated
+  /traffic/warning:
+    put:
+      operationId: toggleTrafficWarnings
+      summary: Toggle traffic warnings
+      tags:
+      - Traffic Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - domain_id
+              properties:
+                domain_id:
+                  type: string
+      responses:
+        '200':
+          description: Traffic warnings toggled
+    post:
+      operationId: configureTrafficWarnings
+      summary: Configure traffic warning threshold
+      tags:
+      - Traffic Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - domain_id
+              - threshold
+              properties:
+                domain_id:
+                  type: string
+                threshold:
+                  type: integer
+                  description: Threshold in days
+      responses:
+        '200':
+          description: Warning threshold updated
+components:
+  schemas:
+    CreateFilterRequest:
+      type: object
+      required:
+      - domain_id
+      - type
+      - filter
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        filter:
+          type: string
+    TrafficFilter:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        filter:
+          type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Pass an OAuth2 access token obtained from POST /token, or a static access key, as a Bearer token in the Authorization header.

@@ -1,0 +1,114 @@
+openapi: 3.0.3
+info:
+  title: Pirsch Access Links Webhooks API
+  description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
+  version: '1'
+  contact:
+    name: Pirsch Support
+    url: https://pirsch.io
+  license:
+    name: Proprietary
+    url: https://pirsch.io/privacy
+servers:
+- url: https://api.pirsch.io/api/v1
+  description: Pirsch production API
+security:
+- BearerAuth: []
+tags:
+- name: Webhooks
+  description: Configure webhooks for event-driven integrations
+paths:
+  /webhook:
+    get:
+      operationId: listWebhooks
+      summary: List webhooks
+      tags:
+      - Webhooks
+      parameters:
+      - name: domain_id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Webhooks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Webhook'
+    post:
+      operationId: createOrUpdateWebhook
+      summary: Create or update webhook
+      tags:
+      - Webhooks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWebhookRequest'
+      responses:
+        '200':
+          description: Webhook saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+    delete:
+      operationId: deleteWebhook
+      summary: Delete webhook
+      tags:
+      - Webhooks
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Webhook deleted
+components:
+  schemas:
+    CreateWebhookRequest:
+      type: object
+      required:
+      - domain_id
+      - event
+      - endpoint
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        description:
+          type: string
+        event:
+          type: string
+        endpoint:
+          type: string
+          format: uri
+    Webhook:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        description:
+          type: string
+        event:
+          type: string
+        endpoint:
+          type: string
+          format: uri
+        active:
+          type: boolean
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Pass an OAuth2 access token obtained from POST /token, or a static access key, as a Bearer token in the Authorization header.

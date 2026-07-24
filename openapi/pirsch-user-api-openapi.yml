@@ -1,0 +1,221 @@
+openapi: 3.0.3
+info:
+  title: Pirsch Access Links User API
+  description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
+  version: '1'
+  contact:
+    name: Pirsch Support
+    url: https://pirsch.io
+  license:
+    name: Proprietary
+    url: https://pirsch.io/privacy
+servers:
+- url: https://api.pirsch.io/api/v1
+  description: Pirsch production API
+security:
+- BearerAuth: []
+tags:
+- name: User
+  description: Manage the authenticated user account
+paths:
+  /user:
+    get:
+      operationId: getUser
+      summary: Get account details
+      description: Get the authenticated user's account information
+      tags:
+      - User
+      responses:
+        '200':
+          description: User account details
+          content:
+            application/json:
+              schema:
+                type: object
+  /user/name:
+    post:
+      operationId: updateUserName
+      summary: Update full name
+      tags:
+      - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - full_name
+              properties:
+                full_name:
+                  type: string
+      responses:
+        '200':
+          description: Name updated
+  /user/email:
+    post:
+      operationId: updateUserEmail
+      summary: Update email address
+      tags:
+      - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                code:
+                  type: string
+      responses:
+        '200':
+          description: Email updated
+  /user/password:
+    post:
+      operationId: updateUserPassword
+      summary: Change password
+      tags:
+      - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - current_password
+              - password
+              - confirm_password
+              properties:
+                current_password:
+                  type: string
+                password:
+                  type: string
+                confirm_password:
+                  type: string
+      responses:
+        '200':
+          description: Password changed
+  /user/language:
+    post:
+      operationId: updateUserLanguage
+      summary: Change interface language
+      tags:
+      - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - language
+              properties:
+                language:
+                  type: string
+      responses:
+        '200':
+          description: Language updated
+  /user/filter:
+    post:
+      operationId: updateUserFilter
+      summary: Change default time range
+      tags:
+      - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - default_time_range
+              properties:
+                default_time_range:
+                  type: string
+      responses:
+        '200':
+          description: Default filter updated
+  /user/news:
+    get:
+      operationId: getUserNews
+      summary: Get news
+      description: Get release news and announcements
+      tags:
+      - User
+      responses:
+        '200':
+          description: News items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    news:
+                      type: integer
+                    date:
+                      type: string
+                      format: date-time
+                    version:
+                      type: string
+                    headline:
+                      type: string
+                    content:
+                      type: string
+    post:
+      operationId: markNewsRead
+      summary: Mark news as read
+      tags:
+      - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - news
+              properties:
+                news:
+                  type: integer
+      responses:
+        '200':
+          description: News marked as read
+  /user/rewards:
+    get:
+      operationId: getUserRewards
+      summary: Get affiliate rewards
+      description: Get affiliate referral rewards summary
+      tags:
+      - User
+      responses:
+        '200':
+          description: Rewards
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sum:
+                    type: number
+                  count:
+                    type: integer
+                  rewards:
+                    type: array
+                    items:
+                      type: object
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Pass an OAuth2 access token obtained from POST /token, or a static access key, as a Bearer token in the Authorization header.

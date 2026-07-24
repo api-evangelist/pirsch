@@ -1,0 +1,312 @@
+openapi: 3.0.3
+info:
+  title: Pirsch Access Links Tracking API
+  description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
+  version: '1'
+  contact:
+    name: Pirsch Support
+    url: https://pirsch.io
+  license:
+    name: Proprietary
+    url: https://pirsch.io/privacy
+servers:
+- url: https://api.pirsch.io/api/v1
+  description: Pirsch production API
+security:
+- BearerAuth: []
+tags:
+- name: Tracking
+  description: Send page views, events, and session keep-alive signals
+paths:
+  /hit:
+    post:
+      operationId: sendPageView
+      summary: Send a page view
+      description: Track a single page view for a domain
+      tags:
+      - Tracking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HitRequest'
+      responses:
+        '200':
+          description: Page view accepted
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /hit/batch:
+    post:
+      operationId: sendPageViewBatch
+      summary: Send multiple page views
+      description: Track a batch of page views
+      tags:
+      - Tracking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/HitBatchRequest'
+      responses:
+        '200':
+          description: Batch accepted
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /event:
+    post:
+      operationId: sendEvent
+      summary: Send a custom event
+      description: Track a single custom event with optional metadata
+      tags:
+      - Tracking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventRequest'
+      responses:
+        '200':
+          description: Event accepted
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /event/batch:
+    post:
+      operationId: sendEventBatch
+      summary: Send multiple custom events
+      description: Track a batch of custom events
+      tags:
+      - Tracking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EventBatchRequest'
+      responses:
+        '200':
+          description: Batch accepted
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /session:
+    post:
+      operationId: keepSessionAlive
+      summary: Keep a session alive
+      description: Extend an existing visitor session
+      tags:
+      - Tracking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionRequest'
+      responses:
+        '200':
+          description: Session extended
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /session/batch:
+    post:
+      operationId: keepSessionAliveBatch
+      summary: Keep multiple sessions alive
+      description: Extend multiple visitor sessions in a single request
+      tags:
+      - Tracking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SessionBatchRequest'
+      responses:
+        '200':
+          description: Sessions extended
+components:
+  schemas:
+    HitRequest:
+      type: object
+      required:
+      - url
+      - ip
+      - user_agent
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Full URL of the page viewed
+        ip:
+          type: string
+          description: Visitor IP address
+        user_agent:
+          type: string
+          description: Visitor User-Agent header value
+        accept_language:
+          type: string
+          description: Accept-Language header value
+        referrer:
+          type: string
+          description: HTTP Referer header value
+        title:
+          type: string
+          description: Page title
+        sec_ch_ua:
+          type: string
+          description: Sec-CH-UA client hint header
+        sec_ch_ua_mobile:
+          type: string
+          description: Sec-CH-UA-Mobile client hint header
+        sec_ch_ua_platform:
+          type: string
+          description: Sec-CH-UA-Platform client hint header
+        sec_ch_ua_platform_version:
+          type: string
+          description: Sec-CH-UA-Platform-Version client hint header
+        sec_ch_width:
+          type: string
+          description: Sec-CH-Width client hint header
+        sec_ch_viewport_width:
+          type: string
+          description: Sec-CH-Viewport-Width client hint header
+        screen_width:
+          type: integer
+          description: Screen width in pixels
+        screen_height:
+          type: integer
+          description: Screen height in pixels
+        disable_bot_filter:
+          type: boolean
+          description: Disable bot filtering for this request
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+          description: Custom key-value tags
+    ErrorResponse:
+      type: object
+      properties:
+        validation:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+        error:
+          type: array
+          items:
+            type: string
+          description: General error messages
+        context:
+          type: object
+          additionalProperties: true
+          description: Additional error context
+    HitBatchRequest:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/HitRequest'
+      - type: object
+        required:
+        - time
+        properties:
+          time:
+            type: string
+            format: date-time
+            description: Timestamp of the page view (ISO 8601)
+    EventRequest:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/HitRequest'
+      - type: object
+        required:
+        - event_name
+        properties:
+          event_name:
+            type: string
+            description: Name of the event
+          event_duration:
+            type: number
+            description: Event duration in seconds
+          event_meta:
+            type: object
+            additionalProperties:
+              type: string
+            description: Event metadata key-value pairs
+          non_interactive:
+            type: boolean
+            description: Whether the event is non-interactive
+    SessionRequest:
+      type: object
+      required:
+      - ip
+      - user_agent
+      properties:
+        ip:
+          type: string
+        user_agent:
+          type: string
+        sec_ch_ua:
+          type: string
+        sec_ch_ua_mobile:
+          type: string
+        sec_ch_ua_platform:
+          type: string
+        sec_ch_ua_platform_version:
+          type: string
+        disable_bot_filter:
+          type: boolean
+    SessionBatchRequest:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SessionRequest'
+      - type: object
+        required:
+        - time
+        properties:
+          time:
+            type: string
+            format: date-time
+    EventBatchRequest:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/EventRequest'
+      - type: object
+        required:
+        - time
+        properties:
+          time:
+            type: string
+            format: date-time
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Pass an OAuth2 access token obtained from POST /token, or a static access key, as a Bearer token in the Authorization header.

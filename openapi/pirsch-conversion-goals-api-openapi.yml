@@ -1,0 +1,197 @@
+openapi: 3.0.3
+info:
+  title: Pirsch Access Links Conversion Goals API
+  description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
+  version: '1'
+  contact:
+    name: Pirsch Support
+    url: https://pirsch.io
+  license:
+    name: Proprietary
+    url: https://pirsch.io/privacy
+servers:
+- url: https://api.pirsch.io/api/v1
+  description: Pirsch production API
+security:
+- BearerAuth: []
+tags:
+- name: Conversion Goals
+  description: Define and manage conversion goals with path patterns or events
+paths:
+  /goal:
+    get:
+      operationId: listConversionGoals
+      summary: List conversion goals
+      tags:
+      - Conversion Goals
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Domain ID
+      - name: search
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Conversion goals
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConversionGoal'
+    post:
+      operationId: createConversionGoal
+      summary: Create conversion goal
+      tags:
+      - Conversion Goals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGoalRequest'
+      responses:
+        '200':
+          description: Goal created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversionGoal'
+    put:
+      operationId: updateConversionGoal
+      summary: Update conversion goal
+      tags:
+      - Conversion Goals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGoalRequest'
+      responses:
+        '200':
+          description: Goal updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversionGoal'
+    delete:
+      operationId: deleteConversionGoal
+      summary: Delete conversion goal
+      tags:
+      - Conversion Goals
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Goal deleted
+  /goal/regex:
+    post:
+      operationId: testGoalRegex
+      summary: Test conversion goal regex
+      description: Test a regex pattern against a sample string
+      tags:
+      - Conversion Goals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - regex
+              - sample
+              properties:
+                regex:
+                  type: string
+                sample:
+                  type: string
+      responses:
+        '200':
+          description: Regex test result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  match:
+                    type: boolean
+components:
+  schemas:
+    ConversionGoal:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        name:
+          type: string
+        path_pattern:
+          type: string
+        pattern:
+          type: string
+        event_name:
+          type: string
+        event_meta_key:
+          type: string
+        event_meta_value:
+          type: string
+        custom_metric_key:
+          type: string
+        custom_metric_type:
+          type: string
+        delete_reached:
+          type: boolean
+        email_reached:
+          type: boolean
+    UpdateGoalRequest:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CreateGoalRequest'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+    CreateGoalRequest:
+      type: object
+      required:
+      - domain_id
+      - name
+      properties:
+        domain_id:
+          type: string
+        name:
+          type: string
+        path_pattern:
+          type: string
+        event_name:
+          type: string
+        event_meta_key:
+          type: string
+        event_meta_value:
+          type: string
+        custom_metric_key:
+          type: string
+        custom_metric_type:
+          type: string
+        delete_reached:
+          type: boolean
+        email_reached:
+          type: boolean
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Pass an OAuth2 access token obtained from POST /token, or a static access key, as a Bearer token in the Authorization header.

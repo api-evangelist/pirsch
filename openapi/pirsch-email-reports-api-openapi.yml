@@ -1,0 +1,151 @@
+openapi: 3.0.3
+info:
+  title: Pirsch Access Links Email Reports API
+  description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
+  version: '1'
+  contact:
+    name: Pirsch Support
+    url: https://pirsch.io
+  license:
+    name: Proprietary
+    url: https://pirsch.io/privacy
+servers:
+- url: https://api.pirsch.io/api/v1
+  description: Pirsch production API
+security:
+- BearerAuth: []
+tags:
+- name: Email Reports
+  description: Schedule and manage recurring email analytics reports
+paths:
+  /report:
+    get:
+      operationId: listEmailReports
+      summary: List email reports
+      tags:
+      - Email Reports
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Domain ID
+      responses:
+        '200':
+          description: Email reports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmailReport'
+    post:
+      operationId: createEmailReport
+      summary: Create email report
+      tags:
+      - Email Reports
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReportRequest'
+      responses:
+        '200':
+          description: Report created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailReport'
+    put:
+      operationId: updateEmailReport
+      summary: Update email report
+      tags:
+      - Email Reports
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - id
+              properties:
+                id:
+                  type: string
+                interval:
+                  type: integer
+                link_to:
+                  type: string
+      responses:
+        '200':
+          description: Report updated
+    delete:
+      operationId: deleteEmailReport
+      summary: Delete email report
+      tags:
+      - Email Reports
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Report deleted
+components:
+  schemas:
+    EmailReport:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+        interval:
+          type: integer
+        link_to:
+          type: string
+        next_report:
+          type: string
+          format: date-time
+        reply_to:
+          type: string
+          format: email
+    CreateReportRequest:
+      type: object
+      required:
+      - domain_id
+      - emails
+      - interval
+      properties:
+        domain_id:
+          type: string
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+        interval:
+          type: integer
+          description: 0 for monthly, or number of weeks
+        reply_to:
+          type: string
+          format: email
+        start_date:
+          type: string
+          format: date
+        link_to:
+          type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Pass an OAuth2 access token obtained from POST /token, or a static access key, as a Bearer token in the Authorization header.

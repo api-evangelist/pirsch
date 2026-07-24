@@ -1,0 +1,132 @@
+openapi: 3.0.3
+info:
+  title: Pirsch Access Links API
+  description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
+  version: '1'
+  contact:
+    name: Pirsch Support
+    url: https://pirsch.io
+  license:
+    name: Proprietary
+    url: https://pirsch.io/privacy
+servers:
+- url: https://api.pirsch.io/api/v1
+  description: Pirsch production API
+security:
+- BearerAuth: []
+tags:
+- name: Access Links
+  description: Manage shareable access links for dashboard visibility
+paths:
+  /domain/link:
+    get:
+      operationId: listAccessLinks
+      summary: List access links
+      description: Get shareable access links for a domain
+      tags:
+      - Access Links
+      parameters:
+      - name: domain_id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Access links
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccessLink'
+    post:
+      operationId: createAccessLink
+      summary: Create access link
+      tags:
+      - Access Links
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccessLinkRequest'
+      responses:
+        '200':
+          description: Created access link
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessLink'
+    put:
+      operationId: updateAccessLink
+      summary: Update access link
+      tags:
+      - Access Links
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAccessLinkRequest'
+      responses:
+        '200':
+          description: Updated access link
+    delete:
+      operationId: deleteAccessLink
+      summary: Delete access link
+      tags:
+      - Access Links
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Access link deleted
+components:
+  schemas:
+    UpdateAccessLinkRequest:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        valid_until:
+          type: string
+          format: date-time
+    CreateAccessLinkRequest:
+      type: object
+      required:
+      - domain_id
+      properties:
+        domain_id:
+          type: string
+        description:
+          type: string
+        valid_until:
+          type: string
+          format: date-time
+    AccessLink:
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        description:
+          type: string
+        valid_until:
+          type: string
+          format: date-time
+          nullable: true
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Pass an OAuth2 access token obtained from POST /token, or a static access key, as a Bearer token in the Authorization header.

@@ -1,0 +1,95 @@
+openapi: 3.0.3
+info:
+  title: Pirsch Access Links Authentication API
+  description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
+  version: '1'
+  contact:
+    name: Pirsch Support
+    url: https://pirsch.io
+  license:
+    name: Proprietary
+    url: https://pirsch.io/privacy
+servers:
+- url: https://api.pirsch.io/api/v1
+  description: Pirsch production API
+security:
+- BearerAuth: []
+tags:
+- name: Authentication
+  description: Obtain access tokens using OAuth2 client credentials
+paths:
+  /token:
+    post:
+      operationId: getToken
+      summary: Obtain access token
+      description: Authenticate with client credentials to obtain a Bearer access token
+      security: []
+      tags:
+      - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+      responses:
+        '200':
+          description: Access token returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: Bearer token to use in subsequent requests
+        expires_at:
+          type: string
+          format: date-time
+          description: UTC timestamp when the token expires
+    ErrorResponse:
+      type: object
+      properties:
+        validation:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+        error:
+          type: array
+          items:
+            type: string
+          description: General error messages
+        context:
+          type: object
+          additionalProperties: true
+          description: Additional error context
+    TokenRequest:
+      type: object
+      required:
+      - client_id
+      - client_secret
+      properties:
+        client_id:
+          type: string
+          description: OAuth2 client ID
+        client_secret:
+          type: string
+          description: OAuth2 client secret
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Pass an OAuth2 access token obtained from POST /token, or a static access key, as a Bearer token in the Authorization header.

@@ -1,0 +1,216 @@
+openapi: 3.0.3
+info:
+  title: Pirsch Access Links Members API
+  description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
+  version: '1'
+  contact:
+    name: Pirsch Support
+    url: https://pirsch.io
+  license:
+    name: Proprietary
+    url: https://pirsch.io/privacy
+servers:
+- url: https://api.pirsch.io/api/v1
+  description: Pirsch production API
+security:
+- BearerAuth: []
+tags:
+- name: Members
+  description: Manage domain members, roles, and invitations
+paths:
+  /member:
+    get:
+      operationId: listMembers
+      summary: List domain members
+      tags:
+      - Members
+      parameters:
+      - name: id
+        in: query
+        schema:
+          type: string
+        description: Domain ID
+      - name: organization_id
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Members
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Member'
+    post:
+      operationId: inviteMembers
+      summary: Invite members
+      description: Send invitations to one or more email addresses
+      tags:
+      - Members
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InviteMembersRequest'
+      responses:
+        '200':
+          description: Invitations sent
+    put:
+      operationId: updateMember
+      summary: Update member role
+      tags:
+      - Members
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMemberRequest'
+      responses:
+        '200':
+          description: Member role updated
+    delete:
+      operationId: removeMember
+      summary: Remove member
+      tags:
+      - Members
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Member ID
+      responses:
+        '200':
+          description: Member removed
+  /invitation:
+    get:
+      operationId: listInvitations
+      summary: List invitations
+      tags:
+      - Members
+      parameters:
+      - name: domain_id
+        in: query
+        schema:
+          type: string
+      - name: organization_id
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Invitations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invitation'
+    post:
+      operationId: acceptInvitation
+      summary: Accept invitation
+      tags:
+      - Members
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - id
+              properties:
+                id:
+                  type: string
+      responses:
+        '200':
+          description: Invitation accepted
+    delete:
+      operationId: deleteInvitation
+      summary: Delete invitation
+      tags:
+      - Members
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - id
+              properties:
+                id:
+                  type: string
+                domain_id:
+                  type: string
+                organization_id:
+                  type: string
+      responses:
+        '200':
+          description: Invitation deleted
+components:
+  schemas:
+    Member:
+      type: object
+      properties:
+        id:
+          type: string
+        role:
+          type: string
+          enum:
+          - Owner
+          - Admin
+          - Viewer
+        user_id:
+          type: string
+        user:
+          type: object
+    UpdateMemberRequest:
+      type: object
+      required:
+      - id
+      - role
+      properties:
+        id:
+          type: string
+          description: Member ID
+        role:
+          type: string
+          enum:
+          - Viewer
+          - Admin
+    InviteMembersRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Domain ID
+        organization_id:
+          type: string
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+    Invitation:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        domain:
+          type: object
+        organization:
+          type: object
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Pass an OAuth2 access token obtained from POST /token, or a static access key, as a Bearer token in the Authorization header.
