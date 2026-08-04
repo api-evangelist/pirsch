@@ -1,0 +1,42 @@
+{
+  "provider": "pirsch",
+  "sources": [
+    "pirsch-access-links-api-openapi.yml",
+    "pirsch-authentication-api-openapi.yml",
+    "pirsch-clients-api-openapi.yml",
+    "pirsch-conversion-goals-api-openapi.yml",
+    "pirsch-domains-api-openapi.yml",
+    "pirsch-email-reports-api-openapi.yml",
+    "pirsch-funnels-api-openapi.yml",
+    "pirsch-members-api-openapi.yml",
+    "pirsch-short-links-api-openapi.yml",
+    "pirsch-statistics-api-openapi.yml",
+    "pirsch-tracking-api-openapi.yml",
+    "pirsch-traffic-management-api-openapi.yml",
+    "pirsch-user-api-openapi.yml",
+    "pirsch-views-api-openapi.yml",
+    "pirsch-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "pirsch-access-links-api-openapi.yml",
+    "pirsch-authentication-api-openapi.yml",
+    "pirsch-clients-api-openapi.yml",
+    "pirsch-conversion-goals-api-openapi.yml",
+    "pirsch-domains-api-openapi.yml",
+    "pirsch-email-reports-api-openapi.yml",
+    "pirsch-funnels-api-openapi.yml",
+    "pirsch-members-api-openapi.yml",
+    "pirsch-short-links-api-openapi.yml",
+    "pirsch-statistics-api-openapi.yml",
+    "pirsch-tracking-api-openapi.yml",
+    "pirsch-traffic-management-api-openapi.yml",
+    "pirsch-user-api-openapi.yml",
+    "pirsch-views-api-openapi.yml",
+    "pirsch-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

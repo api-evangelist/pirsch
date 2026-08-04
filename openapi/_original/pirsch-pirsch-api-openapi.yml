@@ -1,0 +1,3462 @@
+openapi: 3.0.3
+info:
+  title: Pirsch API
+  description: >-
+    RESTful API for sending page views, events, and session data to Pirsch,
+    and for querying statistics including visitors, pages, referrers, UTM
+    parameters, geo-location, device, browser, conversion goals, funnels,
+    and real-time active visitors. Also exposes management endpoints for
+    domains, members, clients, webhooks, email reports, traffic filters,
+    short links, and views.
+  version: "1"
+  contact:
+    name: Pirsch Support
+    url: https://pirsch.io
+  license:
+    name: Proprietary
+    url: https://pirsch.io/privacy
+servers:
+  - url: https://api.pirsch.io/api/v1
+    description: Pirsch production API
+
+security:
+  - BearerAuth: []
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Pass an OAuth2 access token obtained from POST /token, or a static
+        access key, as a Bearer token in the Authorization header.
+
+  schemas:
+    TokenRequest:
+      type: object
+      required:
+        - client_id
+        - client_secret
+      properties:
+        client_id:
+          type: string
+          description: OAuth2 client ID
+        client_secret:
+          type: string
+          description: OAuth2 client secret
+
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: Bearer token to use in subsequent requests
+        expires_at:
+          type: string
+          format: date-time
+          description: UTC timestamp when the token expires
+
+    HitRequest:
+      type: object
+      required:
+        - url
+        - ip
+        - user_agent
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Full URL of the page viewed
+        ip:
+          type: string
+          description: Visitor IP address
+        user_agent:
+          type: string
+          description: Visitor User-Agent header value
+        accept_language:
+          type: string
+          description: Accept-Language header value
+        referrer:
+          type: string
+          description: HTTP Referer header value
+        title:
+          type: string
+          description: Page title
+        sec_ch_ua:
+          type: string
+          description: Sec-CH-UA client hint header
+        sec_ch_ua_mobile:
+          type: string
+          description: Sec-CH-UA-Mobile client hint header
+        sec_ch_ua_platform:
+          type: string
+          description: Sec-CH-UA-Platform client hint header
+        sec_ch_ua_platform_version:
+          type: string
+          description: Sec-CH-UA-Platform-Version client hint header
+        sec_ch_width:
+          type: string
+          description: Sec-CH-Width client hint header
+        sec_ch_viewport_width:
+          type: string
+          description: Sec-CH-Viewport-Width client hint header
+        screen_width:
+          type: integer
+          description: Screen width in pixels
+        screen_height:
+          type: integer
+          description: Screen height in pixels
+        disable_bot_filter:
+          type: boolean
+          description: Disable bot filtering for this request
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+          description: Custom key-value tags
+
+    HitBatchRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/HitRequest'
+        - type: object
+          required:
+            - time
+          properties:
+            time:
+              type: string
+              format: date-time
+              description: Timestamp of the page view (ISO 8601)
+
+    EventRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/HitRequest'
+        - type: object
+          required:
+            - event_name
+          properties:
+            event_name:
+              type: string
+              description: Name of the event
+            event_duration:
+              type: number
+              description: Event duration in seconds
+            event_meta:
+              type: object
+              additionalProperties:
+                type: string
+              description: Event metadata key-value pairs
+            non_interactive:
+              type: boolean
+              description: Whether the event is non-interactive
+
+    EventBatchRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/EventRequest'
+        - type: object
+          required:
+            - time
+          properties:
+            time:
+              type: string
+              format: date-time
+
+    SessionRequest:
+      type: object
+      required:
+        - ip
+        - user_agent
+      properties:
+        ip:
+          type: string
+        user_agent:
+          type: string
+        sec_ch_ua:
+          type: string
+        sec_ch_ua_mobile:
+          type: string
+        sec_ch_ua_platform:
+          type: string
+        sec_ch_ua_platform_version:
+          type: string
+        disable_bot_filter:
+          type: boolean
+
+    SessionBatchRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/SessionRequest'
+        - type: object
+          required:
+            - time
+          properties:
+            time:
+              type: string
+              format: date-time
+
+    TotalStats:
+      type: object
+      properties:
+        visitors:
+          type: integer
+        views:
+          type: integer
+        sessions:
+          type: integer
+        bounces:
+          type: integer
+        bounce_rate:
+          type: number
+          format: float
+        cr:
+          type: number
+          format: float
+        custom_metric_avg:
+          type: number
+          format: float
+        custom_metric_total:
+          type: number
+          format: float
+
+    VisitorStats:
+      type: object
+      properties:
+        day:
+          type: string
+          format: date-time
+        week:
+          type: string
+          format: date-time
+        month:
+          type: string
+          format: date-time
+        year:
+          type: string
+          format: date-time
+        visitors:
+          type: integer
+        views:
+          type: integer
+        sessions:
+          type: integer
+        bounces:
+          type: integer
+        bounce_rate:
+          type: number
+          format: float
+        cr:
+          type: number
+          format: float
+        custom_metric_avg:
+          type: number
+          format: float
+        custom_metric_total:
+          type: number
+          format: float
+
+    PageStats:
+      type: object
+      properties:
+        path:
+          type: string
+        title:
+          type: string
+        visitors:
+          type: integer
+        views:
+          type: integer
+        sessions:
+          type: integer
+        bounces:
+          type: integer
+        relative_visitors:
+          type: number
+          format: float
+        relative_views:
+          type: number
+          format: float
+        bounce_rate:
+          type: number
+          format: float
+        average_time_spent_seconds:
+          type: integer
+
+    ReferrerStats:
+      type: object
+      properties:
+        referrer:
+          type: string
+        referrer_name:
+          type: string
+        referrer_icon:
+          type: string
+        visitors:
+          type: integer
+        sessions:
+          type: integer
+        relative_visitors:
+          type: number
+          format: float
+        bounces:
+          type: integer
+        bounce_rate:
+          type: number
+          format: float
+
+    PlatformStats:
+      type: object
+      properties:
+        platform_desktop:
+          type: integer
+        platform_mobile:
+          type: integer
+        platform_unknown:
+          type: integer
+        relative_platform_desktop:
+          type: number
+          format: float
+        relative_platform_mobile:
+          type: number
+          format: float
+        relative_platform_unknown:
+          type: number
+          format: float
+
+    EventStats:
+      type: object
+      properties:
+        name:
+          type: string
+        count:
+          type: integer
+        visitors:
+          type: integer
+        views:
+          type: integer
+        cr:
+          type: number
+          format: float
+        average_duration_seconds:
+          type: integer
+        meta_keys:
+          type: array
+          items:
+            type: string
+
+    ActiveVisitors:
+      type: object
+      properties:
+        stats:
+          type: array
+          items:
+            type: object
+        countries:
+          type: array
+          items:
+            type: object
+        visitors:
+          type: integer
+
+    Domain:
+      type: object
+      properties:
+        id:
+          type: string
+        hostname:
+          type: string
+        subdomain:
+          type: string
+        def_time:
+          type: string
+          format: date-time
+        mod_time:
+          type: string
+          format: date-time
+        user_id:
+          type: string
+          nullable: true
+        organization_id:
+          type: string
+          nullable: true
+        timezone:
+          type: string
+        public:
+          type: boolean
+        disable_scripts:
+          type: boolean
+        subscription_active:
+          type: boolean
+        display_name:
+          type: string
+        group_by_title:
+          type: boolean
+        user_role:
+          type: string
+          enum:
+            - Owner
+            - Admin
+            - Viewer
+        theme_id:
+          type: string
+        settings:
+          type: object
+
+    CreateDomainRequest:
+      type: object
+      required:
+        - hostname
+        - subdomain
+        - timezone
+      properties:
+        hostname:
+          type: string
+        subdomain:
+          type: string
+        timezone:
+          type: string
+        organization_id:
+          type: string
+        theme_id:
+          type: string
+        public:
+          type: boolean
+        group_by_title:
+          type: boolean
+        disable_scripts:
+          type: boolean
+        display_name:
+          type: string
+        settings:
+          type: object
+
+    Member:
+      type: object
+      properties:
+        id:
+          type: string
+        role:
+          type: string
+          enum:
+            - Owner
+            - Admin
+            - Viewer
+        user_id:
+          type: string
+        user:
+          type: object
+
+    InviteMembersRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Domain ID
+        organization_id:
+          type: string
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+
+    UpdateMemberRequest:
+      type: object
+      required:
+        - id
+        - role
+      properties:
+        id:
+          type: string
+          description: Member ID
+        role:
+          type: string
+          enum:
+            - Viewer
+            - Admin
+
+    Invitation:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        domain:
+          type: object
+        organization:
+          type: object
+
+    AccessLink:
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        description:
+          type: string
+        valid_until:
+          type: string
+          format: date-time
+          nullable: true
+
+    CreateAccessLinkRequest:
+      type: object
+      required:
+        - domain_id
+      properties:
+        domain_id:
+          type: string
+        description:
+          type: string
+        valid_until:
+          type: string
+          format: date-time
+
+    UpdateAccessLinkRequest:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        valid_until:
+          type: string
+          format: date-time
+
+    ConversionGoal:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        name:
+          type: string
+        path_pattern:
+          type: string
+        pattern:
+          type: string
+        event_name:
+          type: string
+        event_meta_key:
+          type: string
+        event_meta_value:
+          type: string
+        custom_metric_key:
+          type: string
+        custom_metric_type:
+          type: string
+        delete_reached:
+          type: boolean
+        email_reached:
+          type: boolean
+
+    CreateGoalRequest:
+      type: object
+      required:
+        - domain_id
+        - name
+      properties:
+        domain_id:
+          type: string
+        name:
+          type: string
+        path_pattern:
+          type: string
+        event_name:
+          type: string
+        event_meta_key:
+          type: string
+        event_meta_value:
+          type: string
+        custom_metric_key:
+          type: string
+        custom_metric_type:
+          type: string
+        delete_reached:
+          type: boolean
+        email_reached:
+          type: boolean
+
+    UpdateGoalRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/CreateGoalRequest'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+
+    Funnel:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        name:
+          type: string
+        steps:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              filter:
+                type: object
+
+    CreateFunnelRequest:
+      type: object
+      required:
+        - domain_id
+        - name
+        - steps
+      properties:
+        domain_id:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        steps:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              filter:
+                type: object
+
+    ShortLink:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        name:
+          type: string
+        event_name:
+          type: string
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
+        expired_url:
+          type: string
+        webhook_id:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        urls:
+          type: array
+          items:
+            type: object
+
+    CreateShortLinkRequest:
+      type: object
+      required:
+        - domain_id
+        - name
+      properties:
+        domain_id:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        event_name:
+          type: string
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        expires_at:
+          type: string
+          format: date-time
+        expired_url:
+          type: string
+        password:
+          type: string
+        webhook_endpoint:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        allow_indexing:
+          type: boolean
+        tags:
+          type: array
+          items:
+            type: string
+        urls:
+          type: array
+          items:
+            type: object
+
+    EmailReport:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+        interval:
+          type: integer
+        link_to:
+          type: string
+        next_report:
+          type: string
+          format: date-time
+        reply_to:
+          type: string
+          format: email
+
+    CreateReportRequest:
+      type: object
+      required:
+        - domain_id
+        - emails
+        - interval
+      properties:
+        domain_id:
+          type: string
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+        interval:
+          type: integer
+          description: 0 for monthly, or number of weeks
+        reply_to:
+          type: string
+          format: email
+        start_date:
+          type: string
+          format: date
+        link_to:
+          type: string
+
+    Webhook:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        description:
+          type: string
+        event:
+          type: string
+        endpoint:
+          type: string
+          format: uri
+        active:
+          type: boolean
+
+    CreateWebhookRequest:
+      type: object
+      required:
+        - domain_id
+        - event
+        - endpoint
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        description:
+          type: string
+        event:
+          type: string
+        endpoint:
+          type: string
+          format: uri
+
+    TrafficFilter:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        filter:
+          type: string
+
+    CreateFilterRequest:
+      type: object
+      required:
+        - domain_id
+        - type
+        - filter
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        filter:
+          type: string
+
+    View:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        name:
+          type: string
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        period:
+          type: string
+
+    CreateViewRequest:
+      type: object
+      required:
+        - domain_id
+        - name
+      properties:
+        domain_id:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        period:
+          type: string
+
+    Client:
+      type: object
+      properties:
+        client_id:
+          type: string
+        description:
+          type: string
+        client_secret:
+          type: string
+          description: Only returned on creation
+
+    CreateClientRequest:
+      type: object
+      required:
+        - domain_id
+        - type
+        - description
+      properties:
+        domain_id:
+          type: string
+        type:
+          type: string
+          enum:
+            - oauth
+            - token
+        description:
+          type: string
+
+    AlternativeDomain:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        hostname:
+          type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        validation:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+        error:
+          type: array
+          items:
+            type: string
+          description: General error messages
+        context:
+          type: object
+          additionalProperties: true
+          description: Additional error context
+
+    StatisticsQueryParams:
+      description: Common statistics query parameters
+      type: object
+
+paths:
+  /token:
+    post:
+      operationId: getToken
+      summary: Obtain access token
+      description: Authenticate with client credentials to obtain a Bearer access token
+      security: []
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+      responses:
+        '200':
+          description: Access token returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /hit:
+    post:
+      operationId: sendPageView
+      summary: Send a page view
+      description: Track a single page view for a domain
+      tags:
+        - Tracking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HitRequest'
+      responses:
+        '200':
+          description: Page view accepted
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /hit/batch:
+    post:
+      operationId: sendPageViewBatch
+      summary: Send multiple page views
+      description: Track a batch of page views
+      tags:
+        - Tracking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/HitBatchRequest'
+      responses:
+        '200':
+          description: Batch accepted
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /event:
+    post:
+      operationId: sendEvent
+      summary: Send a custom event
+      description: Track a single custom event with optional metadata
+      tags:
+        - Tracking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventRequest'
+      responses:
+        '200':
+          description: Event accepted
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /event/batch:
+    post:
+      operationId: sendEventBatch
+      summary: Send multiple custom events
+      description: Track a batch of custom events
+      tags:
+        - Tracking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EventBatchRequest'
+      responses:
+        '200':
+          description: Batch accepted
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /session:
+    post:
+      operationId: keepSessionAlive
+      summary: Keep a session alive
+      description: Extend an existing visitor session
+      tags:
+        - Tracking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionRequest'
+      responses:
+        '200':
+          description: Session extended
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /session/batch:
+    post:
+      operationId: keepSessionAliveBatch
+      summary: Keep multiple sessions alive
+      description: Extend multiple visitor sessions in a single request
+      tags:
+        - Tracking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SessionBatchRequest'
+      responses:
+        '200':
+          description: Sessions extended
+
+  /statistics/total:
+    get:
+      operationId: getTotalStatistics
+      summary: Get total statistics
+      description: Get total visitors, views, sessions, and bounce data for a date range
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Domain ID
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: tz
+          in: query
+          schema:
+            type: string
+        - name: scale
+          in: query
+          schema:
+            type: string
+            enum:
+              - day
+              - week
+              - month
+              - year
+      responses:
+        '200':
+          description: Total statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TotalStats'
+
+  /statistics/visitor:
+    get:
+      operationId: getVisitorStatistics
+      summary: Get visitor statistics over time
+      description: Get visitors grouped by time scale
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: tz
+          in: query
+          schema:
+            type: string
+        - name: scale
+          in: query
+          schema:
+            type: string
+            enum:
+              - day
+              - week
+              - month
+              - year
+      responses:
+        '200':
+          description: Visitor time series
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VisitorStats'
+
+  /statistics/page:
+    get:
+      operationId: getPageStatistics
+      summary: Get page statistics
+      description: Get statistics broken down by page path
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: offset
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          schema:
+            type: string
+        - name: direction
+          in: query
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+      responses:
+        '200':
+          description: Page statistics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PageStats'
+
+  /statistics/hostname:
+    get:
+      operationId: getHostnameStatistics
+      summary: Get hostname statistics
+      description: Get statistics broken down by hostname
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Hostname statistics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    hostname:
+                      type: string
+                    visitors:
+                      type: integer
+                    views:
+                      type: integer
+                    sessions:
+                      type: integer
+                    bounces:
+                      type: integer
+                    relative_visitors:
+                      type: number
+                    relative_views:
+                      type: number
+                    bounce_rate:
+                      type: number
+
+  /statistics/referrer:
+    get:
+      operationId: getReferrerStatistics
+      summary: Get referrer statistics
+      description: Get statistics broken down by referrer
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: offset
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Referrer statistics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReferrerStats'
+
+  /statistics/channel:
+    get:
+      operationId: getChannelStatistics
+      summary: Get traffic channel statistics
+      description: Get statistics grouped by traffic channel
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Channel statistics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics/utm/source:
+    get:
+      operationId: getUtmSourceStatistics
+      summary: Get UTM source statistics
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: UTM source breakdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics/utm/medium:
+    get:
+      operationId: getUtmMediumStatistics
+      summary: Get UTM medium statistics
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: UTM medium breakdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics/utm/campaign:
+    get:
+      operationId: getUtmCampaignStatistics
+      summary: Get UTM campaign statistics
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: UTM campaign breakdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics/utm/content:
+    get:
+      operationId: getUtmContentStatistics
+      summary: Get UTM content statistics
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: UTM content breakdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics/utm/term:
+    get:
+      operationId: getUtmTermStatistics
+      summary: Get UTM term statistics
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: UTM term breakdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics/country:
+    get:
+      operationId: getCountryStatistics
+      summary: Get country statistics
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Country breakdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    country:
+                      type: string
+                    visitors:
+                      type: integer
+                    relative_visitors:
+                      type: number
+
+  /statistics/region:
+    get:
+      operationId: getRegionStatistics
+      summary: Get region statistics
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Region breakdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics/city:
+    get:
+      operationId: getCityStatistics
+      summary: Get city statistics
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: City breakdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics/language:
+    get:
+      operationId: getLanguageStatistics
+      summary: Get language statistics
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Language breakdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics/browser:
+    get:
+      operationId: getBrowserStatistics
+      summary: Get browser statistics
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Browser breakdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics/os:
+    get:
+      operationId: getOsStatistics
+      summary: Get operating system statistics
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: OS breakdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics/platform:
+    get:
+      operationId: getPlatformStatistics
+      summary: Get platform statistics
+      description: Get breakdown between desktop, mobile, and unknown platforms
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Platform statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformStats'
+
+  /statistics/events:
+    get:
+      operationId: getEventStatistics
+      summary: Get event list and statistics
+      description: Get list of tracked events with visitor counts and metadata keys
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Event statistics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventStats'
+
+  /statistics/goals:
+    get:
+      operationId: getGoalStatistics
+      summary: Get conversion goal statistics
+      description: Get statistics for all configured conversion goals
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Goal statistics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics/funnel:
+    get:
+      operationId: getFunnelStatistics
+      summary: Get funnel statistics
+      description: Get step-by-step funnel analytics
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: funnel_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Funnel analytics
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /statistics/active:
+    get:
+      operationId: getActiveVisitors
+      summary: Get active visitors
+      description: Get current real-time active visitor count
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: start
+          in: query
+          schema:
+            type: integer
+            default: 600
+          description: Number of seconds to consider a visitor active
+      responses:
+        '200':
+          description: Active visitor data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActiveVisitors'
+
+  /statistics/session/list:
+    get:
+      operationId: getSessionList
+      summary: Get session list
+      description: Get list of individual visitor sessions
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: offset
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Session list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics/session/details:
+    get:
+      operationId: getSessionDetails
+      summary: Get session details
+      description: Get page-by-page breakdown of a single session
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: visitor_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: session_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Session details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics/growth:
+    get:
+      operationId: getGrowthStatistics
+      summary: Get growth statistics
+      description: Get growth rate metrics comparing the current period to the previous
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Growth rates
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /statistics/keywords:
+    get:
+      operationId: getKeywords
+      summary: Get Google Search Console keywords
+      description: Get keyword data sourced from Google Search Console integration
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Keyword data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /statistics:
+    get:
+      operationId: exportStatistics
+      summary: Export statistics as CSV
+      description: Download a ZIP archive of CSV exports for the selected date range
+      tags:
+        - Statistics
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: ZIP file with CSV exports
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+    delete:
+      operationId: deleteStatistics
+      summary: Delete statistics
+      description: Delete all or partial statistics for a domain
+      tags:
+        - Statistics
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+                  description: Domain ID
+                kind:
+                  type: string
+                  enum:
+                    - ""
+                    - all
+                    - events
+                    - imported
+                from:
+                  type: string
+                  format: date
+                to:
+                  type: string
+                  format: date
+      responses:
+        '200':
+          description: Statistics deleted
+
+  /domain:
+    get:
+      operationId: listDomains
+      summary: List domains
+      description: Get all domains accessible to the authenticated user
+      tags:
+        - Domains
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+        - name: subdomain
+          in: query
+          schema:
+            type: string
+        - name: domain
+          in: query
+          schema:
+            type: string
+        - name: access
+          in: query
+          schema:
+            type: string
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Domain list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Domain'
+    post:
+      operationId: createDomain
+      summary: Create a domain
+      description: Create a new domain for tracking
+      tags:
+        - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDomainRequest'
+      responses:
+        '200':
+          description: Created domain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+    delete:
+      operationId: deleteDomain
+      summary: Delete a domain
+      description: Permanently delete a domain and all its data
+      tags:
+        - Domains
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Domain deleted
+
+  /domain/hostname:
+    post:
+      operationId: updateDomainHostname
+      summary: Update domain hostname
+      tags:
+        - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - domain_id
+                - hostname
+              properties:
+                domain_id:
+                  type: string
+                hostname:
+                  type: string
+      responses:
+        '200':
+          description: Hostname updated
+
+  /domain/subdomain:
+    post:
+      operationId: updateDomainSubdomain
+      summary: Update domain subdomain
+      tags:
+        - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - domain_id
+                - subdomain
+              properties:
+                domain_id:
+                  type: string
+                subdomain:
+                  type: string
+      responses:
+        '200':
+          description: Subdomain updated
+
+  /domain/timezone:
+    post:
+      operationId: updateDomainTimezone
+      summary: Update domain timezone
+      tags:
+        - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - domain_id
+                - timezone
+              properties:
+                domain_id:
+                  type: string
+                timezone:
+                  type: string
+      responses:
+        '200':
+          description: Timezone updated
+
+  /domain/settings:
+    post:
+      operationId: updateDomainSettings
+      summary: Update domain settings
+      tags:
+        - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - domain_id
+              properties:
+                domain_id:
+                  type: string
+                settings:
+                  type: object
+      responses:
+        '200':
+          description: Settings updated
+
+  /domain/alternative:
+    get:
+      operationId: listAlternativeDomains
+      summary: List alternative domains
+      tags:
+        - Domains
+      parameters:
+        - name: domain_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Alternative domains
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AlternativeDomain'
+    post:
+      operationId: createAlternativeDomain
+      summary: Create alternative domain
+      tags:
+        - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - domain_id
+                - hostname
+              properties:
+                domain_id:
+                  type: string
+                hostname:
+                  type: string
+      responses:
+        '200':
+          description: Alternative domain created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlternativeDomain'
+    put:
+      operationId: updateAlternativeDomain
+      summary: Update alternative domain
+      tags:
+        - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - hostname
+              properties:
+                id:
+                  type: string
+                hostname:
+                  type: string
+      responses:
+        '200':
+          description: Alternative domain updated
+    delete:
+      operationId: deleteAlternativeDomain
+      summary: Delete alternative domain
+      tags:
+        - Domains
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Alternative domain deleted
+
+  /domain/link:
+    get:
+      operationId: listAccessLinks
+      summary: List access links
+      description: Get shareable access links for a domain
+      tags:
+        - Access Links
+      parameters:
+        - name: domain_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Access links
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccessLink'
+    post:
+      operationId: createAccessLink
+      summary: Create access link
+      tags:
+        - Access Links
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccessLinkRequest'
+      responses:
+        '200':
+          description: Created access link
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessLink'
+    put:
+      operationId: updateAccessLink
+      summary: Update access link
+      tags:
+        - Access Links
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAccessLinkRequest'
+      responses:
+        '200':
+          description: Updated access link
+    delete:
+      operationId: deleteAccessLink
+      summary: Delete access link
+      tags:
+        - Access Links
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Access link deleted
+
+  /member:
+    get:
+      operationId: listMembers
+      summary: List domain members
+      tags:
+        - Members
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+          description: Domain ID
+        - name: organization_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Members
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Member'
+    post:
+      operationId: inviteMembers
+      summary: Invite members
+      description: Send invitations to one or more email addresses
+      tags:
+        - Members
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InviteMembersRequest'
+      responses:
+        '200':
+          description: Invitations sent
+    put:
+      operationId: updateMember
+      summary: Update member role
+      tags:
+        - Members
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMemberRequest'
+      responses:
+        '200':
+          description: Member role updated
+    delete:
+      operationId: removeMember
+      summary: Remove member
+      tags:
+        - Members
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Member ID
+      responses:
+        '200':
+          description: Member removed
+
+  /invitation:
+    get:
+      operationId: listInvitations
+      summary: List invitations
+      tags:
+        - Members
+      parameters:
+        - name: domain_id
+          in: query
+          schema:
+            type: string
+        - name: organization_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Invitations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invitation'
+    post:
+      operationId: acceptInvitation
+      summary: Accept invitation
+      tags:
+        - Members
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+      responses:
+        '200':
+          description: Invitation accepted
+    delete:
+      operationId: deleteInvitation
+      summary: Delete invitation
+      tags:
+        - Members
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+                domain_id:
+                  type: string
+                organization_id:
+                  type: string
+      responses:
+        '200':
+          description: Invitation deleted
+
+  /client:
+    get:
+      operationId: listClients
+      summary: List API clients
+      tags:
+        - Clients
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Domain ID
+      responses:
+        '200':
+          description: Clients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+    post:
+      operationId: createClient
+      summary: Create or update API client
+      description: Create a new OAuth client or access token client for a domain
+      tags:
+        - Clients
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateClientRequest'
+      responses:
+        '200':
+          description: Client created (includes client_secret on creation)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+    delete:
+      operationId: deleteClient
+      summary: Delete API client
+      tags:
+        - Clients
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Client deleted
+
+  /goal:
+    get:
+      operationId: listConversionGoals
+      summary: List conversion goals
+      tags:
+        - Conversion Goals
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Domain ID
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Conversion goals
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConversionGoal'
+    post:
+      operationId: createConversionGoal
+      summary: Create conversion goal
+      tags:
+        - Conversion Goals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGoalRequest'
+      responses:
+        '200':
+          description: Goal created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversionGoal'
+    put:
+      operationId: updateConversionGoal
+      summary: Update conversion goal
+      tags:
+        - Conversion Goals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGoalRequest'
+      responses:
+        '200':
+          description: Goal updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversionGoal'
+    delete:
+      operationId: deleteConversionGoal
+      summary: Delete conversion goal
+      tags:
+        - Conversion Goals
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Goal deleted
+
+  /goal/regex:
+    post:
+      operationId: testGoalRegex
+      summary: Test conversion goal regex
+      description: Test a regex pattern against a sample string
+      tags:
+        - Conversion Goals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - regex
+                - sample
+              properties:
+                regex:
+                  type: string
+                sample:
+                  type: string
+      responses:
+        '200':
+          description: Regex test result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  match:
+                    type: boolean
+
+  /funnel:
+    get:
+      operationId: listFunnels
+      summary: List funnels
+      tags:
+        - Funnels
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Domain ID
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Funnels
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Funnel'
+    post:
+      operationId: createOrUpdateFunnel
+      summary: Create or update funnel
+      tags:
+        - Funnels
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFunnelRequest'
+      responses:
+        '200':
+          description: Funnel saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Funnel'
+    delete:
+      operationId: deleteFunnel
+      summary: Delete funnel
+      tags:
+        - Funnels
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Funnel deleted
+
+  /link:
+    get:
+      operationId: listShortLinks
+      summary: List short links
+      tags:
+        - Short Links
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Domain ID
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Short links
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShortLink'
+    post:
+      operationId: createOrUpdateShortLink
+      summary: Create or update short link
+      tags:
+        - Short Links
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateShortLinkRequest'
+      responses:
+        '200':
+          description: Short link saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShortLink'
+    delete:
+      operationId: deleteShortLink
+      summary: Delete short link
+      tags:
+        - Short Links
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Short link deleted
+
+  /report:
+    get:
+      operationId: listEmailReports
+      summary: List email reports
+      tags:
+        - Email Reports
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Domain ID
+      responses:
+        '200':
+          description: Email reports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmailReport'
+    post:
+      operationId: createEmailReport
+      summary: Create email report
+      tags:
+        - Email Reports
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReportRequest'
+      responses:
+        '200':
+          description: Report created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailReport'
+    put:
+      operationId: updateEmailReport
+      summary: Update email report
+      tags:
+        - Email Reports
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+                interval:
+                  type: integer
+                link_to:
+                  type: string
+      responses:
+        '200':
+          description: Report updated
+    delete:
+      operationId: deleteEmailReport
+      summary: Delete email report
+      tags:
+        - Email Reports
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Report deleted
+
+  /webhook:
+    get:
+      operationId: listWebhooks
+      summary: List webhooks
+      tags:
+        - Webhooks
+      parameters:
+        - name: domain_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Webhooks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Webhook'
+    post:
+      operationId: createOrUpdateWebhook
+      summary: Create or update webhook
+      tags:
+        - Webhooks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWebhookRequest'
+      responses:
+        '200':
+          description: Webhook saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+    delete:
+      operationId: deleteWebhook
+      summary: Delete webhook
+      tags:
+        - Webhooks
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Webhook deleted
+
+  /filter:
+    get:
+      operationId: listTrafficFilters
+      summary: List traffic filters
+      tags:
+        - Traffic Management
+      parameters:
+        - name: domain_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Traffic filters
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TrafficFilter'
+    post:
+      operationId: createOrUpdateTrafficFilter
+      summary: Create or update traffic filter
+      tags:
+        - Traffic Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFilterRequest'
+      responses:
+        '200':
+          description: Filter saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrafficFilter'
+    delete:
+      operationId: deleteTrafficFilter
+      summary: Delete traffic filter
+      tags:
+        - Traffic Management
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Filter deleted
+
+  /traffic/spike:
+    put:
+      operationId: toggleSpikeNotifications
+      summary: Toggle spike notifications
+      tags:
+        - Traffic Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - domain_id
+              properties:
+                domain_id:
+                  type: string
+      responses:
+        '200':
+          description: Spike notifications toggled
+    post:
+      operationId: configureSpikeNotifications
+      summary: Configure spike notification threshold
+      tags:
+        - Traffic Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - domain_id
+                - threshold
+              properties:
+                domain_id:
+                  type: string
+                threshold:
+                  type: integer
+      responses:
+        '200':
+          description: Spike threshold updated
+
+  /traffic/warning:
+    put:
+      operationId: toggleTrafficWarnings
+      summary: Toggle traffic warnings
+      tags:
+        - Traffic Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - domain_id
+              properties:
+                domain_id:
+                  type: string
+      responses:
+        '200':
+          description: Traffic warnings toggled
+    post:
+      operationId: configureTrafficWarnings
+      summary: Configure traffic warning threshold
+      tags:
+        - Traffic Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - domain_id
+                - threshold
+              properties:
+                domain_id:
+                  type: string
+                threshold:
+                  type: integer
+                  description: Threshold in days
+      responses:
+        '200':
+          description: Warning threshold updated
+
+  /view:
+    get:
+      operationId: listViews
+      summary: List saved views
+      description: Get all saved analytics views for a domain
+      tags:
+        - Views
+      parameters:
+        - name: domain_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Views
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/View'
+    post:
+      operationId: createOrUpdateView
+      summary: Create or update view
+      tags:
+        - Views
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateViewRequest'
+      responses:
+        '200':
+          description: View saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/View'
+    delete:
+      operationId: deleteView
+      summary: Delete view
+      tags:
+        - Views
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: View deleted
+
+  /user:
+    get:
+      operationId: getUser
+      summary: Get account details
+      description: Get the authenticated user's account information
+      tags:
+        - User
+      responses:
+        '200':
+          description: User account details
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /user/name:
+    post:
+      operationId: updateUserName
+      summary: Update full name
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - full_name
+              properties:
+                full_name:
+                  type: string
+      responses:
+        '200':
+          description: Name updated
+
+  /user/email:
+    post:
+      operationId: updateUserEmail
+      summary: Update email address
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                code:
+                  type: string
+      responses:
+        '200':
+          description: Email updated
+
+  /user/password:
+    post:
+      operationId: updateUserPassword
+      summary: Change password
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - current_password
+                - password
+                - confirm_password
+              properties:
+                current_password:
+                  type: string
+                password:
+                  type: string
+                confirm_password:
+                  type: string
+      responses:
+        '200':
+          description: Password changed
+
+  /user/language:
+    post:
+      operationId: updateUserLanguage
+      summary: Change interface language
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - language
+              properties:
+                language:
+                  type: string
+      responses:
+        '200':
+          description: Language updated
+
+  /user/filter:
+    post:
+      operationId: updateUserFilter
+      summary: Change default time range
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - default_time_range
+              properties:
+                default_time_range:
+                  type: string
+      responses:
+        '200':
+          description: Default filter updated
+
+  /user/news:
+    get:
+      operationId: getUserNews
+      summary: Get news
+      description: Get release news and announcements
+      tags:
+        - User
+      responses:
+        '200':
+          description: News items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    news:
+                      type: integer
+                    date:
+                      type: string
+                      format: date-time
+                    version:
+                      type: string
+                    headline:
+                      type: string
+                    content:
+                      type: string
+    post:
+      operationId: markNewsRead
+      summary: Mark news as read
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - news
+              properties:
+                news:
+                  type: integer
+      responses:
+        '200':
+          description: News marked as read
+
+  /user/rewards:
+    get:
+      operationId: getUserRewards
+      summary: Get affiliate rewards
+      description: Get affiliate referral rewards summary
+      tags:
+        - User
+      responses:
+        '200':
+          description: Rewards
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sum:
+                    type: number
+                  count:
+                    type: integer
+                  rewards:
+                    type: array
+                    items:
+                      type: object
+
+tags:
+  - name: Authentication
+    description: Obtain access tokens using OAuth2 client credentials
+  - name: Tracking
+    description: Send page views, events, and session keep-alive signals
+  - name: Statistics
+    description: Query analytics statistics by date range and filter criteria
+  - name: Domains
+    description: Manage tracked domains and their configuration
+  - name: Access Links
+    description: Manage shareable access links for dashboard visibility
+  - name: Members
+    description: Manage domain members, roles, and invitations
+  - name: Clients
+    description: Manage OAuth2 and access-key API clients
+  - name: Conversion Goals
+    description: Define and manage conversion goals with path patterns or events
+  - name: Funnels
+    description: Define and manage multi-step conversion funnels
+  - name: Short Links
+    description: Create and manage UTM-enriched short links
+  - name: Email Reports
+    description: Schedule and manage recurring email analytics reports
+  - name: Webhooks
+    description: Configure webhooks for event-driven integrations
+  - name: Traffic Management
+    description: Filter traffic and configure spike/warning notifications
+  - name: Views
+    description: Save and manage custom analytics views
+  - name: User
+    description: Manage the authenticated user account
