@@ -24,8 +24,13 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/pirsch.png
 url: https://raw.githubusercontent.com/api-evangelist/pirsch/refs/heads/main/apis.yml
 created: "2026-06-13"
-modified: "2026-06-13"
+modified: "2026-08-13"
 specificationVersion: "0.19"
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 33
+  pass: local-v1
 tags:
   - Analytics
   - Web Analytics
@@ -42,7 +47,7 @@ apis:
 - aid: pirsch:pirsch-access-links-api
   name: Pirsch Access Links API
   description: Manage shareable access links for dashboard visibility
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - Access Links
@@ -50,15 +55,15 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-access-links-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 - aid: pirsch:pirsch-authentication-api
   name: Pirsch Authentication API
   description: Obtain access tokens using OAuth2 client credentials
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - Authentication
@@ -66,15 +71,15 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-authentication-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 - aid: pirsch:pirsch-clients-api
   name: Pirsch Clients API
   description: Manage OAuth2 and access-key API clients
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - Clients
@@ -82,15 +87,15 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-clients-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 - aid: pirsch:pirsch-conversion-goals-api
   name: Pirsch Conversion Goals API
   description: Define and manage conversion goals with path patterns or events
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - Conversion Goals
@@ -98,15 +103,15 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-conversion-goals-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 - aid: pirsch:pirsch-domains-api
   name: Pirsch Domains API
   description: Manage tracked domains and their configuration
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - Domains
@@ -114,15 +119,15 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-domains-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 - aid: pirsch:pirsch-email-reports-api
   name: Pirsch Email Reports API
   description: Schedule and manage recurring email analytics reports
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - Email Reports
@@ -130,15 +135,15 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-email-reports-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 - aid: pirsch:pirsch-funnels-api
   name: Pirsch Funnels API
   description: Define and manage multi-step conversion funnels
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - Funnels
@@ -146,15 +151,15 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-funnels-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 - aid: pirsch:pirsch-members-api
   name: Pirsch Members API
   description: Manage domain members, roles, and invitations
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - Members
@@ -162,15 +167,15 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-members-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 - aid: pirsch:pirsch-short-links-api
   name: Pirsch Short Links API
   description: Create and manage UTM-enriched short links
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - Short Links
@@ -178,15 +183,15 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-short-links-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 - aid: pirsch:pirsch-statistics-api
   name: Pirsch Statistics API
   description: Query analytics statistics by date range and filter criteria
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - Statistics
@@ -194,15 +199,15 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-statistics-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 - aid: pirsch:pirsch-tracking-api
   name: Pirsch Tracking API
   description: Send page views, events, and session keep-alive signals
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - Tracking
@@ -210,15 +215,15 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-tracking-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 - aid: pirsch:pirsch-traffic-management-api
   name: Pirsch Traffic Management API
   description: Filter traffic and configure spike/warning notifications
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - Traffic Management
@@ -226,15 +231,15 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-traffic-management-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 - aid: pirsch:pirsch-user-api
   name: Pirsch User API
   description: Manage the authenticated user account
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - User
@@ -242,15 +247,15 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-user-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 - aid: pirsch:pirsch-views-api
   name: Pirsch Views API
   description: Save and manage custom analytics views
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - Views
@@ -258,15 +263,15 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-views-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 - aid: pirsch:pirsch-webhooks-api
   name: Pirsch Webhooks API
   description: Configure webhooks for event-driven integrations
-  humanURL: https://docs.pirsch.io/api-sdks/api
+  humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
   - Webhooks
@@ -274,9 +279,9 @@ apis:
   - type: OpenAPI
     url: openapi/pirsch-webhooks-api-openapi.yml
   - type: Documentation
-    url: https://docs.pirsch.io/api-sdks/api
+    url: https://docs.pirsch.io/api-sdks/api-v1
   - type: APIGuide
-    url: https://docs.pirsch.io/api-sdks/api-guide
+    url: https://docs.pirsch.io/api-sdks/api-guide-v1
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 common:
@@ -306,6 +311,128 @@ common:
     url: rate-limits/pirsch-rate-limits.yml
   - type: FinOps
     url: finops/pirsch-finops.yml
+  - type: DeveloperPortal
+    url: https://docs.pirsch.io/api-sdks/api-v1
+  - type: APIReference
+    url: https://docs.pirsch.io/api-sdks/api-v1
+  - type: GettingStarted
+    url: https://docs.pirsch.io/get-started/frontend-integration
+  - type: Support
+    url: https://forum.pirsch.io
+  - type: HelpCenter
+    url: https://docs.pirsch.io/faq
+  - type: Console
+    url: https://pirsch.pirsch.io
+  - type: Features
+    url: https://pirsch.io/features
+  - type: About
+    url: https://pirsch.io/about-us
+  - type: News
+    url: https://pirsch.io/news
+  - type: DataProcessingAgreement
+    url: https://pirsch.io/static/files/Data%20Processing%20Agreement%20-%20Pirsch%20Analytics.pdf
+  - type: Bluesky
+    url: https://bsky.app/profile/pirsch.bsky.social
+  - type: Mastodon
+    url: https://social.anoxinon.de/@pirsch
+  - type: ProductHunt
+    url: https://www.producthunt.com/products/pirsch-analytics
+  - type: SignUp
+    url: https://pirsch.io/signup
+  - type: Login
+    url: https://pirsch.io/login
+  - type: TermsOfService
+    url: https://pirsch.io/terms
+  - type: PrivacyPolicy
+    url: https://pirsch.io/privacy
+  - type: GitHubOrganization
+    url: https://github.com/pirsch-analytics
+  - type: ChangeLog
+    url: https://docs.pirsch.io/changelog
+  - type: ChangeLog
+    url: changelog/pirsch-changelog.yml
+  - type: Packages
+    url: packages/pirsch-packages.yml
+  - type: SDKs
+    url: packages/pirsch-packages.yml
+  - type: LLMsTxt
+    url: llms/pirsch-llms.txt
+  - type: Conventions
+    url: conventions/pirsch-conventions.yml
+  - type: ErrorCatalog
+    url: errors/pirsch-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/pirsch-lifecycle.yml
+  - type: Conformance
+    url: conformance/pirsch-conformance.yml
+  - type: Compliance
+    url: https://docs.pirsch.io/privacy
+  - type: DataModel
+    url: data-model/pirsch-data-model.yml
+  - type: Components
+    url: components/pirsch-components.yml
+  - type: Webhooks
+    url: asyncapi/pirsch-webhooks.yml
+  - type: ToolCrosswalk
+    url: mcp/pirsch-tool-crosswalk.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Vocabulary
+    url: vocabulary/pirsch-vocabulary.yml
+  - type: JSONLD
+    url: json-ld/pirsch-context.jsonld
+  - type: Rules
+    url: rules/pirsch-jsonschema-spectral-rules.yml
+  - type: JSONSchema
+    url: json-schema/pirsch-hit-request.json
+  - type: JSONSchema
+    url: json-schema/pirsch-event-request.json
+  - type: JSONSchema
+    url: json-schema/pirsch-visitor-stats.json
+  - type: JSONSchema
+    url: json-schema/pirsch-domain.json
+  - type: Examples
+    url: examples/pirsch-hit-request-example.json
+  - type: Examples
+    url: examples/pirsch-event-request-example.json
+  - type: Examples
+    url: examples/pirsch-token-request-example.json
+  - type: Examples
+    url: examples/pirsch-token-response-example.json
+  - type: Examples
+    url: examples/pirsch-visitor-stats-response-example.json
+  - type: Examples
+    url: examples/pirsch-domain-example.json
+  - type: Overlay
+    url: overlays/pirsch-access-links-overlay.yaml
+  - type: Overlay
+    url: overlays/pirsch-authentication-overlay.yaml
+  - type: Overlay
+    url: overlays/pirsch-clients-overlay.yaml
+  - type: Overlay
+    url: overlays/pirsch-conversion-goals-overlay.yaml
+  - type: Overlay
+    url: overlays/pirsch-domains-overlay.yaml
+  - type: Overlay
+    url: overlays/pirsch-email-reports-overlay.yaml
+  - type: Overlay
+    url: overlays/pirsch-funnels-overlay.yaml
+  - type: Overlay
+    url: overlays/pirsch-members-overlay.yaml
+  - type: Overlay
+    url: overlays/pirsch-short-links-overlay.yaml
+  - type: Overlay
+    url: overlays/pirsch-statistics-overlay.yaml
+  - type: Overlay
+    url: overlays/pirsch-tracking-overlay.yaml
+  - type: Overlay
+    url: overlays/pirsch-traffic-management-overlay.yaml
+  - type: Overlay
+    url: overlays/pirsch-user-overlay.yaml
+  - type: Overlay
+    url: overlays/pirsch-views-overlay.yaml
+  - type: Overlay
+    url: overlays/pirsch-webhooks-overlay.yaml
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
