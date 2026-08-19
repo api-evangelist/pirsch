@@ -1,0 +1,104 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  Error envelope and status semantics read from
+  https://docs.pirsch.io/api-sdks/api-guide-v1 and
+  https://docs.pirsch.io/api-sdks/api-v1; the per-operation status codes were
+  derived from the responses blocks in
+  openapi/_original/pirsch-pirsch-api-openapi.yml.
+docs: https://docs.pirsch.io/api-sdks/api-guide-v1
+format: proprietary
+rfc9457: false
+media_type: application/json
+
+envelope:
+  shape: '{ "validation": {"<field>": "<message>"}, "error": ["<message>"], "context": {} }'
+  fields:
+    - name: validation
+      type: object
+      description: >-
+        Field-level validation failures keyed by the offending parameter name.
+        Present on 400 responses caused by a malformed or missing parameter.
+    - name: error
+      type: array of string
+      description: >-
+        General error messages not attributable to a single field — object not
+        found, permission denied, quota exceeded.
+    - name: context
+      type: object
+      description: Free-form key/value context attached to the error.
+  note: >-
+    There is no machine-readable error code and no error type URI. A client that
+    needs to branch on a specific failure has to string-match the message text,
+    which is the single biggest agent-readiness weakness in this API.
+
+problems:
+  - status: 400
+    title: Validation error
+    description: >-
+      The request body or query string failed validation. Field-level detail is
+      returned in `validation`.
+    body: ErrorResponse
+    source_operation: openapi/_original/pirsch-pirsch-api-openapi.yml
+    applies_to:
+      - getToken
+      - sendPageView
+      - sendPageViewBatch
+      - sendEvent
+      - sendEventBatch
+      - keepSessionAlive
+    remediation: >-
+      Read the `validation` map and correct the named fields. For /token a 400
+      also means the client_id/client_secret pair was rejected.
+
+  - status: 401
+    title: Unauthorized
+    description: >-
+      The bearer token is missing, malformed, or expired. Documented explicitly
+      in the API guide as the expiry signal.
+    body: ErrorResponse
+    source: https://docs.pirsch.io/api-sdks/api-v1
+    remediation: >-
+      Re-POST /api/v1/token with the client credentials, replace the cached
+      token, and retry the request once. Pirsch issues no refresh token. A 401
+      on a tracking call made with a pa_ access key means the key was revoked,
+      not expired.
+    note: >-
+      Not declared in the harvested OpenAPI responses blocks even though the
+      docs describe it — a spec-completeness gap worth reporting to Pirsch.
+
+  - status: 403
+    title: Forbidden
+    description: >-
+      The authenticated client has no access to the requested domain, or an
+      access key (write-only) was used against a read endpoint.
+    body: ErrorResponse
+    source: https://docs.pirsch.io/api-sdks/api-guide-v1
+    remediation: >-
+      Confirm the client belongs to the domain in `id`/`domain_id`, and use an
+      OAuth client rather than a pa_ access key for any statistics read.
+    note: Inferred from the documented access-key/write-only split; not declared in the spec.
+
+  - status: 429
+    title: Too Many Requests
+    description: >-
+      The per-minute rate limit for the endpoint category was exceeded — 10/min
+      for security endpoints, 60/min for configuration endpoints.
+    headers: [X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After]
+    source: https://docs.pirsch.io/api-sdks/api-guide-v1
+    remediation: >-
+      Wait the number of seconds in `Retry-After`, or until `X-RateLimit-Reset`,
+      before retrying. Statistics and data-collection endpoints are currently
+      unlimited and should not produce a 429.
+    detail: rate-limits/pirsch-rate-limits.yml
+    note: Not declared in the harvested OpenAPI responses blocks.
+
+coverage:
+  operations_in_spec: 97
+  operations_declaring_a_4xx: 6
+  operations_declaring_only_200: 91
+  note: >-
+    Only the /token and tracking operations declare an error response in the
+    spec. Every management and statistics operation declares a bare 200. That is
+    a contract-quality gap in the spec we hold, and it is the reason 401, 403
+    and 429 above are sourced from the docs rather than derived.

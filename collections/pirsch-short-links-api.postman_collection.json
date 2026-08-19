@@ -1,0 +1,310 @@
+{
+  "item": [
+    {
+      "id": "1f5aa766-dee1-4a72-a85a-529d9966f1a8",
+      "name": "Short Links",
+      "description": {
+        "content": "Create and manage UTM-enriched short links",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b78a51d9-bcbb-4a3c-9603-ebed30b85292",
+          "name": "List short links",
+          "request": {
+            "name": "List short links",
+            "description": {},
+            "url": {
+              "path": [
+                "link"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "(Required) Domain ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a1df0ddd-eff5-4f9a-a763-ac3ff7109211",
+              "name": "Short links",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"domain_id\": \"string\",\n    \"name\": \"string\",\n    \"event_name\": \"string\",\n    \"utm_source\": \"string\",\n    \"utm_medium\": \"string\",\n    \"utm_campaign\": \"string\",\n    \"utm_content\": \"string\",\n    \"utm_term\": \"string\",\n    \"expires_at\": \"1990-03-15T13:03:51.132Z\",\n    \"expired_url\": \"string\",\n    \"webhook_id\": \"string\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"domain_id\": \"string\",\n    \"name\": \"string\",\n    \"event_name\": \"string\",\n    \"utm_source\": \"string\",\n    \"utm_medium\": \"string\",\n    \"utm_campaign\": \"string\",\n    \"utm_content\": \"string\",\n    \"utm_term\": \"string\",\n    \"expires_at\": \"1986-08-09T12:37:27.338Z\",\n    \"expired_url\": \"string\",\n    \"webhook_id\": \"string\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3192ac7a-ae53-405b-a9b0-ed4079935915",
+          "name": "Create or update short link",
+          "request": {
+            "name": "Create or update short link",
+            "description": {},
+            "url": {
+              "path": [
+                "link"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"event_name\": \"<string>\",\n  \"utm_source\": \"<string>\",\n  \"utm_medium\": \"<string>\",\n  \"utm_campaign\": \"<string>\",\n  \"utm_content\": \"<string>\",\n  \"utm_term\": \"<string>\",\n  \"expires_at\": \"<dateTime>\",\n  \"expired_url\": \"<string>\",\n  \"password\": \"<string>\",\n  \"webhook_endpoint\": \"<string>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"image\": \"<string>\",\n  \"allow_indexing\": \"<boolean>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"urls\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "596ede31-4117-40da-8cc0-6ead1e432590",
+              "name": "Short link saved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"event_name\": \"<string>\",\n  \"utm_source\": \"<string>\",\n  \"utm_medium\": \"<string>\",\n  \"utm_campaign\": \"<string>\",\n  \"utm_content\": \"<string>\",\n  \"utm_term\": \"<string>\",\n  \"expires_at\": \"<dateTime>\",\n  \"expired_url\": \"<string>\",\n  \"password\": \"<string>\",\n  \"webhook_endpoint\": \"<string>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"image\": \"<string>\",\n  \"allow_indexing\": \"<boolean>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"urls\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"domain_id\": \"string\",\n  \"name\": \"string\",\n  \"event_name\": \"string\",\n  \"utm_source\": \"string\",\n  \"utm_medium\": \"string\",\n  \"utm_campaign\": \"string\",\n  \"utm_content\": \"string\",\n  \"utm_term\": \"string\",\n  \"expires_at\": \"1950-07-14T12:25:47.282Z\",\n  \"expired_url\": \"string\",\n  \"webhook_id\": \"string\",\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c23fbc7-174a-46e5-9cc2-feba5aaadd8c",
+          "name": "Delete short link",
+          "request": {
+            "name": "Delete short link",
+            "description": {},
+            "url": {
+              "path": [
+                "link"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ed7b1900-c0ca-42d2-b3fa-c73b3218441d",
+              "name": "Short link deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.pirsch.io/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b4d8ffe3-e5b8-442e-bc99-ca505522d75f",
+    "name": "Pirsch Access Links Short Links API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.\n\nContact Support:\n Name: Pirsch Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,389 @@
+{
+  "item": [
+    {
+      "id": "80da6861-40fb-4931-8a5d-1603d8225693",
+      "name": "Email Reports",
+      "description": {
+        "content": "Schedule and manage recurring email analytics reports",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "370a81c1-70d1-40de-994b-be4dd9eb4124",
+          "name": "List email reports",
+          "request": {
+            "name": "List email reports",
+            "description": {},
+            "url": {
+              "path": [
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "(Required) Domain ID"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8a135f6b-3c23-404a-960b-7ce39559e6a6",
+              "name": "Email reports",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"domain_id\": \"string\",\n    \"emails\": [\n      \"jSa8xMS8J7su@LzuxifdbnZhhWiZRqKFfheMYXw.bw\",\n      \"sQtX4qnJrpMxWrw@kPUkqhTOOqCMdQcfzOhJwiiMeveVGxgSb.qtqr\"\n    ],\n    \"interval\": 6232,\n    \"link_to\": \"string\",\n    \"next_report\": \"2012-07-22T23:59:18.283Z\",\n    \"reply_to\": \"JmWYxe60YV@upgYxBQqYdopesG.lpcy\"\n  },\n  {\n    \"id\": \"string\",\n    \"domain_id\": \"string\",\n    \"emails\": [\n      \"YKx8@rCqCpVbwPSqkMVtVbULR.omk\",\n      \"6hG@RxxoBi.sn\"\n    ],\n    \"interval\": 7976,\n    \"link_to\": \"string\",\n    \"next_report\": \"2015-12-12T17:04:50.106Z\",\n    \"reply_to\": \"xvD7aEXN15gxYq4@RRxDHdRJ.ae\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a487e727-263c-4265-9ce0-60d1f5481a4a",
+          "name": "Create email report",
+          "request": {
+            "name": "Create email report",
+            "description": {},
+            "url": {
+              "path": [
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain_id\": \"<string>\",\n  \"emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"interval\": \"<integer>\",\n  \"reply_to\": \"<email>\",\n  \"start_date\": \"<date>\",\n  \"link_to\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7319ebb4-6c1d-440a-8767-39c8e816d8bc",
+              "name": "Report created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain_id\": \"<string>\",\n  \"emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"interval\": \"<integer>\",\n  \"reply_to\": \"<email>\",\n  \"start_date\": \"<date>\",\n  \"link_to\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"domain_id\": \"string\",\n  \"emails\": [\n    \"5j2be1xaToJ@dQxSHUznsuARLcUzeIPNicj.dd\",\n    \"fgLfV64C9RlepkR@neiNlkbtDVUWQ.fwmg\"\n  ],\n  \"interval\": 4967,\n  \"link_to\": \"string\",\n  \"next_report\": \"1954-08-19T03:47:28.303Z\",\n  \"reply_to\": \"tzo1TJaTaG@ReXmNowJAuHXXl.eeu\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7a53cc1b-9b36-4875-b62c-751a25a4468f",
+          "name": "Update email report",
+          "request": {
+            "name": "Update email report",
+            "description": {},
+            "url": {
+              "path": [
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"interval\": \"<integer>\",\n  \"link_to\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "afd22b1a-ee83-433d-87f3-cd60d6427dec",
+              "name": "Report updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"interval\": \"<integer>\",\n  \"link_to\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "53be0b2a-2175-441d-bb5c-e6555b84b17f",
+          "name": "Delete email report",
+          "request": {
+            "name": "Delete email report",
+            "description": {},
+            "url": {
+              "path": [
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "adfff64a-0651-4a3e-8276-9f68400ab44c",
+              "name": "Report deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.pirsch.io/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "72bbeffc-f5ee-48f0-a4ce-cf69031043cc",
+    "name": "Pirsch Access Links Email Reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.\n\nContact Support:\n Name: Pirsch Support",
+      "type": "text/plain"
+    }
+  }
+}

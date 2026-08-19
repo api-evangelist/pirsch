@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pirsch Access Links Short Links API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Short Links",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List short links",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pirsch.io/api/v1/link",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Domain ID"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List short links"
+        },
+        {
+          "info": {
+            "name": "Create or update short link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update short link"
+        },
+        {
+          "info": {
+            "name": "Delete short link",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.pirsch.io/api/v1/link",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete short link"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,147 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pirsch Access Links User API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get account details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pirsch.io/api/v1/user"
+          },
+          "docs": "Get the authenticated user's account information"
+        },
+        {
+          "info": {
+            "name": "Update full name",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/user/name",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update full name"
+        },
+        {
+          "info": {
+            "name": "Update email address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/user/email",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update email address"
+        },
+        {
+          "info": {
+            "name": "Change password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/user/password",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change password"
+        },
+        {
+          "info": {
+            "name": "Change interface language",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/user/language",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change interface language"
+        },
+        {
+          "info": {
+            "name": "Change default time range",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/user/filter",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change default time range"
+        },
+        {
+          "info": {
+            "name": "Get news",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pirsch.io/api/v1/user/news"
+          },
+          "docs": "Get release news and announcements"
+        },
+        {
+          "info": {
+            "name": "Mark news as read",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/user/news",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Mark news as read"
+        },
+        {
+          "info": {
+            "name": "Get affiliate rewards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pirsch.io/api/v1/user/rewards"
+          },
+          "docs": "Get affiliate referral rewards summary"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

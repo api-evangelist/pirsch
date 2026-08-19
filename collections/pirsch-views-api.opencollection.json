@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pirsch Access Links Views API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Views",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List saved views",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pirsch.io/api/v1/view",
+            "params": [
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get all saved analytics views for a domain"
+        },
+        {
+          "info": {
+            "name": "Create or update view",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/view",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update view"
+        },
+        {
+          "info": {
+            "name": "Delete view",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.pirsch.io/api/v1/view",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete view"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

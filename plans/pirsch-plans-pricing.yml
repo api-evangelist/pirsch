@@ -1,6 +1,9 @@
 specificationVersion: "0.1"
 id: pirsch-plans-pricing
 name: Pirsch Plans & Pricing
+generated: '2026-08-13'
+method: searched
+source: https://pirsch.io/pricing
 description: >-
   Pirsch offers three subscription tiers based on monthly page views and
   feature access. All plans include a 30-day free trial with no credit card
@@ -8,7 +11,19 @@ description: >-
   quotas count page views, events, and 10 % of session extensions.
 url: https://pirsch.io/pricing
 created: "2026-06-13"
-modified: "2026-06-13"
+modified: "2026-08-13"
+plan_count: 3
+billing:
+  periods: [month, year]
+  trial: 30-day free trial, no credit card required
+  overage: >-
+    Page-view quotas scale with the price; exceeding the quota triggers a limit
+    notification that names the billing-cycle reset date (changelog 2.14.14)
+    rather than a per-unit overage charge.
+  quota_counting: >-
+    Page views, custom events, and 10% of session extensions all count toward
+    the monthly page-view quota.
+verified: '2026-08-13'
 plans:
   - name: Standard
     description: >-
@@ -19,6 +34,8 @@ plans:
     price: 6.00
     unit: month
     currency: USD
+    annual_price: 72.00
+    annual_unit: year
     quotas:
       - name: Monthly Page Views
         value: 10000
@@ -44,6 +61,8 @@ plans:
     price: 12.00
     unit: month
     currency: USD
+    annual_price: 144.00
+    annual_unit: year
     quotas:
       - name: Monthly Page Views
         value: 10000

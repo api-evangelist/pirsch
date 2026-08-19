@@ -1,0 +1,128 @@
+generated: '2026-08-13'
+method: derived
+status: candidate
+first_party: false
+source: >-
+  Candidate tool list derived from the operations in
+  openapi/_original/pirsch-pirsch-api-openapi.yml. Searched for a first-party
+  Pirsch MCP server across docs.pirsch.io, the github.com/pirsch-analytics
+  organization and the npm registry on 2026-08-13 and found none; the only
+  Pirsch MCP server that exists is third-party (recorded below).
+
+deployment:
+  mode: none
+  auth: none
+  verified: searched
+  note: >-
+    Pirsch publishes no MCP server — neither a remote endpoint nor a stdio
+    package. mcp.pirsch.io answers HTTP 200, but *.pirsch.io is a wildcard
+    catch-all: that hostname and a control hostname return byte-identical
+    2,817-byte SPA HTML, and a JSON-RPC tools/list POST to
+    https://mcp.pirsch.io/mcp returns that same HTML, not an MCP response. It is
+    not an endpoint. https://api.pirsch.io/mcp returns 404.
+
+third_party_servers:
+  - name: Pirsch Analytics MCP Server
+    vendor: Very Good Plugins
+    first_party: false
+    mode: local-stdio
+    install: npx @verygoodplugins/mcp-pirsch
+    package: https://www.npmjs.com/package/@verygoodplugins/mcp-pirsch
+    repository: https://github.com/verygoodplugins/mcp-pirsch
+    auth: oauth
+    auth_detail: >-
+      Uses the caller's own Pirsch OAuth client credentials (client_id /
+      client_secret) against POST /api/v1/token, with token caching and refresh.
+    verified: searched
+    source: https://github.com/verygoodplugins/mcp-pirsch
+    tools: 17
+    note: >-
+      A real, installable MCP server, but it is a community project wrapping the
+      public REST API. It is NOT a Pirsch agent surface and no MCPServer pointer
+      is wired in apis.yml on the strength of it. Its tool names are mapped to
+      the backing REST operations in pirsch-tool-crosswalk.yml.
+
+server:
+  name: pirsch
+  transport: null
+  url: null
+
+tools:
+  - name: list_domains
+    description: List domains accessible to the authenticated account
+    source_operation: openapi/pirsch-domains-api-openapi.yml#listDomains
+  - name: get_total_statistics
+    description: Get total visitors, views, sessions and bounce data for a date range
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getTotalStatistics
+  - name: get_visitor_statistics
+    description: Get visitors grouped by day, week, month or year
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getVisitorStatistics
+  - name: get_page_statistics
+    description: Get statistics broken down by page path
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getPageStatistics
+  - name: get_hostname_statistics
+    description: Get statistics broken down by hostname
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getHostnameStatistics
+  - name: get_referrer_statistics
+    description: Get statistics broken down by referrer
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getReferrerStatistics
+  - name: get_channel_statistics
+    description: Get statistics grouped by traffic channel
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getChannelStatistics
+  - name: get_utm_statistics
+    description: Get UTM source, medium, campaign, content and term breakdowns
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getUtmSourceStatistics
+  - name: get_geo_statistics
+    description: Get country, region and city breakdowns
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getCountryStatistics
+  - name: get_device_statistics
+    description: Get browser, operating system and platform breakdowns
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getPlatformStatistics
+  - name: get_event_statistics
+    description: Get tracked events with visitor counts and metadata keys
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getEventStatistics
+  - name: get_goal_statistics
+    description: Get statistics for all configured conversion goals
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getGoalStatistics
+  - name: get_funnel_statistics
+    description: Get step-by-step funnel analytics for a funnel
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getFunnelStatistics
+  - name: get_active_visitors
+    description: Get the current real-time active visitor count
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getActiveVisitors
+  - name: get_session_list
+    description: List individual visitor sessions
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getSessionList
+  - name: get_session_details
+    description: Get the page-by-page breakdown of a single session
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getSessionDetails
+  - name: get_growth_statistics
+    description: Get growth rates comparing the current period to the previous one
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getGrowthStatistics
+  - name: get_keywords
+    description: Get Google Search Console keyword data
+    source_operation: openapi/pirsch-statistics-api-openapi.yml#getKeywords
+  - name: send_page_view
+    description: Track a single page view
+    source_operation: openapi/pirsch-tracking-api-openapi.yml#sendPageView
+  - name: send_event
+    description: Track a single custom event with optional metadata
+    source_operation: openapi/pirsch-tracking-api-openapi.yml#sendEvent
+  - name: list_conversion_goals
+    description: List conversion goals configured for a domain
+    source_operation: openapi/pirsch-conversion-goals-api-openapi.yml#listConversionGoals
+  - name: list_funnels
+    description: List funnels configured for a domain
+    source_operation: openapi/pirsch-funnels-api-openapi.yml#listFunnels
+  - name: list_webhooks
+    description: List webhooks configured for a domain
+    source_operation: openapi/pirsch-webhooks-api-openapi.yml#listWebhooks
+
+authentication:
+  scheme: http-bearer
+  detail: authentication/pirsch-authentication.yml
+  note: >-
+    Any Pirsch MCP server must carry either an OAuth2 client-credentials token
+    from POST /api/v1/token or a pa_-prefixed access key in the Authorization
+    header. Access keys are write-only, so a read/statistics tool set requires
+    the OAuth client type.

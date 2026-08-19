@@ -1,0 +1,310 @@
+{
+  "item": [
+    {
+      "id": "621531db-c331-4a33-a90e-699ec4587ca8",
+      "name": "Funnels",
+      "description": {
+        "content": "Define and manage multi-step conversion funnels",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8216cd7a-bbc6-4ccd-968f-8d9331539754",
+          "name": "List funnels",
+          "request": {
+            "name": "List funnels",
+            "description": {},
+            "url": {
+              "path": [
+                "funnel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "(Required) Domain ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5951e54f-96be-442d-b662-8e4a0269d21b",
+              "name": "Funnels",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "funnel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"domain_id\": \"string\",\n    \"name\": \"string\",\n    \"steps\": [\n      {\n        \"name\": \"string\",\n        \"filter\": {}\n      },\n      {\n        \"name\": \"string\",\n        \"filter\": {}\n      }\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"domain_id\": \"string\",\n    \"name\": \"string\",\n    \"steps\": [\n      {\n        \"name\": \"string\",\n        \"filter\": {}\n      },\n      {\n        \"name\": \"string\",\n        \"filter\": {}\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8486ae1b-4225-4c37-b340-94971dcaf96c",
+          "name": "Create or update funnel",
+          "request": {
+            "name": "Create or update funnel",
+            "description": {},
+            "url": {
+              "path": [
+                "funnel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"steps\": [\n    {\n      \"name\": \"<string>\",\n      \"filter\": \"<object>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"filter\": \"<object>\"\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fbcdc625-a01b-4ae0-a166-2304e6454c16",
+              "name": "Funnel saved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "funnel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"steps\": [\n    {\n      \"name\": \"<string>\",\n      \"filter\": \"<object>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"filter\": \"<object>\"\n    }\n  ],\n  \"id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"domain_id\": \"string\",\n  \"name\": \"string\",\n  \"steps\": [\n    {\n      \"name\": \"string\",\n      \"filter\": {}\n    },\n    {\n      \"name\": \"string\",\n      \"filter\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a95dca7d-971a-40bc-84da-da9f11dcc2c5",
+          "name": "Delete funnel",
+          "request": {
+            "name": "Delete funnel",
+            "description": {},
+            "url": {
+              "path": [
+                "funnel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "23c99541-ef06-49b2-80ba-812a4fe60f85",
+              "name": "Funnel deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "funnel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.pirsch.io/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "216220dc-80fe-4caa-8a5e-aa4af0a512ba",
+    "name": "Pirsch Access Links Funnels API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.\n\nContact Support:\n Name: Pirsch Support",
+      "type": "text/plain"
+    }
+  }
+}

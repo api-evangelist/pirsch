@@ -1,0 +1,89 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.pirsch.io/advanced/webhooks
+docs: https://docs.pirsch.io/advanced/webhooks
+asyncapi_published: false
+asyncapi_note: >-
+  Pirsch publishes no AsyncAPI document. This artifact is the webhook catalog
+  read from the documentation, not a generated AsyncAPI — fabricating a spec for
+  a provider that does not ship one would misrepresent the surface. Wire
+  type: Webhooks, not type: AsyncAPI.
+
+description: >-
+  Pirsch's only event surface is an outbound webhook that fires when a named
+  custom event is tracked on a domain. There is no event stream, no message
+  broker, no server-sent events and no subscription API.
+
+transport:
+  protocol: HTTPS
+  method: POST
+  content_type: application/json
+  endpoint: caller-supplied HTTPS URL, configured per webhook
+  https_required: true
+
+configuration:
+  where: dashboard Integration settings, or the Webhooks API
+  api:
+    list: GET /api/v1/webhook?domain_id=<id>
+    upsert: POST /api/v1/webhook
+    delete: DELETE /api/v1/webhook?id=<id>
+    operations: [listWebhooks, createOrUpdateWebhook, deleteWebhook]
+    spec: openapi/pirsch-webhooks-api-openapi.yml
+  fields:
+    - {name: domain_id, required: true, description: Domain the webhook belongs to}
+    - {name: event, required: true, description: The custom event name that triggers the webhook}
+    - {name: endpoint, required: true, description: HTTPS URL to POST to}
+    - {name: description, required: false}
+    - {name: active, required: false, description: Whether the webhook is currently enabled}
+
+events:
+  - name: '<custom event name>'
+    trigger: >-
+      Fires when a custom event with the configured name is tracked on the
+      domain, whether via POST /api/v1/event, the pa.js script, or an HTML meta
+      tag.
+    payload_example: |
+      {
+          "event_name": "purchase",
+          "event_duration": 42,
+          "event_meta": {
+              "amount": "199.99",
+              "currency": "USD"
+          }
+      }
+    payload_fields:
+      - {name: event_name, type: string, description: The name of the custom event}
+      - {name: event_duration, type: number, description: Event duration in seconds}
+      - {name: event_meta, type: object, description: Flat key/value map — both key and value are strings}
+    note: >-
+      There is no fixed event catalog. The event names are whatever the customer
+      chooses to track, so the set is per-account rather than per-provider. That
+      is why no enumerable channel list is recorded here.
+
+delivery:
+  expected_response: HTTP 200-299
+  failure_behavior: >-
+    A response outside 200-299 fails silently — Pirsch does not retry the
+    delivery.
+  auto_disable_after: 100 consecutive failures
+  reenable: edit and save the webhook configuration in the dashboard
+  notification: Pirsch emails the account when a webhook is failing.
+
+security:
+  signature_header: null
+  shared_secret: false
+  timestamp: false
+  replay_protection: false
+  assessment: >-
+    Unsigned. Pirsch sends no signature header, no shared secret and no
+    timestamp, so a receiver has no way to verify that a POST came from Pirsch.
+    The only defence available to an integrator is treating the endpoint URL
+    itself as a secret (an unguessable path) and validating the payload shape.
+    Recorded because an agent building on this surface must not assume webhook
+    authenticity.
+
+related:
+  short_links: >-
+    Short links accept a webhook_id / webhook_endpoint, so a short-link
+    redirect can also drive a webhook — see
+    openapi/pirsch-short-links-api-openapi.yml.

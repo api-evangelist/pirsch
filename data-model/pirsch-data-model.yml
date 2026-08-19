@@ -1,0 +1,97 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  Derived from the components.schemas $ref graph and the id-reference fields
+  (domain_id, user_id, organization_id, funnel_id, webhook_id, theme_id) in
+  openapi/_original/pirsch-pirsch-api-openapi.yml, cross-checked against the
+  object shapes documented at https://docs.pirsch.io/api-sdks/api-v1.
+docs: https://docs.pirsch.io/api-sdks/api-v1
+notation: >-
+  relationships use has_one / has_many / belongs_to with the foreign-key field
+  name; direction is from the entity that owns the reference.
+id_scheme:
+  format: opaque string identifiers
+  prefixes: false
+  note: >-
+    Unlike prefix-typed APIs, Pirsch ids carry no type prefix — a domain id, a
+    goal id and a member id are indistinguishable strings. The only typed
+    identifier in the system is the pa_ access-key prefix, which is a
+    credential, not an object id.
+
+entities:
+  - {name: User, domain: account, description: The authenticated account holder. Root of the ownership tree.}
+  - {name: Organization, domain: account, description: Optional container that can own domains instead of a user.}
+  - {name: Domain, domain: core, description: A tracked website. Every analytics object hangs off a domain.}
+  - {name: AlternativeDomain, domain: core, description: An additional hostname reporting into the same domain.}
+  - {name: Member, domain: access, description: A user's role (Owner/Admin/Viewer) on a domain or organization.}
+  - {name: Invitation, domain: access, description: A pending email invitation to become a member.}
+  - {name: AccessLink, domain: access, description: A shareable code granting read access to a dashboard, optionally time-limited.}
+  - {name: Client, domain: access, description: An API client — either an OAuth client (client_id/client_secret) or a token client.}
+  - {name: Hit, domain: collection, description: A single page view submitted to /hit. Write-only; not readable as an object.}
+  - {name: Event, domain: collection, description: A named custom event with duration and a flat string metadata map.}
+  - {name: Session, domain: collection, description: A visitor session, extended by /session keep-alive calls.}
+  - {name: ConversionGoal, domain: analysis, description: A path pattern or event definition counted as a conversion.}
+  - {name: Funnel, domain: analysis, description: An ordered list of filter steps measured as a drop-off sequence.}
+  - {name: View, domain: analysis, description: A saved date range and period for a domain dashboard.}
+  - {name: TrafficFilter, domain: analysis, description: A rule excluding traffic from a domain's statistics.}
+  - {name: ShortLink, domain: engagement, description: A UTM-enriched short URL, optionally expiring and webhook-bound.}
+  - {name: EmailReport, domain: engagement, description: A recurring emailed analytics digest on an interval.}
+  - {name: Webhook, domain: engagement, description: An HTTPS endpoint POSTed to when a named custom event fires.}
+  - {name: Statistics, domain: reporting, description: Read-only aggregate projections (TotalStats, VisitorStats, PageStats, ReferrerStats, PlatformStats, EventStats, ActiveVisitors).}
+
+relationships:
+  - {from: Domain, to: User, kind: belongs_to, via: user_id}
+  - {from: Domain, to: Organization, kind: belongs_to, via: organization_id}
+  - {from: Domain, to: AlternativeDomain, kind: has_many, via: domain_id}
+  - {from: Domain, to: Member, kind: has_many, via: id}
+  - {from: Domain, to: AccessLink, kind: has_many, via: domain_id}
+  - {from: Domain, to: Client, kind: has_many, via: domain_id}
+  - {from: Domain, to: ConversionGoal, kind: has_many, via: domain_id}
+  - {from: Domain, to: Funnel, kind: has_many, via: domain_id}
+  - {from: Domain, to: View, kind: has_many, via: domain_id}
+  - {from: Domain, to: TrafficFilter, kind: has_many, via: domain_id}
+  - {from: Domain, to: ShortLink, kind: has_many, via: domain_id}
+  - {from: Domain, to: EmailReport, kind: has_many, via: domain_id}
+  - {from: Domain, to: Webhook, kind: has_many, via: domain_id}
+  - {from: Member, to: User, kind: belongs_to, via: user_id}
+  - {from: Invitation, to: Domain, kind: belongs_to, via: domain_id}
+  - {from: Invitation, to: Organization, kind: belongs_to, via: organization_id}
+  - {from: ConversionGoal, to: Domain, kind: belongs_to, via: domain_id}
+  - {from: ConversionGoal, to: Event, kind: has_one, via: event_name}
+  - {from: Funnel, to: Domain, kind: belongs_to, via: domain_id}
+  - {from: ShortLink, to: Webhook, kind: belongs_to, via: webhook_id}
+  - {from: ShortLink, to: Event, kind: has_one, via: event_name}
+  - {from: EmailReport, to: Domain, kind: belongs_to, via: domain_id}
+  - {from: Webhook, to: Domain, kind: belongs_to, via: domain_id}
+  - {from: Webhook, to: Event, kind: has_one, via: event}
+  - {from: Event, to: Hit, kind: belongs_to, via: 'inherited request shape (EventRequest allOf HitRequest)'}
+  - {from: Session, to: Hit, kind: has_many, via: 'visitor_id + session_id (statistics only)'}
+  - {from: Statistics, to: Domain, kind: belongs_to, via: id}
+
+schema_inheritance:
+  - {child: HitBatchRequest, parent: HitRequest, adds: [time]}
+  - {child: EventRequest, parent: HitRequest, adds: [event_name, event_duration, event_meta, non_interactive]}
+  - {child: EventBatchRequest, parent: EventRequest, adds: [time]}
+  - {child: SessionBatchRequest, parent: SessionRequest, adds: [time]}
+  - {child: UpdateGoalRequest, parent: CreateGoalRequest, adds: [id]}
+
+roles:
+  values: [Owner, Admin, Viewer]
+  applies_to: [Domain.user_role, Member.role]
+  note: >-
+    UpdateMemberRequest only accepts Viewer or Admin — Owner cannot be granted
+    through the API.
+
+observations:
+  - >-
+    Domain is the hub of the entire model. Nineteen of the twenty entity types
+    reach the domain in one hop; only User and Organization sit above it.
+  - >-
+    The foreign key naming is inconsistent between read and write. Statistics
+    and several list operations scope by `id` (meaning domain id) while write
+    operations use `domain_id`. An agent that assumes one name will fail on
+    roughly half the surface.
+  - >-
+    Collection objects (Hit, Event, Session) are write-only. They can be
+    submitted and then queried only as aggregates through /statistics/*; there
+    is no GET for an individual hit or event.

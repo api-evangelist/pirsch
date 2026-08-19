@@ -1,0 +1,153 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.pirsch.io/api-sdks/sdks (the official SDK list), the
+  github.com/pirsch-analytics organization repository listing, and the
+  unauthenticated registry metadata endpoints registry.npmjs.org,
+  proxy.golang.org and repo.packagist.org. Versions and publish dates below were
+  read from those registry endpoints on 2026-08-13, not from prose.
+docs: https://docs.pirsch.io/api-sdks/sdks
+notes: >-
+  Pirsch names exactly three officially supported client SDKs — JavaScript, Go
+  and PHP. The docs page states plainly that community .NET and Ruby SDKs exist
+  but "Unofficial SDKs are not supported by us", so those are not recorded here.
+  The Java SDK repo in the same org has had no commit since 2022-05-31 and is
+  published to no registry; it is recorded as unmaintained rather than dropped,
+  because the repo is still public and discoverable.
+
+packages:
+  - language: javascript
+    registry: npm
+    name: pirsch-sdk
+    url: https://www.npmjs.com/package/pirsch-sdk
+    install: npm install pirsch-sdk
+    repository: https://github.com/pirsch-analytics/pirsch-js-sdk
+    official: true
+    version: 2.10.1
+    published: '2026-08-02'
+    note: >-
+      TypeScript/JavaScript client SDK for Pirsch. Most actively released of the
+      three official SDKs.
+
+  - language: go
+    registry: go
+    name: github.com/pirsch-analytics/pirsch-go-sdk/v2
+    url: https://pkg.go.dev/github.com/pirsch-analytics/pirsch-go-sdk/v2
+    install: go get github.com/pirsch-analytics/pirsch-go-sdk/v2
+    repository: https://github.com/pirsch-analytics/pirsch-go-sdk
+    official: true
+    version: v2.6.1
+    published: '2026-05-11'
+    note: >-
+      The v1 module path (github.com/pirsch-analytics/pirsch-go-sdk, latest
+      v1.9.0 from 2023-04-02) still resolves on proxy.golang.org; v2 is the
+      current major.
+
+  - language: php
+    registry: packagist
+    name: pirsch-analytics/sdk
+    url: https://packagist.org/packages/pirsch-analytics/sdk
+    install: composer require pirsch-analytics/sdk
+    repository: https://github.com/pirsch-analytics/pirsch-php-sdk
+    official: true
+    version: v2.0.2
+    published: '2025-01-31'
+    note: >-
+      Oldest release of the three official SDKs — 18 months behind the JS SDK at
+      time of probe. The Composer package name (pirsch-analytics/sdk) does not
+      match the repository name (pirsch-php-sdk).
+
+  - language: php
+    registry: packagist
+    name: pirsch-analytics/laravel-pirsch
+    url: https://packagist.org/packages/pirsch-analytics/laravel-pirsch
+    install: composer require pirsch-analytics/laravel-pirsch
+    repository: https://github.com/pirsch-analytics/laravel-pirsch
+    official: true
+    kind: framework-integration
+    version: 1.1.0
+    published: '2026-03-31'
+    note: Official Laravel integration; wraps the PHP SDK rather than the API directly.
+
+  - language: php
+    registry: wordpress.org
+    name: pirsch-analytics
+    url: https://wordpress.org/plugins/pirsch-analytics/
+    repository: https://github.com/pirsch-analytics/pirsch-wordpress
+    official: true
+    kind: plugin
+    version: v2.0.1
+    published: null
+    note: >-
+      Version read from the repository's git tags (v2.0.1); the WordPress.org
+      plugin directory was not queried for a dated release, so `published` is
+      recorded null rather than guessed.
+
+  - language: go
+    registry: go
+    name: github.com/pirsch-analytics/pirsch/v6
+    url: https://pkg.go.dev/github.com/pirsch-analytics/pirsch/v6
+    install: go get github.com/pirsch-analytics/pirsch/v6
+    repository: https://github.com/pirsch-analytics/pirsch
+    official: true
+    kind: self-hosted-library
+    version: v6.28.4
+    published: '2026-07-22'
+    note: >-
+      Not an API client — this is the open-source, self-hosted Go analytics
+      engine the hosted product is built on. A v7 line is in release-candidate
+      (v7.0.0-rc9 tagged 2026-07-06 on proxy.golang.org, rc27 in git tags).
+
+  - language: go
+    registry: none
+    name: caddy-pirsch-plugin
+    url: https://github.com/pirsch-analytics/caddy-pirsch-plugin
+    repository: https://github.com/pirsch-analytics/caddy-pirsch-plugin
+    official: true
+    kind: server-plugin
+    version: null
+    published: null
+    note: >-
+      Caddy v2 plugin that tracks requests through Pirsch. Distributed as a Go
+      module built into Caddy via xcaddy; no tagged release was found, so both
+      fields are recorded null (checked, nothing to record).
+
+  - language: java
+    registry: none
+    name: pirsch-analytics/java-sdk
+    url: https://github.com/pirsch-analytics/java-sdk
+    repository: https://github.com/pirsch-analytics/java-sdk
+    official: true
+    status: unmaintained
+    version: null
+    published: null
+    note: >-
+      Java client SDK in the official org, but published to no registry (not on
+      Maven Central under this coordinate) and with no push since 2022-05-31.
+      It is not listed on the official SDK page.
+
+  - language: javascript
+    registry: npm
+    name: pirsch
+    url: https://www.npmjs.com/package/pirsch
+    official: true
+    status: superseded
+    version: 1.7.2
+    published: '2020-10-29'
+    note: >-
+      First-party npm name last published 2020-10-29, nearly six years stale and
+      superseded by pirsch-sdk. Recorded as a decay signal, not as a recommended
+      install.
+
+community_packages:
+  - languages: [dotnet, ruby]
+    note: >-
+      docs.pirsch.io/api-sdks/sdks links community .NET and Ruby SDKs and states
+      "Unofficial SDKs are not supported by us." Not enumerated here because
+      they are not first-party.
+
+summary:
+  official_client_sdks: 3
+  languages: [javascript, go, php]
+  most_recent_release: '2026-08-02'
+  oldest_official_client_release: '2025-01-31'

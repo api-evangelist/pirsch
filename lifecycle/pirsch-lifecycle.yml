@@ -1,0 +1,107 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.pirsch.io/api-sdks/api (the v2 announcement),
+  https://docs.pirsch.io/api-sdks/api-v1, https://docs.pirsch.io/changelog, plus
+  live probes for a status page and a security/disclosure page on 2026-08-13.
+
+versioning:
+  scheme: uri-path
+  current: v1
+  base: https://api.pirsch.io/api/v1
+  docs: https://docs.pirsch.io/api-sdks/api-v1
+  notes: >-
+    The API version lives in the path. There is no version request header and no
+    per-account pinning; every caller is on v1.
+
+next_version:
+  version: v2
+  status: announced-not-released
+  docs: https://docs.pirsch.io/api-sdks/api
+  quote: >-
+    "API version 2 is work and progess and will most likely be released at the
+    end of 2026."
+  notes: >-
+    The v2 page exists at docs.pirsch.io/api-sdks/api and redirects readers back
+    to v1. No v2 base URL, contract or migration guide is published. Note that
+    the v2 page now occupies the /api-sdks/api and /api-sdks/api-guide URLs that
+    previously served v1 — v1 moved to /api-sdks/api-v1 and
+    /api-sdks/api-guide-v1. Any bookmark or catalog entry pointing at the old
+    URLs silently lands on an unreleased API's placeholder.
+
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  notes: >-
+    Pirsch publishes no deprecation policy, no migration window and no RFC 8594
+    Sunset/Deprecation header support. Deprecations, when they happen, appear in
+    the changelog prose only. No `Deprecation` pointer is wired in apis.yml.
+
+sla:
+  url: null
+  public_uptime_target: null
+  notes: >-
+    No uptime SLA is published on pirsch.io/terms or the pricing page. Enterprise
+    terms are negotiated ("dedicated support" on the Enterprise tier) but no
+    numeric commitment is public.
+
+status_page: null
+status_page_evidence:
+  - url: https://status.pirsch.io
+    status: 200
+    verdict: not-a-status-page
+    detail: >-
+      *.pirsch.io is a wildcard catch-all. status.pirsch.io, mcp.pirsch.io and a
+      control hostname all return a byte-identical 2,817-byte SPA shell
+      (md5 4b8b7f1aabf34d4146694f566d6d87a8). The 200 is the wildcard, not a
+      status page.
+  - url: https://pirsch.io/status
+    status: 404
+notes_on_status: >-
+  No status page was found. No `StatusPage` pointer is wired in apis.yml.
+  Availability incidents are communicated via https://x.com/PirschAnalytics and
+  the changelog.
+
+changelog:
+  url: https://docs.pirsch.io/changelog
+  scheme: semver-ish product versions with dates
+  current: 2.14.17
+  current_date: '2026-08-09'
+  detail: changelog/pirsch-changelog.yml
+  notes: >-
+    The changelog tracks the Pirsch product, not the API contract — entries
+    describe dashboard, billing and bot-filter changes. There is no separate API
+    changelog, so an integrator cannot tell from it whether an endpoint moved.
+
+support:
+  email: support@pirsch.io
+  troubleshooting: https://docs.pirsch.io/get-started/troubleshooting
+  faq: https://docs.pirsch.io/faq
+
+open_source:
+  engine: https://github.com/pirsch-analytics/pirsch
+  current: v6.28.4 (2026-07-22)
+  next: v7.0.0-rc9 on proxy.golang.org, v7.0.0-rc27 in git tags
+  notes: >-
+    The analytics engine behind the hosted product is open source (Go). Its
+    major-version cadence is public and is the best available proxy for the
+    platform's own roadmap, since Pirsch publishes no roadmap page
+    (https://pirsch.io/roadmap returned 404).
+
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in openapi/ carries deprecated: true.
+
+decay_signals:
+  - signal: PHP SDK release age
+    detail: >-
+      pirsch-analytics/sdk last published v2.0.2 on 2025-01-31 — 18 months
+      behind the JavaScript SDK (2.10.1, 2026-08-02).
+  - signal: Java SDK abandoned
+    detail: >-
+      github.com/pirsch-analytics/java-sdk has had no push since 2022-05-31 and
+      is on no registry; it is absent from the official SDK page but the repo
+      is still public.
+  - signal: stale npm name
+    detail: The first-party npm package `pirsch` last published 1.7.2 on 2020-10-29.

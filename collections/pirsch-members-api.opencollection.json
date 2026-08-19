@@ -1,0 +1,150 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pirsch Access Links Members API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Members",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List domain members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pirsch.io/api/v1/member",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Domain ID"
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List domain members"
+        },
+        {
+          "info": {
+            "name": "Invite members",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/member",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send invitations to one or more email addresses"
+        },
+        {
+          "info": {
+            "name": "Update member role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.pirsch.io/api/v1/member",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update member role"
+        },
+        {
+          "info": {
+            "name": "Remove member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.pirsch.io/api/v1/member",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Member ID"
+              }
+            ]
+          },
+          "docs": "Remove member"
+        },
+        {
+          "info": {
+            "name": "List invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pirsch.io/api/v1/invitation",
+            "params": [
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List invitations"
+        },
+        {
+          "info": {
+            "name": "Accept invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/invitation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accept invitation"
+        },
+        {
+          "info": {
+            "name": "Delete invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.pirsch.io/api/v1/invitation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete invitation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

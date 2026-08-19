@@ -1,0 +1,204 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  Binds the 17 tools published by the third-party Pirsch MCP server
+  (github.com/verygoodplugins/mcp-pirsch, npm @verygoodplugins/mcp-pirsch) to the
+  Pirsch REST operationIds in openapi/. Tool names and descriptions were read
+  from that project's README on 2026-08-13; operationIds were verified verbatim
+  against openapi/_original/pirsch-pirsch-api-openapi.yml. The MCP server is
+  stdio-only, so tools/list could not be introspected over the wire without
+  installing and running it — mappings are therefore made by name and
+  documented semantics, and confidence is set accordingly.
+caveat: >-
+  This crosswalk documents a COMMUNITY MCP surface, not a Pirsch one. Pirsch
+  ships no MCP server (see pirsch-mcp.yml). The crosswalk is still worth holding
+  because it is the only evidence of which parts of the Pirsch REST API agents
+  are actually reaching for.
+
+surfaces:
+  openapi:
+    path: openapi/_original/pirsch-pirsch-api-openapi.yml
+    refined: openapi/pirsch-*-openapi.yml
+    operations: 97
+    gated: false
+  graphql:
+    endpoint: null
+    note: Pirsch publishes no GraphQL surface.
+  mcp:
+    server: '@verygoodplugins/mcp-pirsch'
+    transport: stdio
+    url: null
+    first_party: false
+    gated: true
+    gated_reason: >-
+      stdio transport — tools/list requires locally installing and running the
+      package with live Pirsch OAuth credentials; no anonymous introspection is
+      possible.
+
+crosswalk:
+  - tool: pirsch_list_domains
+    category: domains
+    rest: [listDomains]
+    binding: rest
+    confidence: high
+  - tool: pirsch_total
+    category: statistics
+    rest: [getTotalStatistics]
+    binding: rest
+    confidence: high
+  - tool: pirsch_visitors
+    category: statistics
+    rest: [getVisitorStatistics]
+    binding: rest
+    confidence: high
+  - tool: pirsch_pages
+    category: statistics
+    rest: [getPageStatistics]
+    binding: rest
+    confidence: high
+  - tool: pirsch_referrers
+    category: statistics
+    rest: [getReferrerStatistics]
+    binding: rest
+    confidence: high
+  - tool: pirsch_goals
+    category: conversion-goals
+    rest: [getGoalStatistics, listConversionGoals]
+    binding: rest
+    confidence: medium
+    note: >-
+      Described as "conversion goals together with their observed stats", which
+      spans both the goal configuration list and the goal statistics read.
+  - tool: pirsch_events
+    category: statistics
+    rest: [getEventStatistics]
+    binding: rest
+    confidence: high
+  - tool: pirsch_utm
+    category: statistics
+    rest: [getUtmSourceStatistics, getUtmMediumStatistics, getUtmCampaignStatistics, getUtmContentStatistics, getUtmTermStatistics]
+    binding: rest
+    confidence: medium
+    note: One tool fans out across the five separate UTM breakdown operations.
+  - tool: pirsch_growth
+    category: statistics
+    rest: [getGrowthStatistics]
+    binding: rest
+    confidence: high
+  - tool: pirsch_active
+    category: statistics
+    rest: [getActiveVisitors]
+    binding: rest
+    confidence: high
+  - tool: pirsch_sessions
+    category: statistics
+    rest: [getSessionList]
+    binding: rest
+    confidence: high
+  - tool: pirsch_session_details
+    category: statistics
+    rest: [getSessionDetails]
+    binding: rest
+    confidence: high
+  - tool: pirsch_entry_pages
+    category: statistics
+    rest: []
+    binding: rest-undocumented-in-spec
+    confidence: low
+    rest_path: GET /api/v1/statistics/page/entry
+    note: >-
+      The endpoint is real and documented at docs.pirsch.io/api-sdks/api-v1, but
+      our harvested OpenAPI does not contain it, so there is no operationId to
+      bind to. Spec gap on our side, not an MCP-only tool.
+  - tool: pirsch_exit_pages
+    category: statistics
+    rest: []
+    binding: rest-undocumented-in-spec
+    confidence: low
+    rest_path: GET /api/v1/statistics/page/exit
+    note: Same spec gap as pirsch_entry_pages.
+  - tool: pirsch_event_pages
+    category: statistics
+    rest: []
+    binding: rest-undocumented-in-spec
+    confidence: low
+    rest_path: GET /api/v1/statistics/event/page
+    note: >-
+      "Pages on which a specific event fired" — documented endpoint, absent from
+      our spec.
+  - tool: pirsch_overview
+    category: statistics
+    rest: []
+    binding: rest-undocumented-in-spec
+    confidence: low
+    rest_path: GET /api/v1/statistics/overview
+    note: >-
+      Described as "cached overview statistics", which matches the documented
+      /statistics/overview endpoint. Absent from our spec.
+
+mcp_only:
+  - tool: pirsch_compare
+    reason: >-
+      Server-side composite — issues two period reads and computes the deltas
+      client-side. The Pirsch REST API publishes no comparison operation.
+
+rest_only:
+  - capability: Tracking (write)
+    operations: [sendPageView, sendPageViewBatch, sendEvent, sendEventBatch, keepSessionAlive, keepSessionAliveBatch]
+    note: The MCP server is read-only; no tool writes tracking data.
+  - capability: Domain management
+    operations: [createDomain, deleteDomain, updateDomainHostname, updateDomainSubdomain, updateDomainTimezone, updateDomainSettings, listAlternativeDomains, createAlternativeDomain, updateAlternativeDomain, deleteAlternativeDomain]
+  - capability: Access links
+    operations: [listAccessLinks, createAccessLink, updateAccessLink, deleteAccessLink]
+  - capability: Members and invitations
+    operations: [listMembers, inviteMembers, updateMember, removeMember, listInvitations, acceptInvitation, deleteInvitation]
+  - capability: API clients
+    operations: [listClients, createClient, deleteClient]
+  - capability: Conversion goal management
+    operations: [createConversionGoal, updateConversionGoal, deleteConversionGoal, testGoalRegex]
+  - capability: Funnel management
+    operations: [createOrUpdateFunnel, deleteFunnel]
+  - capability: Short links
+    operations: [listShortLinks, createOrUpdateShortLink, deleteShortLink]
+  - capability: Email reports
+    operations: [listEmailReports, createEmailReport, updateEmailReport, deleteEmailReport]
+  - capability: Webhooks
+    operations: [listWebhooks, createOrUpdateWebhook, deleteWebhook]
+  - capability: Traffic management
+    operations: [listTrafficFilters, createOrUpdateTrafficFilter, deleteTrafficFilter, toggleSpikeNotifications, configureSpikeNotifications, toggleTrafficWarnings, configureTrafficWarnings]
+  - capability: Saved views
+    operations: [listViews, createOrUpdateView, deleteView]
+  - capability: User account
+    operations: [getUser, updateUserName, updateUserEmail, updateUserPassword, updateUserLanguage, updateUserFilter, getUserNews, markNewsRead, getUserRewards]
+  - capability: Statistics not surfaced as tools
+    operations: [getHostnameStatistics, getChannelStatistics, getCountryStatistics, getRegionStatistics, getCityStatistics, getLanguageStatistics, getBrowserStatistics, getOsStatistics, getPlatformStatistics, getFunnelStatistics, getKeywords, exportStatistics, deleteStatistics]
+  - capability: Authentication
+    operations: [getToken]
+    note: Handled internally by the MCP server rather than exposed as a tool.
+
+coverage:
+  tools_named: 17
+  tools_bound_to_rest: 12
+  tools_high_confidence: 10
+  tools_medium_confidence: 2
+  tools_unbindable_spec_gap: 4
+  mcp_only: 1
+  rest_operations_total_in_spec: 97
+  rest_operations_with_a_tool: 17
+  rest_operations_without_a_tool: 80
+
+spec_gaps:
+  count: 4
+  detail: >-
+    Four tools point at documented Pirsch endpoints our harvested OpenAPI does
+    not contain: /statistics/overview, /statistics/page/entry,
+    /statistics/page/exit and /statistics/event/page. Extracting the endpoint
+    paths named on docs.pirsch.io/api-sdks/api-v1 on 2026-08-13 yields roughly
+    120 distinct paths against the 97 operations in our spec — the gap also
+    includes the whole /statistics/options/* filter-value family, /statistics/
+    tags, hours, minutes, weekdays, screen, duration/*, browser/version, and a
+    dozen /domain/* and /user/* single-setting endpoints. Pirsch publishes no
+    machine-readable OpenAPI of its own, so this spec is a reconstruction from
+    the docs and it is measurably incomplete. Closing the gap is a harvest task
+    for a later round, and the honest number to quote is "97 captured of ~120
+    documented", not "97".

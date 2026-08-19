@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pirsch Access Links API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Access Links",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List access links",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pirsch.io/api/v1/domain/link",
+            "params": [
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get shareable access links for a domain"
+        },
+        {
+          "info": {
+            "name": "Create access link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/domain/link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create access link"
+        },
+        {
+          "info": {
+            "name": "Update access link",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.pirsch.io/api/v1/domain/link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update access link"
+        },
+        {
+          "info": {
+            "name": "Delete access link",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.pirsch.io/api/v1/domain/link",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete access link"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

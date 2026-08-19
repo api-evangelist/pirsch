@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pirsch Access Links Conversion Goals API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Conversion Goals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List conversion goals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pirsch.io/api/v1/goal",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Domain ID"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List conversion goals"
+        },
+        {
+          "info": {
+            "name": "Create conversion goal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/goal",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create conversion goal"
+        },
+        {
+          "info": {
+            "name": "Update conversion goal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.pirsch.io/api/v1/goal",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update conversion goal"
+        },
+        {
+          "info": {
+            "name": "Delete conversion goal",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.pirsch.io/api/v1/goal",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete conversion goal"
+        },
+        {
+          "info": {
+            "name": "Test conversion goal regex",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/goal/regex",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Test a regex pattern against a sample string"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

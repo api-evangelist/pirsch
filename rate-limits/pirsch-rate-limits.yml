@@ -1,14 +1,20 @@
 specificationVersion: "0.1"
 id: pirsch-rate-limits
 name: Pirsch API Rate Limits
+generated: '2026-08-13'
+method: searched
+source: https://docs.pirsch.io/api-sdks/api-guide-v1
+limit_count: 3
+status_on_exhaustion: 429
+verified: '2026-08-13'
 description: >-
   Pirsch enforces per-endpoint rate limits to protect its infrastructure.
   Limits vary by endpoint category. Response headers communicate current
   quota status on every request. Statistics and data-collection endpoints are
   currently unlimited but may be capped in future releases.
-url: https://docs.pirsch.io/api-sdks/api-guide
+url: https://docs.pirsch.io/api-sdks/api-guide-v1
 created: "2026-06-13"
-modified: "2026-06-13"
+modified: "2026-08-13"
 limits:
   - name: Security Endpoints
     description: >-

@@ -1,0 +1,160 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.pirsch.io/api-sdks/api-guide-v1 and
+  https://docs.pirsch.io/api-sdks/api-v1, cross-checked against the operations
+  and securitySchemes in openapi/_original/pirsch-pirsch-api-openapi.yml.
+docs: https://docs.pirsch.io/api-sdks/api-guide-v1
+description: >-
+  The cross-cutting request/response semantics that apply to every Pirsch
+  endpoint: auth style, pagination, filtering, error envelope, rate-limit
+  signalling, versioning and timestamps. Recorded because OpenAPI does not
+  express most of it, and because several of these are notable by their absence.
+
+base_url: https://api.pirsch.io/api/v1
+api_style: REST over HTTPS, JSON request and response bodies
+
+authentication:
+  scheme: HTTP Bearer
+  token_types:
+    - name: OAuth2 client credentials
+      obtain: POST /api/v1/token with {client_id, client_secret}
+      returns: {access_token, expires_at}
+      scope: full read and write for the domain the client belongs to
+    - name: Access key
+      prefix: pa_
+      obtain: created in the dashboard, no token exchange
+      scope: write-only — tracking endpoints only
+  header: 'Authorization: Bearer <token>'
+  expiry_behavior: >-
+    An expired token returns HTTP 401. There is no refresh token — clients
+    re-POST /token with the client credentials and retry.
+  detail: authentication/pirsch-authentication.yml
+  docs: https://docs.pirsch.io/api-sdks/api-guide-v1
+
+idempotency:
+  supported: false
+  mechanism: null
+  note: >-
+    Pirsch documents no idempotency key, no Idempotency-Key header and no
+    replay semantics. Retrying POST /hit or POST /event after a network failure
+    will record the page view or event twice. Batch endpoints (/hit/batch,
+    /event/batch) are all-or-nothing per request with no per-item dedupe key.
+    Because there is no idempotency support, no `Idempotency` pointer is wired
+    in apis.yml — the absence is the finding.
+
+pagination:
+  style: offset-limit
+  request_params:
+    offset: integer — number of records to skip
+    limit: integer — page size, hard-capped at 100
+  response_shape: >-
+    A bare JSON array. There is no envelope, no total count, no has_more flag
+    and no next-page link, so a client cannot tell a full last page from a
+    truncated one without issuing another request.
+  applies_to: list and statistics endpoints
+  docs: https://docs.pirsch.io/api-sdks/api-v1
+
+filtering:
+  style: query-string parameters, repeated for OR
+  required_on_statistics: [id, from, to]
+  date_format: 'YYYY-MM-DD'
+  operators:
+    '!': negation — exclude matches
+    '~': contains — substring match
+    '^': excludes — string exclusion
+  multi_value: >-
+    Repeating a parameter ORs the values, e.g. city=London&city=Berlin.
+  dimensions: >-
+    40+ filter dimensions including path, hostname, language, country, region,
+    city, browser, os, platform, referrer, channel, tag and the five utm_*
+    parameters.
+  filter_value_discovery: >-
+    GET /statistics/options/{dimension} returns the available values for a
+    filter dimension (browser, channel, city, country, event, hostname,
+    language, metadata, os, page, referrer, region, tag, utm/*).
+  docs: https://docs.pirsch.io/api-sdks/api-v1
+
+field_expansion:
+  supported: false
+  note: No expand/include parameter; responses are fixed shapes.
+
+metadata:
+  supported: true
+  mechanism: >-
+    `tags` (flat string map) on page views, and `event_meta` (flat string map)
+    on custom events. Both key and value must be strings.
+  queryable: >-
+    Yes — GET /statistics/options/metadata and /statistics/options/tag expose
+    the recorded keys and values as filter dimensions.
+
+request_tracing:
+  request_id_header: null
+  note: >-
+    Pirsch returns no request-id or correlation header. There is no documented
+    way for a caller to reference a single request in a support conversation.
+
+versioning:
+  scheme: uri-path
+  current: v1
+  mechanism: version segment in the path — https://api.pirsch.io/api/v1
+  next: >-
+    An API v2 is announced at docs.pirsch.io/api-sdks/api, which states it "is
+    work and progess and will most likely be released at the end of 2026". No v2
+    contract is published yet.
+  detail: lifecycle/pirsch-lifecycle.yml
+  changelog: changelog/pirsch-changelog.yml
+
+error_envelope:
+  media_type: application/json
+  rfc9457: false
+  shape: '{ "validation": {"<field>": "<message>"}, "error": ["<message>"], "context": {} }'
+  fields:
+    validation: field-level validation failures, keyed by parameter name
+    error: general errors — object not found, permission denied and similar
+    context: free-form key/value context for the error
+  detail: errors/pirsch-problem-types.yml
+  docs: https://docs.pirsch.io/api-sdks/api-guide-v1
+
+rate_limits:
+  signal_status: 429
+  headers: [X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After]
+  tiers:
+    security: 10 requests/minute
+    configuration: 60 requests/minute
+    statistics_and_collection: unlimited at time of writing
+  detail: rate-limits/pirsch-rate-limits.yml
+  docs: https://docs.pirsch.io/api-sdks/api-guide-v1
+
+webhooks:
+  signing_header: null
+  verification: >-
+    None documented. Pirsch POSTs the event payload to the configured HTTPS
+    endpoint with no signature, no shared secret and no timestamp, so a receiver
+    cannot verify the caller. Treat the endpoint URL itself as the only secret.
+  disable_after: 100 consecutive non-2xx responses
+  detail: asyncapi/pirsch-webhooks.yml
+  docs: https://docs.pirsch.io/advanced/webhooks
+
+other_conventions:
+  - name: Timestamps
+    detail: ISO 8601 with UTC timezone, e.g. 2021-05-22T10:11:12.123456Z.
+  - name: Batch ordering
+    detail: >-
+      /hit/batch and /event/batch payloads must be pre-sorted by the `time`
+      field or session and page durations are computed wrong. The API does not
+      sort for you.
+  - name: Domain scoping
+    detail: >-
+      Almost every read requires an `id` query parameter naming the domain;
+      write endpoints use `domain_id` in the body. The two names are not
+      interchangeable and the split is not consistent across resources.
+  - name: Client-side tracking
+    detail: >-
+      The browser script at https://api.pirsch.io/pa.js is configured entirely
+      through data-* attributes; see components/pirsch-components.yml.
+  - name: No sandbox
+    detail: >-
+      There is no test mode and no separate test key prefix. The only
+      development affordance is the `data-dev` attribute on the tracking script,
+      which lifts the localhost restriction and writes to live data.

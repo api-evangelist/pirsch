@@ -1,0 +1,142 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  Compliance claims read from https://docs.pirsch.io/privacy and
+  https://pirsch.io/privacy on 2026-08-13; protocol conformance derived from
+  openapi/_original/pirsch-pirsch-api-openapi.yml and the runtime semantics in
+  conventions/pirsch-conventions.yml.
+docs: https://docs.pirsch.io/privacy
+
+standards:
+  - id: oauth2-client-credentials
+    conforms: partial
+    evidence: >-
+      POST /api/v1/token exchanges client_id + client_secret for an
+      access_token, which is the OAuth 2.0 client-credentials shape, but the
+      request and response are plain JSON rather than the RFC 6749
+      form-encoded grant_type=client_credentials body and token_type/expires_in
+      response. There is no scope parameter and no token_type field. The
+      OpenAPI declares the scheme as http/bearer, not oauth2.
+  - id: oauth2-rfc6749
+    conforms: false
+    evidence: >-
+      No grant_type parameter, no token_type in the response, no
+      /.well-known/oauth-authorization-server metadata (404 on api.pirsch.io).
+  - id: oidc
+    conforms: false
+    evidence: /.well-known/openid-configuration returned 404 on every host.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors use a proprietary {validation, error, context} envelope over
+      application/json; no application/problem+json, no type URI, no title.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returned 404 on pirsch.io, api.pirsch.io and docs.pirsch.io.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset or Deprecation header support and no deprecation policy published.
+  - id: rfc8615-well-known
+    conforms: false
+    evidence: No /.well-known/ surface of any kind is served.
+  - id: idempotency
+    conforms: false
+    evidence: >-
+      No Idempotency-Key header and no replay semantics documented; POST /hit
+      and POST /event are not safe to retry.
+  - id: pagination
+    conforms: partial
+    evidence: >-
+      offset/limit query parameters with a hard cap of 100, but responses are
+      bare arrays with no total, has_more or next link.
+  - id: rate-limit-headers
+    conforms: partial
+    evidence: >-
+      Returns the legacy X-RateLimit-Limit / X-RateLimit-Remaining /
+      X-RateLimit-Reset trio plus Retry-After, not the IETF draft
+      RateLimit-Limit/RateLimit-Remaining/RateLimit-Reset fields.
+  - id: openapi
+    conforms: false
+    evidence: >-
+      Pirsch publishes no OpenAPI document. The specs in openapi/ are an API
+      Evangelist reconstruction from the published reference.
+  - id: asyncapi
+    conforms: false
+    evidence: >-
+      A webhook surface exists (see asyncapi/pirsch-webhooks.yml) but no
+      AsyncAPI document is published.
+  - id: mcp
+    conforms: false
+    evidence: No first-party MCP server; the only Pirsch MCP server is a community project.
+  - id: a2a
+    conforms: false
+    evidence: No agent card at /.well-known/agent-card.json or /.well-known/agent.json on any host.
+  - id: json-api
+    conforms: false
+    evidence: Plain JSON objects/arrays; no JSON:API document structure.
+  - id: fhir-r4
+    conforms: false
+  - id: scim2
+    conforms: false
+  - id: odata
+    conforms: false
+  - id: fapi
+    conforms: false
+
+compliance:
+  published: true
+  url: https://docs.pirsch.io/privacy
+  regimes:
+    - id: gdpr
+      claimed: true
+      evidence: >-
+        docs.pirsch.io/privacy — "making Pirsch fully GDPR, CCPA, and PECR
+        compliant". pirsch.io/privacy cites Regulation (EU) 2016/679 Articles 6,
+        13, 14, 15-21, 28 and 44-46.
+    - id: ccpa
+      claimed: true
+      evidence: docs.pirsch.io/privacy — "fully GDPR, CCPA, and PECR compliant".
+    - id: pecr
+      claimed: true
+      evidence: docs.pirsch.io/privacy — "fully GDPR, CCPA, and PECR compliant".
+    - id: ttdsg
+      claimed: true
+      evidence: >-
+        pirsch.io/privacy cites TTDSG §25(1) and §25(2) on storing or accessing
+        information in terminal equipment — the German cookie-consent provision.
+        Pirsch's position is that it stores nothing on the device, so consent is
+        not required.
+    - id: dpa
+      claimed: true
+      evidence: >-
+        A Data Processing Agreement under Art. 28 GDPR is offered for download
+        in English and German.
+  certifications: []
+  certifications_note: >-
+    No SOC 2, ISO 27001, PCI DSS, HIPAA, FedRAMP or CSA STAR certification is
+    claimed anywhere on pirsch.io or docs.pirsch.io. The compliance posture is
+    regulatory-alignment-by-design (no cookies, no personal data, German
+    hosting), not third-party audited. Do not read the GDPR/CCPA/PECR claims as
+    certifications.
+
+data_residency:
+  primary: Germany
+  hosting_provider: Hetzner Online GmbH
+  controller: Emvi Software GmbH, Nickelstraße 1b, 33378 Rheda-Wiedenbrück, Germany
+  sub_processors:
+    - {name: Hetzner Online GmbH, country: DE, purpose: hosting}
+    - {name: Amazon Web Services EMEA SARL, country: LU, purpose: email}
+    - {name: Google Cloud EMEA Limited, country: IE, purpose: workspace and communication}
+    - {name: 'Intuition Machines, Inc.', country: US, purpose: CAPTCHA}
+    - {name: 'Stripe, Inc.', country: US, purpose: payments}
+    - {name: Datev eG, country: DE, purpose: tax communication}
+  source: https://pirsch.io/privacy
+
+contacts:
+  privacy: privacy@pirsch.io
+  support: support@pirsch.io
+  data_protection_officer: Dr. Frank Eickmeier, UNVERZAGT, Hamburg
+  security: null
+  security_note: >-
+    No security@ address, no vulnerability disclosure policy and no bug bounty
+    were found; probe-security-programs.py returned vdp=none trust=none.

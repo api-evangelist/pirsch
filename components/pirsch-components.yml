@@ -1,0 +1,94 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.pirsch.io/get-started/frontend-integration and
+  https://docs.pirsch.io/advanced/embedding, read 2026-08-13.
+description: >-
+  Pirsch ships two client-side surfaces that are not SDKs: a browser tracking
+  script loaded from the API host, and an embeddable dashboard delivered as an
+  iframe. Both are configured declaratively — data-* attributes on the script,
+  query parameters on the iframe.
+
+families:
+  - name: Tracking script
+    kind: browser-script
+    loader: https://api.pirsch.io/pa.js
+    distribution: served from the API host, unpinned (always latest)
+    version: null
+    version_note: >-
+      The script URL carries no version segment and no integrity hash, so a
+      consumer cannot pin a build or tell which one they are getting. Recorded
+      as null deliberately — checked, nothing to pin.
+    example: |
+      <script defer src="https://api.pirsch.io/pa.js"
+          id="pianjs"
+          data-code="YOUR_IDENTIFICATION_CODE"></script>
+    required_attributes:
+      - {name: id, value: pianjs, description: Element id the script looks itself up by}
+      - {name: data-code, description: The domain's identification code}
+    options:
+      - {name: data-exclude, description: Regular expressions for pages to skip}
+      - {name: data-include, description: Allowlist of pages that should send data}
+      - {name: data-disable-query, description: Strip query parameters and UTM data}
+      - {name: data-disable-referrer, description: Do not send the referrer}
+      - {name: data-disable-resolution, description: Do not send screen dimensions}
+      - {name: data-disable-history, description: Turn off SPA URL-change tracking}
+      - {name: data-disable-page-views, description: Disable page-view collection}
+      - {name: data-disable-outbound-links, description: Stop tracking outbound link clicks}
+      - {name: data-disable-downloads, description: Disable file-download tracking}
+      - {name: data-enable-sessions, description: Activate session extension}
+      - {name: data-path-prefix, description: Prefix added to the recorded path}
+      - {name: data-path-suffix, description: Suffix added to the recorded path}
+      - {name: data-title-prefix, description: Prefix added to the recorded title}
+      - {name: data-title-suffix, description: Suffix added to the recorded title}
+      - {name: data-dev, description: Override the localhost restriction for local testing}
+      - {name: data-domain, description: Rollup view across multiple domains}
+    javascript_api:
+      - {name: pirschInit(), description: Manually initialize tracking when the script is injected dynamically}
+    note: >-
+      data-dev is the closest thing Pirsch has to a test mode — it lifts the
+      localhost guard, but the data it sends is written to the live domain.
+
+  - name: Embedded dashboard
+    kind: iframe
+    distribution: iframe against the Pirsch dashboard host
+    version: null
+    modes:
+      - name: public
+        description: >-
+          Uses an access link created on the Access settings page; no login
+          required by the viewer.
+        access_links_api: openapi/pirsch-access-links-api-openapi.yml
+      - name: private
+        description: Embeds https://dashboard.pirsch.io and requires the viewer to be logged in.
+    example: |
+      <iframe src="https://dev.pirsch.io/?domain=pirsch.io&interval=14d&ui=hide"
+          width="1200"
+          height="800"
+          style="border-width: 0;"></iframe>
+    parameters:
+      - {name: domain, description: The domain to display}
+      - {name: interval, description: Time interval, e.g. 14d}
+      - {name: ui, values: [hide], description: Removes the Pirsch header and footer}
+      - {name: mode, values: [dark, light], description: Colour theme}
+      - {name: lang, values: [en, de, es, fr, nl, it, pt, ja], description: Dashboard language}
+    note: >-
+      Enterprise adds custom domains, custom themes and "extensive white
+      labeling" on top of the same embed.
+
+public_demo:
+  url: https://pirsch.pirsch.io
+  description: >-
+    Pirsch runs its own analytics publicly. The homepage "View Live Demo" link
+    points at pirsch.pirsch.io — the real dashboard for pirsch.io, readable
+    without an account. It is the closest thing Pirsch offers to a console or
+    playground; there is no sandbox, no test mode and no seeded test data.
+  rendering: >-
+    Client-side only. The response is the same 2,817-byte SPA shell every
+    *.pirsch.io host returns; the dashboard resolves the subdomain in JavaScript.
+    Nothing on that URL is machine-readable.
+
+not_offered:
+  - Web components or a element/UI library
+  - A hosted checkout or prebuilt form surface
+  - A React/Vue/Svelte component package (framework use goes through pirsch-sdk)

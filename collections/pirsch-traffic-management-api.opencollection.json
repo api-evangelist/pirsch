@@ -1,0 +1,135 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pirsch Access Links Traffic Management API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Traffic Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List traffic filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pirsch.io/api/v1/filter",
+            "params": [
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List traffic filters"
+        },
+        {
+          "info": {
+            "name": "Create or update traffic filter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/filter",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update traffic filter"
+        },
+        {
+          "info": {
+            "name": "Delete traffic filter",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.pirsch.io/api/v1/filter",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete traffic filter"
+        },
+        {
+          "info": {
+            "name": "Configure spike notification threshold",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/traffic/spike",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Configure spike notification threshold"
+        },
+        {
+          "info": {
+            "name": "Toggle spike notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.pirsch.io/api/v1/traffic/spike",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Toggle spike notifications"
+        },
+        {
+          "info": {
+            "name": "Configure traffic warning threshold",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pirsch.io/api/v1/traffic/warning",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Configure traffic warning threshold"
+        },
+        {
+          "info": {
+            "name": "Toggle traffic warnings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.pirsch.io/api/v1/traffic/warning",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Toggle traffic warnings"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

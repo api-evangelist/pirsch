@@ -1,9 +1,22 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/pirsch-pirsch-api-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: openapi/_original/pirsch-pirsch-api-openapi.yml
+docs: https://docs.pirsch.io/api-sdks/api-guide-v1
+description: >-
+  Baseline derived mechanically from the OpenAPI securitySchemes, then upgraded
+  from https://docs.pirsch.io/api-sdks/api-guide-v1 and
+  https://docs.pirsch.io/api-sdks/api-v1, which document two distinct credential
+  types the single http/bearer scheme in the spec does not distinguish.
 summary:
   types:
   - http
+  http_schemes:
+  - bearer
+  credential_types:
+  - oauth2-client-credentials
+  - static-access-key
+  oauth2_flows: []
+  scopes: none
 schemes:
 - name: BearerAuth
   type: http
@@ -12,3 +25,58 @@ schemes:
     as a Bearer token in the Authorization header.
   sources:
   - openapi/pirsch-pirsch-api-openapi.yml
+
+credentials:
+- id: oauth-client
+  name: OAuth2 client credentials
+  client_type: oauth
+  created_via: POST /api/v1/client with type "oauth" (operationId createClient), or the dashboard
+  token_endpoint: https://api.pirsch.io/api/v1/token
+  token_request: '{"client_id": "<client_id>", "client_secret": "<client_secret>"}'
+  token_response: '{"access_token": "<token>", "expires_at": "<UTC timestamp>"}'
+  header: 'Authorization: Bearer <access_token>'
+  access: read and write, scoped to the domain the client belongs to
+  refresh: >-
+    No refresh token. On HTTP 401 the client re-POSTs /token with the same
+    credentials and retries.
+  operation: openapi/pirsch-authentication-api-openapi.yml#getToken
+  docs: https://docs.pirsch.io/api-sdks/api-guide-v1
+- id: access-key
+  name: Access key
+  client_type: token
+  prefix: pa_
+  created_via: POST /api/v1/client with type "token" (operationId createClient), or the dashboard
+  header: 'Authorization: Bearer pa_<key>'
+  access: write-only — data submission endpoints only (/hit, /event, /session and their batch forms)
+  rotation: >-
+    Delete and recreate the client (DELETE /api/v1/client?id=). No rotation
+    endpoint and no key expiry.
+  purpose: Stateless server-side tracking without a token exchange round trip.
+  docs: https://docs.pirsch.io/api-sdks/api-guide-v1
+
+scopes:
+  supported: false
+  note: >-
+    Pirsch has no OAuth scope surface. A client is either an OAuth client (full
+    read/write on its domain) or a write-only access key; there is nothing
+    finer. No scopes/ artifact is emitted, because an empty scope file would
+    imply a permission model that does not exist.
+
+secret_exposure:
+  client_secret_returned_once: true
+  detail: >-
+    The Client schema notes client_secret is "Only returned on creation" — it
+    cannot be re-read afterwards.
+
+discovery:
+  oauth_authorization_server_metadata: false
+  openid_configuration: false
+  note: >-
+    /.well-known/oauth-authorization-server and
+    /.well-known/openid-configuration both returned 404 on api.pirsch.io on
+    2026-08-13. There is no machine-discoverable auth metadata; the token
+    endpoint is only findable in the prose docs.
+
+transport:
+  https_required: true
+  detail: security/pirsch-domain-security.yml

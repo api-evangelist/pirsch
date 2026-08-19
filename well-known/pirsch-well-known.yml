@@ -1,0 +1,60 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  Live unauthenticated GET against every host in apis.yml and the OpenAPI
+  servers[] block — api.pirsch.io (baseURL / servers[0]), pirsch.io (Website)
+  and docs.pirsch.io (Documentation) — on 2026-08-13.
+result: none
+summary: >-
+  Pirsch serves no /.well-known/ discovery surface. Every RFC 8615 path probed
+  returned 404 on all three hosts. No WellKnown or SecurityTxt pointer is wired
+  in apis.yml, because a recorded absence is not a presence.
+
+hosts:
+  - host: https://api.pirsch.io
+    catch_all: false
+    note: >-
+      Go service; unknown paths return a plain-text "404 page not found" with
+      content-type text/plain. A negative control
+      (/.well-known/ae-nonexistent-probe-xyz) returned the same 404, confirming
+      the misses are real rather than a routing quirk.
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/oauth-protected-resource, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+
+  - host: https://pirsch.io
+    catch_all: false
+    note: >-
+      Single-page marketing/dashboard app. Returns an HTML shell body but with a
+      real HTTP 404 status on unknown paths, including the negative control.
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+
+  - host: https://docs.pirsch.io
+    catch_all: false
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+
+x-related-finding:
+  subdomain_wildcard: true
+  detail: >-
+    *.pirsch.io resolves and answers HTTP 200 with an identical 2,817-byte SPA
+    shell for EVERY subdomain — status.pirsch.io, mcp.pirsch.io and a control
+    hostname (ae-nonexistent-xyz.pirsch.io) all returned byte-identical bodies
+    (md5 4b8b7f1aabf34d4146694f566d6d87a8). Neither a status page nor an MCP
+    server exists at those names; the 200 is a wildcard catch-all. Recorded here
+    so a future round does not re-credit status.pirsch.io as a status page or
+    mcp.pirsch.io as an agent surface.

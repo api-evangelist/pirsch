@@ -1,0 +1,870 @@
+{
+  "item": [
+    {
+      "id": "0fb4d819-93ab-492b-ac23-e70ee02d2e4a",
+      "name": "Tracking",
+      "description": {
+        "content": "Send page views, events, and session keep-alive signals",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "65d84e65-6587-4891-9a20-f54406a2536d",
+          "name": "Send a page view",
+          "request": {
+            "name": "Send a page view",
+            "description": {
+              "content": "Track a single page view for a domain",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<uri>\",\n  \"ip\": \"<string>\",\n  \"user_agent\": \"<string>\",\n  \"accept_language\": \"<string>\",\n  \"referrer\": \"<string>\",\n  \"title\": \"<string>\",\n  \"sec_ch_ua\": \"<string>\",\n  \"sec_ch_ua_mobile\": \"<string>\",\n  \"sec_ch_ua_platform\": \"<string>\",\n  \"sec_ch_ua_platform_version\": \"<string>\",\n  \"sec_ch_width\": \"<string>\",\n  \"sec_ch_viewport_width\": \"<string>\",\n  \"screen_width\": \"<integer>\",\n  \"screen_height\": \"<integer>\",\n  \"disable_bot_filter\": \"<boolean>\",\n  \"tags\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "94d80cb9-e014-4e45-94a2-fd2d1f1fd26e",
+              "name": "Page view accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<uri>\",\n  \"ip\": \"<string>\",\n  \"user_agent\": \"<string>\",\n  \"accept_language\": \"<string>\",\n  \"referrer\": \"<string>\",\n  \"title\": \"<string>\",\n  \"sec_ch_ua\": \"<string>\",\n  \"sec_ch_ua_mobile\": \"<string>\",\n  \"sec_ch_ua_platform\": \"<string>\",\n  \"sec_ch_ua_platform_version\": \"<string>\",\n  \"sec_ch_width\": \"<string>\",\n  \"sec_ch_viewport_width\": \"<string>\",\n  \"screen_width\": \"<integer>\",\n  \"screen_height\": \"<integer>\",\n  \"disable_bot_filter\": \"<boolean>\",\n  \"tags\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "75904a6a-d183-4a77-a5e7-c252ce5f4729",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<uri>\",\n  \"ip\": \"<string>\",\n  \"user_agent\": \"<string>\",\n  \"accept_language\": \"<string>\",\n  \"referrer\": \"<string>\",\n  \"title\": \"<string>\",\n  \"sec_ch_ua\": \"<string>\",\n  \"sec_ch_ua_mobile\": \"<string>\",\n  \"sec_ch_ua_platform\": \"<string>\",\n  \"sec_ch_ua_platform_version\": \"<string>\",\n  \"sec_ch_width\": \"<string>\",\n  \"sec_ch_viewport_width\": \"<string>\",\n  \"screen_width\": \"<integer>\",\n  \"screen_height\": \"<integer>\",\n  \"disable_bot_filter\": \"<boolean>\",\n  \"tags\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"validation\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"error\": [\n    \"string\",\n    \"string\"\n  ],\n  \"context\": {\n    \"key_0\": 6596.475331296423,\n    \"key_1\": 2598.741704281652,\n    \"key_2\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a89ba58f-0bf0-405a-a36f-0324fa905dc2",
+          "name": "Send multiple page views",
+          "request": {
+            "name": "Send multiple page views",
+            "description": {
+              "content": "Track a batch of page views",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hit",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  \"<object>\",\n  \"<object>\"\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "00c154ce-30cf-4b1f-a546-e3062c69a5c0",
+              "name": "Batch accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hit",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"ip\": \"<string>\",\n    \"time\": \"<dateTime>\",\n    \"url\": \"<uri>\",\n    \"user_agent\": \"<string>\",\n    \"accept_language\": \"<string>\",\n    \"referrer\": \"<string>\",\n    \"title\": \"<string>\",\n    \"sec_ch_ua\": \"<string>\",\n    \"sec_ch_ua_mobile\": \"<string>\",\n    \"sec_ch_ua_platform\": \"<string>\",\n    \"sec_ch_ua_platform_version\": \"<string>\",\n    \"sec_ch_width\": \"<string>\",\n    \"sec_ch_viewport_width\": \"<string>\",\n    \"screen_width\": \"<integer>\",\n    \"screen_height\": \"<integer>\",\n    \"disable_bot_filter\": \"<boolean>\",\n    \"tags\": {\n      \"key_0\": \"<string>\"\n    }\n  },\n  {\n    \"ip\": \"<string>\",\n    \"time\": \"<dateTime>\",\n    \"url\": \"<uri>\",\n    \"user_agent\": \"<string>\",\n    \"accept_language\": \"<string>\",\n    \"referrer\": \"<string>\",\n    \"title\": \"<string>\",\n    \"sec_ch_ua\": \"<string>\",\n    \"sec_ch_ua_mobile\": \"<string>\",\n    \"sec_ch_ua_platform\": \"<string>\",\n    \"sec_ch_ua_platform_version\": \"<string>\",\n    \"sec_ch_width\": \"<string>\",\n    \"sec_ch_viewport_width\": \"<string>\",\n    \"screen_width\": \"<integer>\",\n    \"screen_height\": \"<integer>\",\n    \"disable_bot_filter\": \"<boolean>\",\n    \"tags\": {\n      \"key_0\": \"<string>\"\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0ce970d0-efbe-48b1-8e20-48746ceb7071",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hit",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"ip\": \"<string>\",\n    \"time\": \"<dateTime>\",\n    \"url\": \"<uri>\",\n    \"user_agent\": \"<string>\",\n    \"accept_language\": \"<string>\",\n    \"referrer\": \"<string>\",\n    \"title\": \"<string>\",\n    \"sec_ch_ua\": \"<string>\",\n    \"sec_ch_ua_mobile\": \"<string>\",\n    \"sec_ch_ua_platform\": \"<string>\",\n    \"sec_ch_ua_platform_version\": \"<string>\",\n    \"sec_ch_width\": \"<string>\",\n    \"sec_ch_viewport_width\": \"<string>\",\n    \"screen_width\": \"<integer>\",\n    \"screen_height\": \"<integer>\",\n    \"disable_bot_filter\": \"<boolean>\",\n    \"tags\": {\n      \"key_0\": \"<string>\"\n    }\n  },\n  {\n    \"ip\": \"<string>\",\n    \"time\": \"<dateTime>\",\n    \"url\": \"<uri>\",\n    \"user_agent\": \"<string>\",\n    \"accept_language\": \"<string>\",\n    \"referrer\": \"<string>\",\n    \"title\": \"<string>\",\n    \"sec_ch_ua\": \"<string>\",\n    \"sec_ch_ua_mobile\": \"<string>\",\n    \"sec_ch_ua_platform\": \"<string>\",\n    \"sec_ch_ua_platform_version\": \"<string>\",\n    \"sec_ch_width\": \"<string>\",\n    \"sec_ch_viewport_width\": \"<string>\",\n    \"screen_width\": \"<integer>\",\n    \"screen_height\": \"<integer>\",\n    \"disable_bot_filter\": \"<boolean>\",\n    \"tags\": {\n      \"key_0\": \"<string>\"\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"validation\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"error\": [\n    \"string\",\n    \"string\"\n  ],\n  \"context\": {\n    \"key_0\": 5266,\n    \"key_1\": 9744.606868128409\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b1d3a9fc-2734-402c-81f6-6f8b69cdcc73",
+          "name": "Send a custom event",
+          "request": {
+            "name": "Send a custom event",
+            "description": {
+              "content": "Track a single custom event with optional metadata",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "event"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e76410a9-65e8-45a0-9a2c-d67c52045587",
+              "name": "Event accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_name\": \"<string>\",\n  \"ip\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"user_agent\": \"<string>\",\n  \"accept_language\": \"<string>\",\n  \"referrer\": \"<string>\",\n  \"title\": \"<string>\",\n  \"sec_ch_ua\": \"<string>\",\n  \"sec_ch_ua_mobile\": \"<string>\",\n  \"sec_ch_ua_platform\": \"<string>\",\n  \"sec_ch_ua_platform_version\": \"<string>\",\n  \"sec_ch_width\": \"<string>\",\n  \"sec_ch_viewport_width\": \"<string>\",\n  \"screen_width\": \"<integer>\",\n  \"screen_height\": \"<integer>\",\n  \"disable_bot_filter\": \"<boolean>\",\n  \"tags\": {\n    \"key_0\": \"<string>\"\n  },\n  \"event_duration\": \"<number>\",\n  \"event_meta\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"non_interactive\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ef6672d2-c4fa-4eed-ab8a-b9cc5e99f5ce",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_name\": \"<string>\",\n  \"ip\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"user_agent\": \"<string>\",\n  \"accept_language\": \"<string>\",\n  \"referrer\": \"<string>\",\n  \"title\": \"<string>\",\n  \"sec_ch_ua\": \"<string>\",\n  \"sec_ch_ua_mobile\": \"<string>\",\n  \"sec_ch_ua_platform\": \"<string>\",\n  \"sec_ch_ua_platform_version\": \"<string>\",\n  \"sec_ch_width\": \"<string>\",\n  \"sec_ch_viewport_width\": \"<string>\",\n  \"screen_width\": \"<integer>\",\n  \"screen_height\": \"<integer>\",\n  \"disable_bot_filter\": \"<boolean>\",\n  \"tags\": {\n    \"key_0\": \"<string>\"\n  },\n  \"event_duration\": \"<number>\",\n  \"event_meta\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"non_interactive\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"validation\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"error\": [\n    \"string\",\n    \"string\"\n  ],\n  \"context\": {\n    \"key_0\": 5266,\n    \"key_1\": 9744.606868128409\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "61c83d59-674d-4243-b832-7f6b9d127646",
+          "name": "Send multiple custom events",
+          "request": {
+            "name": "Send multiple custom events",
+            "description": {
+              "content": "Track a batch of custom events",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "event",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  \"<object>\",\n  \"<object>\"\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e577349a-4ef6-49ea-801c-abbd4f12dbe8",
+              "name": "Batch accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"event_name\": \"<string>\",\n    \"ip\": \"<string>\",\n    \"time\": \"<dateTime>\",\n    \"url\": \"<uri>\",\n    \"user_agent\": \"<string>\",\n    \"accept_language\": \"<string>\",\n    \"referrer\": \"<string>\",\n    \"title\": \"<string>\",\n    \"sec_ch_ua\": \"<string>\",\n    \"sec_ch_ua_mobile\": \"<string>\",\n    \"sec_ch_ua_platform\": \"<string>\",\n    \"sec_ch_ua_platform_version\": \"<string>\",\n    \"sec_ch_width\": \"<string>\",\n    \"sec_ch_viewport_width\": \"<string>\",\n    \"screen_width\": \"<integer>\",\n    \"screen_height\": \"<integer>\",\n    \"disable_bot_filter\": \"<boolean>\",\n    \"tags\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"event_duration\": \"<number>\",\n    \"event_meta\": {\n      \"key_0\": \"<string>\"\n    },\n    \"non_interactive\": \"<boolean>\"\n  },\n  {\n    \"event_name\": \"<string>\",\n    \"ip\": \"<string>\",\n    \"time\": \"<dateTime>\",\n    \"url\": \"<uri>\",\n    \"user_agent\": \"<string>\",\n    \"accept_language\": \"<string>\",\n    \"referrer\": \"<string>\",\n    \"title\": \"<string>\",\n    \"sec_ch_ua\": \"<string>\",\n    \"sec_ch_ua_mobile\": \"<string>\",\n    \"sec_ch_ua_platform\": \"<string>\",\n    \"sec_ch_ua_platform_version\": \"<string>\",\n    \"sec_ch_width\": \"<string>\",\n    \"sec_ch_viewport_width\": \"<string>\",\n    \"screen_width\": \"<integer>\",\n    \"screen_height\": \"<integer>\",\n    \"disable_bot_filter\": \"<boolean>\",\n    \"tags\": {\n      \"key_0\": \"<string>\"\n    },\n    \"event_duration\": \"<number>\",\n    \"event_meta\": {\n      \"key_0\": \"<string>\"\n    },\n    \"non_interactive\": \"<boolean>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "36acac24-fefa-4549-a581-c356be8bdd95",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"event_name\": \"<string>\",\n    \"ip\": \"<string>\",\n    \"time\": \"<dateTime>\",\n    \"url\": \"<uri>\",\n    \"user_agent\": \"<string>\",\n    \"accept_language\": \"<string>\",\n    \"referrer\": \"<string>\",\n    \"title\": \"<string>\",\n    \"sec_ch_ua\": \"<string>\",\n    \"sec_ch_ua_mobile\": \"<string>\",\n    \"sec_ch_ua_platform\": \"<string>\",\n    \"sec_ch_ua_platform_version\": \"<string>\",\n    \"sec_ch_width\": \"<string>\",\n    \"sec_ch_viewport_width\": \"<string>\",\n    \"screen_width\": \"<integer>\",\n    \"screen_height\": \"<integer>\",\n    \"disable_bot_filter\": \"<boolean>\",\n    \"tags\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"event_duration\": \"<number>\",\n    \"event_meta\": {\n      \"key_0\": \"<string>\"\n    },\n    \"non_interactive\": \"<boolean>\"\n  },\n  {\n    \"event_name\": \"<string>\",\n    \"ip\": \"<string>\",\n    \"time\": \"<dateTime>\",\n    \"url\": \"<uri>\",\n    \"user_agent\": \"<string>\",\n    \"accept_language\": \"<string>\",\n    \"referrer\": \"<string>\",\n    \"title\": \"<string>\",\n    \"sec_ch_ua\": \"<string>\",\n    \"sec_ch_ua_mobile\": \"<string>\",\n    \"sec_ch_ua_platform\": \"<string>\",\n    \"sec_ch_ua_platform_version\": \"<string>\",\n    \"sec_ch_width\": \"<string>\",\n    \"sec_ch_viewport_width\": \"<string>\",\n    \"screen_width\": \"<integer>\",\n    \"screen_height\": \"<integer>\",\n    \"disable_bot_filter\": \"<boolean>\",\n    \"tags\": {\n      \"key_0\": \"<string>\"\n    },\n    \"event_duration\": \"<number>\",\n    \"event_meta\": {\n      \"key_0\": \"<string>\"\n    },\n    \"non_interactive\": \"<boolean>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"validation\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"error\": [\n    \"string\",\n    \"string\"\n  ],\n  \"context\": {\n    \"key_0\": 5266,\n    \"key_1\": 9744.606868128409\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7bb693b4-bd57-4260-bc78-ffbe7244c5f1",
+          "name": "Keep a session alive",
+          "request": {
+            "name": "Keep a session alive",
+            "description": {
+              "content": "Extend an existing visitor session",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "session"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ip\": \"<string>\",\n  \"user_agent\": \"<string>\",\n  \"sec_ch_ua\": \"<string>\",\n  \"sec_ch_ua_mobile\": \"<string>\",\n  \"sec_ch_ua_platform\": \"<string>\",\n  \"sec_ch_ua_platform_version\": \"<string>\",\n  \"disable_bot_filter\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7d2f2b49-bbb9-4048-8ae4-0f54a1a14a5a",
+              "name": "Session extended",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "session"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ip\": \"<string>\",\n  \"user_agent\": \"<string>\",\n  \"sec_ch_ua\": \"<string>\",\n  \"sec_ch_ua_mobile\": \"<string>\",\n  \"sec_ch_ua_platform\": \"<string>\",\n  \"sec_ch_ua_platform_version\": \"<string>\",\n  \"disable_bot_filter\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "886fd7a4-e96e-4aa0-a277-7bb3c526873d",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "session"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ip\": \"<string>\",\n  \"user_agent\": \"<string>\",\n  \"sec_ch_ua\": \"<string>\",\n  \"sec_ch_ua_mobile\": \"<string>\",\n  \"sec_ch_ua_platform\": \"<string>\",\n  \"sec_ch_ua_platform_version\": \"<string>\",\n  \"disable_bot_filter\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"validation\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"error\": [\n    \"string\",\n    \"string\"\n  ],\n  \"context\": {\n    \"key_0\": 5266,\n    \"key_1\": 9744.606868128409\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2bf8b1ef-c3e9-4452-a276-27f22e315652",
+          "name": "Keep multiple sessions alive",
+          "request": {
+            "name": "Keep multiple sessions alive",
+            "description": {
+              "content": "Extend multiple visitor sessions in a single request",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "session",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  \"<object>\",\n  \"<object>\"\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "448e3b76-2f2b-414d-bf5e-439f82620305",
+              "name": "Sessions extended",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "session",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"ip\": \"<string>\",\n    \"time\": \"<dateTime>\",\n    \"user_agent\": \"<string>\",\n    \"sec_ch_ua\": \"<string>\",\n    \"sec_ch_ua_mobile\": \"<string>\",\n    \"sec_ch_ua_platform\": \"<string>\",\n    \"sec_ch_ua_platform_version\": \"<string>\",\n    \"disable_bot_filter\": \"<boolean>\"\n  },\n  {\n    \"ip\": \"<string>\",\n    \"time\": \"<dateTime>\",\n    \"user_agent\": \"<string>\",\n    \"sec_ch_ua\": \"<string>\",\n    \"sec_ch_ua_mobile\": \"<string>\",\n    \"sec_ch_ua_platform\": \"<string>\",\n    \"sec_ch_ua_platform_version\": \"<string>\",\n    \"disable_bot_filter\": \"<boolean>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.pirsch.io/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "815f6e07-73d0-42f7-bd19-92c8f1bdd02d",
+    "name": "Pirsch Access Links Tracking API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.\n\nContact Support:\n Name: Pirsch Support",
+      "type": "text/plain"
+    }
+  }
+}

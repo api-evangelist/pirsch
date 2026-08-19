@@ -1,0 +1,50 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Pirsch Access Links Webhooks API
+  version: 1.0.0
+extends: openapi/pirsch-webhooks-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: Generated from the artifacts in this repo; records API Evangelist annotations without mutating
+  the harvested OpenAPI.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-aid: pirsch
+    x-apievangelist-profile: https://apis.io/provider/pirsch
+    x-apievangelist-artifacts:
+      authentication: authentication/pirsch-authentication.yml
+      conventions: conventions/pirsch-conventions.yml
+      errors: errors/pirsch-problem-types.yml
+      rate-limits: rate-limits/pirsch-rate-limits.yml
+      lifecycle: lifecycle/pirsch-lifecycle.yml
+      data-model: data-model/pirsch-data-model.yml
+      conformance: conformance/pirsch-conformance.yml
+    x-apievangelist-provenance: Pirsch publishes no OpenAPI document. This spec is an API Evangelist reconstruction
+      from https://docs.pirsch.io/api-sdks/api-v1 and is known to be incomplete (97 operations captured
+      against roughly 120 documented paths as of 2026-08-13).
+- target: $.info
+  update:
+    x-idempotency:
+      supported: false
+      note: Pirsch documents no Idempotency-Key header and no replay semantics; POST retries double-count.
+    x-pagination:
+      style: offset-limit
+      params:
+      - offset
+      - limit
+      max_limit: 100
+      envelope: false
+    x-error-envelope:
+      rfc9457: false
+      shape: '{validation, error, context}'
+    x-rate-limit-headers:
+    - X-RateLimit-Limit
+    - X-RateLimit-Remaining
+    - X-RateLimit-Reset
+    - Retry-After
+- target: $.servers
+  update:
+  - url: https://api.pirsch.io/api/v1
+    description: Pirsch production API (v1). An API v2 is announced for end of 2026 but not released.
+x-operations-covered: 3
