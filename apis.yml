@@ -39,6 +39,18 @@ tags:
   - Cookie-Free
   - Page Views
   - Sessions
+  - Event
+  - Conversion Goals
+  - Funnels
+  - Traffic Sources
+tags_raw:
+  - Analytics
+  - Web Analytics
+  - Privacy
+  - GDPR
+  - Cookie-Free
+  - Page Views
+  - Sessions
   - Events
   - Conversion Goals
   - Funnels
@@ -274,6 +286,8 @@ apis:
   humanURL: https://docs.pirsch.io/api-sdks/api-v1
   baseURL: https://api.pirsch.io/api/v1
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
