@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Pirsch Access Links Tracking API
+  title: Pirsch Tracking API
   description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
   version: '1'
   contact:
@@ -152,6 +152,68 @@ paths:
           description: Sessions extended
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        validation:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+        error:
+          type: array
+          items:
+            type: string
+          description: General error messages
+        context:
+          type: object
+          additionalProperties: true
+          description: Additional error context
+    HitBatchRequest:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/HitRequest'
+      - type: object
+        required:
+        - time
+        properties:
+          time:
+            type: string
+            format: date-time
+            description: Timestamp of the page view (ISO 8601)
+    EventBatchRequest:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/EventRequest'
+      - type: object
+        required:
+        - time
+        properties:
+          time:
+            type: string
+            format: date-time
+    SessionRequest:
+      type: object
+      required:
+      - ip
+      - user_agent
+      properties:
+        ip:
+          type: string
+        user_agent:
+          type: string
+        sec_ch_ua:
+          type: string
+        sec_ch_ua_mobile:
+          type: string
+        sec_ch_ua_platform:
+          type: string
+        sec_ch_ua_platform_version:
+          type: string
+        disable_bot_filter:
+          type: boolean
     HitRequest:
       type: object
       required:
@@ -210,29 +272,10 @@ components:
           additionalProperties:
             type: string
           description: Custom key-value tags
-    ErrorResponse:
-      type: object
-      properties:
-        validation:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: Field-level validation errors
-        error:
-          type: array
-          items:
-            type: string
-          description: General error messages
-        context:
-          type: object
-          additionalProperties: true
-          description: Additional error context
-    HitBatchRequest:
+    SessionBatchRequest:
       type: object
       allOf:
-      - $ref: '#/components/schemas/HitRequest'
+      - $ref: '#/components/schemas/SessionRequest'
       - type: object
         required:
         - time
@@ -240,7 +283,6 @@ components:
           time:
             type: string
             format: date-time
-            description: Timestamp of the page view (ISO 8601)
     EventRequest:
       type: object
       allOf:
@@ -263,48 +305,6 @@ components:
           non_interactive:
             type: boolean
             description: Whether the event is non-interactive
-    SessionRequest:
-      type: object
-      required:
-      - ip
-      - user_agent
-      properties:
-        ip:
-          type: string
-        user_agent:
-          type: string
-        sec_ch_ua:
-          type: string
-        sec_ch_ua_mobile:
-          type: string
-        sec_ch_ua_platform:
-          type: string
-        sec_ch_ua_platform_version:
-          type: string
-        disable_bot_filter:
-          type: boolean
-    SessionBatchRequest:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/SessionRequest'
-      - type: object
-        required:
-        - time
-        properties:
-          time:
-            type: string
-            format: date-time
-    EventBatchRequest:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/EventRequest'
-      - type: object
-        required:
-        - time
-        properties:
-          time:
-            type: string
-            format: date-time
   securitySchemes:
     BearerAuth:
       type: http

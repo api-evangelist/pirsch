@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Pirsch Access Links Domains API
+  title: Pirsch Domains API
   description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
   version: '1'
   contact:
@@ -265,6 +265,60 @@ paths:
           description: Alternative domain deleted
 components:
   schemas:
+    AlternativeDomain:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        hostname:
+          type: string
+    Domain:
+      type: object
+      properties:
+        id:
+          type: string
+        hostname:
+          type: string
+        subdomain:
+          type: string
+        def_time:
+          type: string
+          format: date-time
+        mod_time:
+          type: string
+          format: date-time
+        user_id:
+          type:
+          - string
+          - 'null'
+        organization_id:
+          type:
+          - string
+          - 'null'
+        timezone:
+          type: string
+        public:
+          type: boolean
+        disable_scripts:
+          type: boolean
+        subscription_active:
+          type: boolean
+        display_name:
+          type: string
+        group_by_title:
+          type: boolean
+        user_role:
+          type: string
+          enum:
+          - Owner
+          - Admin
+          - Viewer
+        theme_id:
+          type: string
+        settings:
+          type: object
     CreateDomainRequest:
       type: object
       required:
@@ -292,58 +346,6 @@ components:
           type: string
         settings:
           type: object
-    Domain:
-      type: object
-      properties:
-        id:
-          type: string
-        hostname:
-          type: string
-        subdomain:
-          type: string
-        def_time:
-          type: string
-          format: date-time
-        mod_time:
-          type: string
-          format: date-time
-        user_id:
-          type: string
-          nullable: true
-        organization_id:
-          type: string
-          nullable: true
-        timezone:
-          type: string
-        public:
-          type: boolean
-        disable_scripts:
-          type: boolean
-        subscription_active:
-          type: boolean
-        display_name:
-          type: string
-        group_by_title:
-          type: boolean
-        user_role:
-          type: string
-          enum:
-          - Owner
-          - Admin
-          - Viewer
-        theme_id:
-          type: string
-        settings:
-          type: object
-    AlternativeDomain:
-      type: object
-      properties:
-        id:
-          type: string
-        domain_id:
-          type: string
-        hostname:
-          type: string
   securitySchemes:
     BearerAuth:
       type: http

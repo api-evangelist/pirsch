@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Pirsch Access Links Members API
+  title: Pirsch Members API
   description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
   version: '1'
   contact:
@@ -155,6 +155,18 @@ paths:
           description: Invitation deleted
 components:
   schemas:
+    Invitation:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        domain:
+          type: object
+        organization:
+          type: object
     Member:
       type: object
       properties:
@@ -197,18 +209,6 @@ components:
           items:
             type: string
             format: email
-    Invitation:
-      type: object
-      properties:
-        id:
-          type: string
-        email:
-          type: string
-          format: email
-        domain:
-          type: object
-        organization:
-          type: object
   securitySchemes:
     BearerAuth:
       type: http

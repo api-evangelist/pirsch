@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Pirsch Access Links Short Links API
+  title: Pirsch Short Links API
   description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
   version: '1'
   contact:
@@ -78,43 +78,6 @@ paths:
           description: Short link deleted
 components:
   schemas:
-    ShortLink:
-      type: object
-      properties:
-        id:
-          type: string
-        domain_id:
-          type: string
-        name:
-          type: string
-        event_name:
-          type: string
-        utm_source:
-          type: string
-        utm_medium:
-          type: string
-        utm_campaign:
-          type: string
-        utm_content:
-          type: string
-        utm_term:
-          type: string
-        expires_at:
-          type: string
-          format: date-time
-          nullable: true
-        expired_url:
-          type: string
-        webhook_id:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        urls:
-          type: array
-          items:
-            type: object
     CreateShortLinkRequest:
       type: object
       required:
@@ -156,6 +119,44 @@ components:
           type: string
         allow_indexing:
           type: boolean
+        tags:
+          type: array
+          items:
+            type: string
+        urls:
+          type: array
+          items:
+            type: object
+    ShortLink:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        name:
+          type: string
+        event_name:
+          type: string
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        expires_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        expired_url:
+          type: string
+        webhook_id:
+          type: string
         tags:
           type: array
           items:

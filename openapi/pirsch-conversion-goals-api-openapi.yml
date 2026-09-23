@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Pirsch Access Links Conversion Goals API
+  title: Pirsch Conversion Goals API
   description: RESTful API for sending page views, events, and session data to Pirsch, and for querying statistics including visitors, pages, referrers, UTM parameters, geo-location, device, browser, conversion goals, funnels, and real-time active visitors. Also exposes management endpoints for domains, members, clients, webhooks, email reports, traffic filters, short links, and views.
   version: '1'
   contact:
@@ -127,6 +127,16 @@ paths:
                     type: boolean
 components:
   schemas:
+    UpdateGoalRequest:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CreateGoalRequest'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
     ConversionGoal:
       type: object
       properties:
@@ -154,16 +164,6 @@ components:
           type: boolean
         email_reached:
           type: boolean
-    UpdateGoalRequest:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/CreateGoalRequest'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: string
     CreateGoalRequest:
       type: object
       required:

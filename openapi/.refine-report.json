@@ -1,21 +1,7 @@
 {
   "provider": "pirsch",
   "sources": [
-    "pirsch-access-links-api-openapi.yml",
-    "pirsch-authentication-api-openapi.yml",
-    "pirsch-clients-api-openapi.yml",
-    "pirsch-conversion-goals-api-openapi.yml",
-    "pirsch-domains-api-openapi.yml",
-    "pirsch-email-reports-api-openapi.yml",
-    "pirsch-funnels-api-openapi.yml",
-    "pirsch-members-api-openapi.yml",
-    "pirsch-short-links-api-openapi.yml",
-    "pirsch-statistics-api-openapi.yml",
-    "pirsch-tracking-api-openapi.yml",
-    "pirsch-traffic-management-api-openapi.yml",
-    "pirsch-user-api-openapi.yml",
-    "pirsch-views-api-openapi.yml",
-    "pirsch-webhooks-api-openapi.yml"
+    "_original/pirsch-pirsch-api-openapi.yml"
   ],
   "outputs": [
     "pirsch-access-links-api-openapi.yml",
@@ -37,6 +23,26 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "pirsch-pirsch-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "pirsch-access-links-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pirsch-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pirsch-clients-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pirsch-conversion-goals-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pirsch-domains-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pirsch-email-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pirsch-funnels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pirsch-members-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pirsch-short-links-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pirsch-statistics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pirsch-tracking-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pirsch-traffic-management-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pirsch-user-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pirsch-views-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pirsch-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
