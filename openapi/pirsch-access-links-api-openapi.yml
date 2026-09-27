@@ -88,18 +88,6 @@ paths:
           description: Access link deleted
 components:
   schemas:
-    UpdateAccessLinkRequest:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-        description:
-          type: string
-        valid_until:
-          type: string
-          format: date-time
     AccessLink:
       type: object
       properties:
@@ -120,6 +108,18 @@ components:
       - domain_id
       properties:
         domain_id:
+          type: string
+        description:
+          type: string
+        valid_until:
+          type: string
+          format: date-time
+    UpdateAccessLinkRequest:
+      type: object
+      required:
+      - id
+      properties:
+        id:
           type: string
         description:
           type: string

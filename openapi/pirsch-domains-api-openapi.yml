@@ -274,6 +274,33 @@ components:
           type: string
         hostname:
           type: string
+    CreateDomainRequest:
+      type: object
+      required:
+      - hostname
+      - subdomain
+      - timezone
+      properties:
+        hostname:
+          type: string
+        subdomain:
+          type: string
+        timezone:
+          type: string
+        organization_id:
+          type: string
+        theme_id:
+          type: string
+        public:
+          type: boolean
+        group_by_title:
+          type: boolean
+        disable_scripts:
+          type: boolean
+        display_name:
+          type: string
+        settings:
+          type: object
     Domain:
       type: object
       properties:
@@ -316,33 +343,6 @@ components:
           - Admin
           - Viewer
         theme_id:
-          type: string
-        settings:
-          type: object
-    CreateDomainRequest:
-      type: object
-      required:
-      - hostname
-      - subdomain
-      - timezone
-      properties:
-        hostname:
-          type: string
-        subdomain:
-          type: string
-        timezone:
-          type: string
-        organization_id:
-          type: string
-        theme_id:
-          type: string
-        public:
-          type: boolean
-        group_by_title:
-          type: boolean
-        disable_scripts:
-          type: boolean
-        display_name:
           type: string
         settings:
           type: object

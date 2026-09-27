@@ -97,28 +97,6 @@ paths:
           description: Report deleted
 components:
   schemas:
-    EmailReport:
-      type: object
-      properties:
-        id:
-          type: string
-        domain_id:
-          type: string
-        emails:
-          type: array
-          items:
-            type: string
-            format: email
-        interval:
-          type: integer
-        link_to:
-          type: string
-        next_report:
-          type: string
-          format: date-time
-        reply_to:
-          type: string
-          format: email
     CreateReportRequest:
       type: object
       required:
@@ -144,6 +122,28 @@ components:
           format: date
         link_to:
           type: string
+    EmailReport:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+        interval:
+          type: integer
+        link_to:
+          type: string
+        next_report:
+          type: string
+          format: date-time
+        reply_to:
+          type: string
+          format: email
   securitySchemes:
     BearerAuth:
       type: http

@@ -1055,6 +1055,39 @@ components:
         relative_platform_unknown:
           type: number
           format: float
+    EventStats:
+      type: object
+      properties:
+        name:
+          type: string
+        count:
+          type: integer
+        visitors:
+          type: integer
+        views:
+          type: integer
+        cr:
+          type: number
+          format: float
+        average_duration_seconds:
+          type: integer
+        meta_keys:
+          type: array
+          items:
+            type: string
+    ActiveVisitors:
+      type: object
+      properties:
+        stats:
+          type: array
+          items:
+            type: object
+        countries:
+          type: array
+          items:
+            type: object
+        visitors:
+          type: integer
     PageStats:
       type: object
       properties:
@@ -1081,6 +1114,29 @@ components:
           format: float
         average_time_spent_seconds:
           type: integer
+    TotalStats:
+      type: object
+      properties:
+        visitors:
+          type: integer
+        views:
+          type: integer
+        sessions:
+          type: integer
+        bounces:
+          type: integer
+        bounce_rate:
+          type: number
+          format: float
+        cr:
+          type: number
+          format: float
+        custom_metric_avg:
+          type: number
+          format: float
+        custom_metric_total:
+          type: number
+          format: float
     VisitorStats:
       type: object
       properties:
@@ -1116,19 +1172,6 @@ components:
         custom_metric_total:
           type: number
           format: float
-    ActiveVisitors:
-      type: object
-      properties:
-        stats:
-          type: array
-          items:
-            type: object
-        countries:
-          type: array
-          items:
-            type: object
-        visitors:
-          type: integer
     ReferrerStats:
       type: object
       properties:
@@ -1148,49 +1191,6 @@ components:
         bounces:
           type: integer
         bounce_rate:
-          type: number
-          format: float
-    EventStats:
-      type: object
-      properties:
-        name:
-          type: string
-        count:
-          type: integer
-        visitors:
-          type: integer
-        views:
-          type: integer
-        cr:
-          type: number
-          format: float
-        average_duration_seconds:
-          type: integer
-        meta_keys:
-          type: array
-          items:
-            type: string
-    TotalStats:
-      type: object
-      properties:
-        visitors:
-          type: integer
-        views:
-          type: integer
-        sessions:
-          type: integer
-        bounces:
-          type: integer
-        bounce_rate:
-          type: number
-          format: float
-        cr:
-          type: number
-          format: float
-        custom_metric_avg:
-          type: number
-          format: float
-        custom_metric_total:
           type: number
           format: float
   securitySchemes:

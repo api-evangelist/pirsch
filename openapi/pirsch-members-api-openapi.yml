@@ -155,6 +155,20 @@ paths:
           description: Invitation deleted
 components:
   schemas:
+    UpdateMemberRequest:
+      type: object
+      required:
+      - id
+      - role
+      properties:
+        id:
+          type: string
+          description: Member ID
+        role:
+          type: string
+          enum:
+          - Viewer
+          - Admin
     Invitation:
       type: object
       properties:
@@ -182,20 +196,6 @@ components:
           type: string
         user:
           type: object
-    UpdateMemberRequest:
-      type: object
-      required:
-      - id
-      - role
-      properties:
-        id:
-          type: string
-          description: Member ID
-        role:
-          type: string
-          enum:
-          - Viewer
-          - Admin
     InviteMembersRequest:
       type: object
       properties:

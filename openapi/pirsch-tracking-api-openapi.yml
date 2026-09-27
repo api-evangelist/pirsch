@@ -152,48 +152,28 @@ paths:
           description: Sessions extended
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        validation:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: Field-level validation errors
-        error:
-          type: array
-          items:
-            type: string
-          description: General error messages
-        context:
-          type: object
-          additionalProperties: true
-          description: Additional error context
-    HitBatchRequest:
+    EventRequest:
       type: object
       allOf:
       - $ref: '#/components/schemas/HitRequest'
       - type: object
         required:
-        - time
+        - event_name
         properties:
-          time:
+          event_name:
             type: string
-            format: date-time
-            description: Timestamp of the page view (ISO 8601)
-    EventBatchRequest:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/EventRequest'
-      - type: object
-        required:
-        - time
-        properties:
-          time:
-            type: string
-            format: date-time
+            description: Name of the event
+          event_duration:
+            type: number
+            description: Event duration in seconds
+          event_meta:
+            type: object
+            additionalProperties:
+              type: string
+            description: Event metadata key-value pairs
+          non_interactive:
+            type: boolean
+            description: Whether the event is non-interactive
     SessionRequest:
       type: object
       required:
@@ -214,6 +194,59 @@ components:
           type: string
         disable_bot_filter:
           type: boolean
+    HitBatchRequest:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/HitRequest'
+      - type: object
+        required:
+        - time
+        properties:
+          time:
+            type: string
+            format: date-time
+            description: Timestamp of the page view (ISO 8601)
+    SessionBatchRequest:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SessionRequest'
+      - type: object
+        required:
+        - time
+        properties:
+          time:
+            type: string
+            format: date-time
+    ErrorResponse:
+      type: object
+      properties:
+        validation:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+        error:
+          type: array
+          items:
+            type: string
+          description: General error messages
+        context:
+          type: object
+          additionalProperties: true
+          description: Additional error context
+    EventBatchRequest:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/EventRequest'
+      - type: object
+        required:
+        - time
+        properties:
+          time:
+            type: string
+            format: date-time
     HitRequest:
       type: object
       required:
@@ -272,39 +305,6 @@ components:
           additionalProperties:
             type: string
           description: Custom key-value tags
-    SessionBatchRequest:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/SessionRequest'
-      - type: object
-        required:
-        - time
-        properties:
-          time:
-            type: string
-            format: date-time
-    EventRequest:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/HitRequest'
-      - type: object
-        required:
-        - event_name
-        properties:
-          event_name:
-            type: string
-            description: Name of the event
-          event_duration:
-            type: number
-            description: Event duration in seconds
-          event_meta:
-            type: object
-            additionalProperties:
-              type: string
-            description: Event metadata key-value pairs
-          non_interactive:
-            type: boolean
-            description: Whether the event is non-interactive
   securitySchemes:
     BearerAuth:
       type: http
