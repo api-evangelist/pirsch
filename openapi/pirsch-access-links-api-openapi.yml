@@ -88,20 +88,6 @@ paths:
           description: Access link deleted
 components:
   schemas:
-    AccessLink:
-      type: object
-      properties:
-        id:
-          type: string
-        code:
-          type: string
-        description:
-          type: string
-        valid_until:
-          type:
-          - string
-          - 'null'
-          format: date-time
     CreateAccessLinkRequest:
       type: object
       required:
@@ -125,6 +111,20 @@ components:
           type: string
         valid_until:
           type: string
+          format: date-time
+    AccessLink:
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        description:
+          type: string
+        valid_until:
+          type:
+          - string
+          - 'null'
           format: date-time
   securitySchemes:
     BearerAuth:

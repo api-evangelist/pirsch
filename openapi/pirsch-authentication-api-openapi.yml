@@ -47,25 +47,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        validation:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: Field-level validation errors
-        error:
-          type: array
-          items:
-            type: string
-          description: General error messages
-        context:
-          type: object
-          additionalProperties: true
-          description: Additional error context
     TokenResponse:
       type: object
       properties:
@@ -88,6 +69,25 @@ components:
         client_secret:
           type: string
           description: OAuth2 client secret
+    ErrorResponse:
+      type: object
+      properties:
+        validation:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+        error:
+          type: array
+          items:
+            type: string
+          description: General error messages
+        context:
+          type: object
+          additionalProperties: true
+          description: Additional error context
   securitySchemes:
     BearerAuth:
       type: http

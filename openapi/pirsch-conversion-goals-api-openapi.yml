@@ -127,16 +127,6 @@ paths:
                     type: boolean
 components:
   schemas:
-    UpdateGoalRequest:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/CreateGoalRequest'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: string
     ConversionGoal:
       type: object
       properties:
@@ -190,6 +180,16 @@ components:
           type: boolean
         email_reached:
           type: boolean
+    UpdateGoalRequest:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CreateGoalRequest'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
   securitySchemes:
     BearerAuth:
       type: http

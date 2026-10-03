@@ -181,6 +181,19 @@ components:
           type: object
         organization:
           type: object
+    InviteMembersRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Domain ID
+        organization_id:
+          type: string
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
     Member:
       type: object
       properties:
@@ -196,19 +209,6 @@ components:
           type: string
         user:
           type: object
-    InviteMembersRequest:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Domain ID
-        organization_id:
-          type: string
-        emails:
-          type: array
-          items:
-            type: string
-            format: email
   securitySchemes:
     BearerAuth:
       type: http

@@ -158,12 +158,8 @@ paths:
           description: Warning threshold updated
 components:
   schemas:
-    CreateFilterRequest:
+    TrafficFilter:
       type: object
-      required:
-      - domain_id
-      - type
-      - filter
       properties:
         id:
           type: string
@@ -175,8 +171,12 @@ components:
           type: string
         filter:
           type: string
-    TrafficFilter:
+    CreateFilterRequest:
       type: object
+      required:
+      - domain_id
+      - type
+      - filter
       properties:
         id:
           type: string

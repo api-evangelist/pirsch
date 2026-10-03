@@ -75,6 +75,16 @@ paths:
           description: Client deleted
 components:
   schemas:
+    Client:
+      type: object
+      properties:
+        client_id:
+          type: string
+        description:
+          type: string
+        client_secret:
+          type: string
+          description: Only returned on creation
     CreateClientRequest:
       type: object
       required:
@@ -91,16 +101,6 @@ components:
           - token
         description:
           type: string
-    Client:
-      type: object
-      properties:
-        client_id:
-          type: string
-        description:
-          type: string
-        client_secret:
-          type: string
-          description: Only returned on creation
   securitySchemes:
     BearerAuth:
       type: http

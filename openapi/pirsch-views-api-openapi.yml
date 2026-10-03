@@ -78,12 +78,15 @@ paths:
           description: View deleted
 components:
   schemas:
-    View:
+    CreateViewRequest:
       type: object
+      required:
+      - domain_id
+      - name
       properties:
-        id:
-          type: string
         domain_id:
+          type: string
+        id:
           type: string
         name:
           type: string
@@ -95,15 +98,12 @@ components:
           format: date
         period:
           type: string
-    CreateViewRequest:
+    View:
       type: object
-      required:
-      - domain_id
-      - name
       properties:
-        domain_id:
-          type: string
         id:
+          type: string
+        domain_id:
           type: string
         name:
           type: string

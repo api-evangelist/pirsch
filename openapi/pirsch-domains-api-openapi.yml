@@ -265,15 +265,6 @@ paths:
           description: Alternative domain deleted
 components:
   schemas:
-    AlternativeDomain:
-      type: object
-      properties:
-        id:
-          type: string
-        domain_id:
-          type: string
-        hostname:
-          type: string
     CreateDomainRequest:
       type: object
       required:
@@ -346,6 +337,15 @@ components:
           type: string
         settings:
           type: object
+    AlternativeDomain:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        hostname:
+          type: string
   securitySchemes:
     BearerAuth:
       type: http

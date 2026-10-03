@@ -1037,22 +1037,27 @@ paths:
           description: Statistics deleted
 components:
   schemas:
-    PlatformStats:
+    TotalStats:
       type: object
       properties:
-        platform_desktop:
+        visitors:
           type: integer
-        platform_mobile:
+        views:
           type: integer
-        platform_unknown:
+        sessions:
           type: integer
-        relative_platform_desktop:
+        bounces:
+          type: integer
+        bounce_rate:
           type: number
           format: float
-        relative_platform_mobile:
+        cr:
           type: number
           format: float
-        relative_platform_unknown:
+        custom_metric_avg:
+          type: number
+          format: float
+        custom_metric_total:
           type: number
           format: float
     EventStats:
@@ -1075,6 +1080,27 @@ components:
           type: array
           items:
             type: string
+    ReferrerStats:
+      type: object
+      properties:
+        referrer:
+          type: string
+        referrer_name:
+          type: string
+        referrer_icon:
+          type: string
+        visitors:
+          type: integer
+        sessions:
+          type: integer
+        relative_visitors:
+          type: number
+          format: float
+        bounces:
+          type: integer
+        bounce_rate:
+          type: number
+          format: float
     ActiveVisitors:
       type: object
       properties:
@@ -1088,6 +1114,24 @@ components:
             type: object
         visitors:
           type: integer
+    PlatformStats:
+      type: object
+      properties:
+        platform_desktop:
+          type: integer
+        platform_mobile:
+          type: integer
+        platform_unknown:
+          type: integer
+        relative_platform_desktop:
+          type: number
+          format: float
+        relative_platform_mobile:
+          type: number
+          format: float
+        relative_platform_unknown:
+          type: number
+          format: float
     PageStats:
       type: object
       properties:
@@ -1114,29 +1158,6 @@ components:
           format: float
         average_time_spent_seconds:
           type: integer
-    TotalStats:
-      type: object
-      properties:
-        visitors:
-          type: integer
-        views:
-          type: integer
-        sessions:
-          type: integer
-        bounces:
-          type: integer
-        bounce_rate:
-          type: number
-          format: float
-        cr:
-          type: number
-          format: float
-        custom_metric_avg:
-          type: number
-          format: float
-        custom_metric_total:
-          type: number
-          format: float
     VisitorStats:
       type: object
       properties:
@@ -1170,27 +1191,6 @@ components:
           type: number
           format: float
         custom_metric_total:
-          type: number
-          format: float
-    ReferrerStats:
-      type: object
-      properties:
-        referrer:
-          type: string
-        referrer_name:
-          type: string
-        referrer_icon:
-          type: string
-        visitors:
-          type: integer
-        sessions:
-          type: integer
-        relative_visitors:
-          type: number
-          format: float
-        bounces:
-          type: integer
-        bounce_rate:
           type: number
           format: float
   securitySchemes:
