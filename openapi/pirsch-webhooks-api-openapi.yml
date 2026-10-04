@@ -73,22 +73,6 @@ paths:
           description: Webhook deleted
 components:
   schemas:
-    Webhook:
-      type: object
-      properties:
-        id:
-          type: string
-        domain_id:
-          type: string
-        description:
-          type: string
-        event:
-          type: string
-        endpoint:
-          type: string
-          format: uri
-        active:
-          type: boolean
     CreateWebhookRequest:
       type: object
       required:
@@ -107,6 +91,22 @@ components:
         endpoint:
           type: string
           format: uri
+    Webhook:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        description:
+          type: string
+        event:
+          type: string
+        endpoint:
+          type: string
+          format: uri
+        active:
+          type: boolean
   securitySchemes:
     BearerAuth:
       type: http

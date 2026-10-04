@@ -221,6 +221,67 @@ components:
           time:
             type: string
             format: date-time
+    EventRequest:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/HitRequest'
+      - type: object
+        required:
+        - event_name
+        properties:
+          event_name:
+            type: string
+            description: Name of the event
+          event_duration:
+            type: number
+            description: Event duration in seconds
+          event_meta:
+            type: object
+            additionalProperties:
+              type: string
+            description: Event metadata key-value pairs
+          non_interactive:
+            type: boolean
+            description: Whether the event is non-interactive
+    SessionRequest:
+      type: object
+      required:
+      - ip
+      - user_agent
+      properties:
+        ip:
+          type: string
+        user_agent:
+          type: string
+        sec_ch_ua:
+          type: string
+        sec_ch_ua_mobile:
+          type: string
+        sec_ch_ua_platform:
+          type: string
+        sec_ch_ua_platform_version:
+          type: string
+        disable_bot_filter:
+          type: boolean
+    ErrorResponse:
+      type: object
+      properties:
+        validation:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+        error:
+          type: array
+          items:
+            type: string
+          description: General error messages
+        context:
+          type: object
+          additionalProperties: true
+          description: Additional error context
     EventBatchRequest:
       type: object
       allOf:
@@ -244,67 +305,6 @@ components:
             type: string
             format: date-time
             description: Timestamp of the page view (ISO 8601)
-    SessionRequest:
-      type: object
-      required:
-      - ip
-      - user_agent
-      properties:
-        ip:
-          type: string
-        user_agent:
-          type: string
-        sec_ch_ua:
-          type: string
-        sec_ch_ua_mobile:
-          type: string
-        sec_ch_ua_platform:
-          type: string
-        sec_ch_ua_platform_version:
-          type: string
-        disable_bot_filter:
-          type: boolean
-    EventRequest:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/HitRequest'
-      - type: object
-        required:
-        - event_name
-        properties:
-          event_name:
-            type: string
-            description: Name of the event
-          event_duration:
-            type: number
-            description: Event duration in seconds
-          event_meta:
-            type: object
-            additionalProperties:
-              type: string
-            description: Event metadata key-value pairs
-          non_interactive:
-            type: boolean
-            description: Whether the event is non-interactive
-    ErrorResponse:
-      type: object
-      properties:
-        validation:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: Field-level validation errors
-        error:
-          type: array
-          items:
-            type: string
-          description: General error messages
-        context:
-          type: object
-          additionalProperties: true
-          description: Additional error context
   securitySchemes:
     BearerAuth:
       type: http

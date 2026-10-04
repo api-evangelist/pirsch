@@ -127,6 +127,42 @@ paths:
                     type: boolean
 components:
   schemas:
+    UpdateGoalRequest:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CreateGoalRequest'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+    CreateGoalRequest:
+      type: object
+      required:
+      - domain_id
+      - name
+      properties:
+        domain_id:
+          type: string
+        name:
+          type: string
+        path_pattern:
+          type: string
+        event_name:
+          type: string
+        event_meta_key:
+          type: string
+        event_meta_value:
+          type: string
+        custom_metric_key:
+          type: string
+        custom_metric_type:
+          type: string
+        delete_reached:
+          type: boolean
+        email_reached:
+          type: boolean
     ConversionGoal:
       type: object
       properties:
@@ -154,42 +190,6 @@ components:
           type: boolean
         email_reached:
           type: boolean
-    CreateGoalRequest:
-      type: object
-      required:
-      - domain_id
-      - name
-      properties:
-        domain_id:
-          type: string
-        name:
-          type: string
-        path_pattern:
-          type: string
-        event_name:
-          type: string
-        event_meta_key:
-          type: string
-        event_meta_value:
-          type: string
-        custom_metric_key:
-          type: string
-        custom_metric_type:
-          type: string
-        delete_reached:
-          type: boolean
-        email_reached:
-          type: boolean
-    UpdateGoalRequest:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/CreateGoalRequest'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: string
   securitySchemes:
     BearerAuth:
       type: http

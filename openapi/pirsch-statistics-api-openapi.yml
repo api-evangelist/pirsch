@@ -1037,6 +1037,40 @@ paths:
           description: Statistics deleted
 components:
   schemas:
+    ActiveVisitors:
+      type: object
+      properties:
+        stats:
+          type: array
+          items:
+            type: object
+        countries:
+          type: array
+          items:
+            type: object
+        visitors:
+          type: integer
+    ReferrerStats:
+      type: object
+      properties:
+        referrer:
+          type: string
+        referrer_name:
+          type: string
+        referrer_icon:
+          type: string
+        visitors:
+          type: integer
+        sessions:
+          type: integer
+        relative_visitors:
+          type: number
+          format: float
+        bounces:
+          type: integer
+        bounce_rate:
+          type: number
+          format: float
     TotalStats:
       type: object
       properties:
@@ -1060,6 +1094,24 @@ components:
         custom_metric_total:
           type: number
           format: float
+    PlatformStats:
+      type: object
+      properties:
+        platform_desktop:
+          type: integer
+        platform_mobile:
+          type: integer
+        platform_unknown:
+          type: integer
+        relative_platform_desktop:
+          type: number
+          format: float
+        relative_platform_mobile:
+          type: number
+          format: float
+        relative_platform_unknown:
+          type: number
+          format: float
     EventStats:
       type: object
       properties:
@@ -1080,58 +1132,6 @@ components:
           type: array
           items:
             type: string
-    ReferrerStats:
-      type: object
-      properties:
-        referrer:
-          type: string
-        referrer_name:
-          type: string
-        referrer_icon:
-          type: string
-        visitors:
-          type: integer
-        sessions:
-          type: integer
-        relative_visitors:
-          type: number
-          format: float
-        bounces:
-          type: integer
-        bounce_rate:
-          type: number
-          format: float
-    ActiveVisitors:
-      type: object
-      properties:
-        stats:
-          type: array
-          items:
-            type: object
-        countries:
-          type: array
-          items:
-            type: object
-        visitors:
-          type: integer
-    PlatformStats:
-      type: object
-      properties:
-        platform_desktop:
-          type: integer
-        platform_mobile:
-          type: integer
-        platform_unknown:
-          type: integer
-        relative_platform_desktop:
-          type: number
-          format: float
-        relative_platform_mobile:
-          type: number
-          format: float
-        relative_platform_unknown:
-          type: number
-          format: float
     PageStats:
       type: object
       properties:

@@ -292,6 +292,15 @@ components:
           type: string
         settings:
           type: object
+    AlternativeDomain:
+      type: object
+      properties:
+        id:
+          type: string
+        domain_id:
+          type: string
+        hostname:
+          type: string
     Domain:
       type: object
       properties:
@@ -337,15 +346,6 @@ components:
           type: string
         settings:
           type: object
-    AlternativeDomain:
-      type: object
-      properties:
-        id:
-          type: string
-        domain_id:
-          type: string
-        hostname:
-          type: string
   securitySchemes:
     BearerAuth:
       type: http

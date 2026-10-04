@@ -155,45 +155,6 @@ paths:
           description: Invitation deleted
 components:
   schemas:
-    UpdateMemberRequest:
-      type: object
-      required:
-      - id
-      - role
-      properties:
-        id:
-          type: string
-          description: Member ID
-        role:
-          type: string
-          enum:
-          - Viewer
-          - Admin
-    Invitation:
-      type: object
-      properties:
-        id:
-          type: string
-        email:
-          type: string
-          format: email
-        domain:
-          type: object
-        organization:
-          type: object
-    InviteMembersRequest:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Domain ID
-        organization_id:
-          type: string
-        emails:
-          type: array
-          items:
-            type: string
-            format: email
     Member:
       type: object
       properties:
@@ -208,6 +169,45 @@ components:
         user_id:
           type: string
         user:
+          type: object
+    UpdateMemberRequest:
+      type: object
+      required:
+      - id
+      - role
+      properties:
+        id:
+          type: string
+          description: Member ID
+        role:
+          type: string
+          enum:
+          - Viewer
+          - Admin
+    InviteMembersRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Domain ID
+        organization_id:
+          type: string
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+    Invitation:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        domain:
+          type: object
+        organization:
           type: object
   securitySchemes:
     BearerAuth:

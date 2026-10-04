@@ -78,16 +78,12 @@ paths:
           description: Funnel deleted
 components:
   schemas:
-    CreateFunnelRequest:
+    Funnel:
       type: object
-      required:
-      - domain_id
-      - name
-      - steps
       properties:
-        domain_id:
-          type: string
         id:
+          type: string
+        domain_id:
           type: string
         name:
           type: string
@@ -100,12 +96,16 @@ components:
                 type: string
               filter:
                 type: object
-    Funnel:
+    CreateFunnelRequest:
       type: object
+      required:
+      - domain_id
+      - name
+      - steps
       properties:
-        id:
-          type: string
         domain_id:
+          type: string
+        id:
           type: string
         name:
           type: string

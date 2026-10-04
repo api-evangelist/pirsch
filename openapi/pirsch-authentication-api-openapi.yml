@@ -57,18 +57,6 @@ components:
           type: string
           format: date-time
           description: UTC timestamp when the token expires
-    TokenRequest:
-      type: object
-      required:
-      - client_id
-      - client_secret
-      properties:
-        client_id:
-          type: string
-          description: OAuth2 client ID
-        client_secret:
-          type: string
-          description: OAuth2 client secret
     ErrorResponse:
       type: object
       properties:
@@ -88,6 +76,18 @@ components:
           type: object
           additionalProperties: true
           description: Additional error context
+    TokenRequest:
+      type: object
+      required:
+      - client_id
+      - client_secret
+      properties:
+        client_id:
+          type: string
+          description: OAuth2 client ID
+        client_secret:
+          type: string
+          description: OAuth2 client secret
   securitySchemes:
     BearerAuth:
       type: http
