@@ -311,6 +311,9 @@ apis:
   - type: SDKs
     url: https://docs.pirsch.io/api-sdks/sdks
 common:
+  - type: CapabilityMap
+    url: capabilities/pirsch-capability-edges.yml
+    name: Pirsch Business Capability Map
   - type: AgenticAccess
     url: agentic-access/pirsch-agentic-access.yml
   - type: DomainSecurity

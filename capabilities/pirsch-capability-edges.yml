@@ -1,0 +1,37 @@
+slug: pirsch
+provider: Pirsch
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Statistics
+  spec_file: pirsch-statistics-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: GET /statistics/utm/campaign  getUtmCampaignStatistics  Get UTM campaign statistics
+  reason: Query surface for visitors, pages, referrers, traffic channels and UTM source/medium/campaign
+    — website and campaign traffic measurement, i.e. digital marketing analytics. Some residual ambiguity
+    with general analytics/BI delivery.
+- tag: Tracking
+  spec_file: pirsch-tracking-api-openapi.yml
+  capability_id: BC-4280.10
+  capability_id_l1: BC-4280
+  capability_name: Product Telemetry Instrumentation
+  confidence: 0.7
+  evidence: POST /hit sendPageView 'Send a page view'; POST /event sendEvent 'Send a custom event'; schemas
+    HitRequest, EventRequest
+  reason: The operations ingest page views, custom events and session heartbeats from client runtimes
+    against defined event schemas — instrumentation/capture of usage telemetry rather than analysis. Maps
+    to Product Telemetry Instrumentation; some ambiguity since the subject is website visitors rather
+    than in-product users.
